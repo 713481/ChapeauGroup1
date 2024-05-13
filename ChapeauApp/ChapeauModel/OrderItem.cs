@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace ChapeauModel
 {
-    internal class Bill
+    public class OrderItem
     {
-        public int BillID { get; set; }
+        public int ItemID { get; set; }
         public int OrderID { get; set; }
-        public double TotalPrice { get; set; }
-        public DateTime BillDate { get; set; }
+        public int OrderCount { get; set; }
+        public DateTime OrderTime { get; set; }
     }
 }

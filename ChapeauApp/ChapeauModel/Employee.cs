@@ -14,5 +14,6 @@ namespace ChapeauModel
         public int PhoneNumber { get; set; }
         public string Address { get; set; }
         public int Password { get; set; }
+        public string Role { get; set; }
     }
 }

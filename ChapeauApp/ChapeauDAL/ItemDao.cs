@@ -4,11 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ChapeauModel
+namespace ChapeauDAL
 {
-    internal class Table
+    internal class ItemDao
     {
-        public int TableID { get; set; }
-        public int TableNumber { get; set; }
     }
 }

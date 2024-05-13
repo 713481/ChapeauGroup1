@@ -4,11 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ChapeauModel
+namespace ChapeauDAL
 {
-    internal class Table
+    public class OrderDao
     {
-        public int TableID { get; set; }
-        public int TableNumber { get; set; }
+
     }
 }
