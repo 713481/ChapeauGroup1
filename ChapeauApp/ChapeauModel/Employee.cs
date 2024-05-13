@@ -6,7 +6,13 @@ using System.Threading.Tasks;
 
 namespace ChapeauModel
 {
-    internal class Employee
+    public class Employee
     {
+        public int EmployeeID { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public int PhoneNumber { get; set; }
+        public string Address { get; set; }
+        public int Password { get; set; }
     }
 }
