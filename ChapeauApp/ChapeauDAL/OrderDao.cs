@@ -6,8 +6,15 @@ using System.Threading.Tasks;
 
 namespace ChapeauDAL
 {
-    public class OrderDao
+    public class OrderDao : BaseDao
     {
+        ItemDao itemDao;
+        TableDao tableDao;
+        public OrderDao() 
+        { 
+            itemDao = new ItemDao();
+            tableDao = new TableDao();
+        }
 
     }
 }
