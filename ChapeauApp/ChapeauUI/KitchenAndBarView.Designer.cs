@@ -29,56 +29,71 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(KitchenAndBarView));
-            pictureBox1 = new PictureBox();
-            listView1 = new ListView();
-            listView2 = new ListView();
-            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
+            pictureBoxChapau = new PictureBox();
+            ListViewOpenOrderBar = new ListView();
+            listViewOrderItemBar = new ListView();
+            label1 = new Label();
+            ((System.ComponentModel.ISupportInitialize)pictureBoxChapau).BeginInit();
             SuspendLayout();
             // 
-            // pictureBox1
+            // pictureBoxChapau
             // 
-            pictureBox1.Image = (Image)resources.GetObject("pictureBox1.Image");
-            pictureBox1.Location = new Point(26, 12);
-            pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(139, 82);
-            pictureBox1.TabIndex = 0;
-            pictureBox1.TabStop = false;
+            pictureBoxChapau.Image = (Image)resources.GetObject("pictureBoxChapau.Image");
+            pictureBoxChapau.Location = new Point(30, 16);
+            pictureBoxChapau.Margin = new Padding(3, 4, 3, 4);
+            pictureBoxChapau.Name = "pictureBoxChapau";
+            pictureBoxChapau.Size = new Size(159, 109);
+            pictureBoxChapau.TabIndex = 0;
+            pictureBoxChapau.TabStop = false;
             // 
-            // listView1
+            // ListViewOpenOrderBar
             // 
-            listView1.Location = new Point(58, 150);
-            listView1.Name = "listView1";
-            listView1.Size = new Size(323, 467);
-            listView1.TabIndex = 1;
-            listView1.UseCompatibleStateImageBehavior = false;
+            ListViewOpenOrderBar.Location = new Point(289, 181);
+            ListViewOpenOrderBar.Margin = new Padding(3, 4, 3, 4);
+            ListViewOpenOrderBar.Name = "ListViewOpenOrderBar";
+            ListViewOpenOrderBar.Size = new Size(863, 280);
+            ListViewOpenOrderBar.TabIndex = 1;
+            ListViewOpenOrderBar.UseCompatibleStateImageBehavior = false;
             // 
-            // listView2
+            // listViewOrderItemBar
             // 
-            listView2.Location = new Point(557, 150);
-            listView2.Name = "listView2";
-            listView2.Size = new Size(451, 467);
-            listView2.TabIndex = 2;
-            listView2.UseCompatibleStateImageBehavior = false;
+            listViewOrderItemBar.Location = new Point(289, 536);
+            listViewOrderItemBar.Margin = new Padding(3, 4, 3, 4);
+            listViewOrderItemBar.Name = "listViewOrderItemBar";
+            listViewOrderItemBar.Size = new Size(863, 285);
+            listViewOrderItemBar.TabIndex = 2;
+            listViewOrderItemBar.UseCompatibleStateImageBehavior = false;
+            // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.Location = new Point(0, 0);
+            label1.Name = "label1";
+            label1.Size = new Size(50, 20);
+            label1.TabIndex = 3;
+            label1.Text = "label1";
             // 
             // KitchenAndBarView
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1110, 724);
-            Controls.Add(listView2);
-            Controls.Add(listView1);
-            Controls.Add(pictureBox1);
-            Margin = new Padding(3, 2, 3, 2);
+            ClientSize = new Size(1269, 965);
+            Controls.Add(label1);
+            Controls.Add(listViewOrderItemBar);
+            Controls.Add(ListViewOpenOrderBar);
+            Controls.Add(pictureBoxChapau);
             Name = "KitchenAndBarView";
             Text = "KitchenAndBarView";
-            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBoxChapau).EndInit();
             ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
 
-        private PictureBox pictureBox1;
-        private ListView listView1;
-        private ListView listView2;
+        private PictureBox pictureBoxChapau;
+        private ListView ListViewOpenOrderBar;
+        private ListView listViewOrderItemBar;
+        private Label label1;
     }
 }

@@ -29,7 +29,7 @@ namespace ChapeauDAL
             {
                 new SqlParameter("@Status", (int)changeStatus),
                 new SqlParameter("@OrderID", item.OrderID),
-                new SqlParameter("@ItemID", item.ItemID)
+                new SqlParameter("@ItemID", item.MenuItem.ItemID)
             };
             if (item.Notes != "")
             {
@@ -46,7 +46,7 @@ namespace ChapeauDAL
             {
                 OrderItem orderItem = new OrderItem()
                 {
-                    ItemID = (int)
+                    MenuItem = itemDao.GetItemById((int)dr["ItemID"]),
                     OrderID = (int)dr["OrderID"],
                     StatusItem = (ItemStatus)dr["OrderStatus"],
                     OrderCount = (int)dr["OrderCount"],
