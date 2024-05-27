@@ -33,5 +33,28 @@ namespace ChapeauDAL
             }
             return tables;
         }
+        public void UpdatesTableStatus(int tableNumber, int tableStatus)
+        {
+            string query = "UPDATE [TABLE]" +
+                            "SET tableStatus = @TableStatus" +
+                            "WHERE tableNumber = @TableNumber";
+            List<SqlParameter> sqlParameters = new List<SqlParameter>
+            {
+                new SqlParameter("@TableStatus", tableStatus),
+                new SqlParameter("@TableNumber", tableNumber)
+            };
+
+            ExecuteEditQuery(query, sqlParameters.ToArray());
+        }
+
+
+
+
+
+
+
+
+
+
     }   
 }
