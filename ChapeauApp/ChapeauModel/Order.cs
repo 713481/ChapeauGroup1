@@ -9,8 +9,19 @@ namespace ChapeauModel
     public class Order
     {
         public int OrderID { get; set; }
-        public int TableID { get; set; }
+        public Table TableID { get; set; }
         public int EmployeeID { get; set; }
-        public List<Order> OrderList { get; set; }
+        public List<OrderItem> OrderList { get; set; }
+        public ItemStatus Status { get; set; }
+        public DateTime OrderTime { get; set; }
+
+        public TimeSpan CustomerWaitingTime
+        {
+            get
+            {
+                return DateTime.Now - OrderTime;
+            }
+        }
+       
     }
 }

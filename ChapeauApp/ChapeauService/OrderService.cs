@@ -31,5 +31,15 @@ namespace ChapeauService
         {
             orderDao.GetOrderItems(isABar, isAOpenOrders, id);
         }
+
+        public List<Order> GetOrder(bool bar, bool openOrder)
+        {
+            return orderDao.GetOrders(bar, openOrder);
+        }
+
+        public void GetHistoryOrderItem(int tableid)
+        {
+            orderDao.GetHistoryOrderItems(tableid);
+        }
     }
 }

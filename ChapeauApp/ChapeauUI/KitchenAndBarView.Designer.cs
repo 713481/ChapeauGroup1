@@ -31,8 +31,15 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(KitchenAndBarView));
             pictureBoxChapau = new PictureBox();
             ListViewOpenOrderBar = new ListView();
+            ViewTableID = new ColumnHeader();
+            OrderIDBar = new ColumnHeader();
+            OrderTimeBar = new ColumnHeader();
+            columnHeader4 = new ColumnHeader();
             listViewOrderItemBar = new ListView();
-            label1 = new Label();
+            labelOrderBar = new Label();
+            labelOrderItemBar = new Label();
+            buttonSetToReady = new Button();
+            SetToPreparedButton = new Button();
             ((System.ComponentModel.ISupportInitialize)pictureBoxChapau).BeginInit();
             SuspendLayout();
             // 
@@ -48,37 +55,86 @@
             // 
             // ListViewOpenOrderBar
             // 
-            ListViewOpenOrderBar.Location = new Point(289, 181);
+            ListViewOpenOrderBar.Columns.AddRange(new ColumnHeader[] { ViewTableID, OrderIDBar, OrderTimeBar, columnHeader4 });
+            ListViewOpenOrderBar.Location = new Point(300, 145);
             ListViewOpenOrderBar.Margin = new Padding(3, 4, 3, 4);
             ListViewOpenOrderBar.Name = "ListViewOpenOrderBar";
             ListViewOpenOrderBar.Size = new Size(863, 280);
             ListViewOpenOrderBar.TabIndex = 1;
             ListViewOpenOrderBar.UseCompatibleStateImageBehavior = false;
             // 
+            // ViewTableID
+            // 
+            ViewTableID.Text = "Table ID";
+            // 
+            // OrderIDBar
+            // 
+            OrderIDBar.Text = "Order ID";
+            // 
+            // OrderTimeBar
+            // 
+            OrderTimeBar.Text = "Order Time";
+            // 
+            // columnHeader4
+            // 
+            columnHeader4.Text = "";
+            // 
             // listViewOrderItemBar
             // 
-            listViewOrderItemBar.Location = new Point(289, 536);
+            listViewOrderItemBar.Location = new Point(300, 501);
             listViewOrderItemBar.Margin = new Padding(3, 4, 3, 4);
             listViewOrderItemBar.Name = "listViewOrderItemBar";
             listViewOrderItemBar.Size = new Size(863, 285);
             listViewOrderItemBar.TabIndex = 2;
             listViewOrderItemBar.UseCompatibleStateImageBehavior = false;
             // 
-            // label1
+            // labelOrderBar
             // 
-            label1.AutoSize = true;
-            label1.Location = new Point(0, 0);
-            label1.Name = "label1";
-            label1.Size = new Size(50, 20);
-            label1.TabIndex = 3;
-            label1.Text = "label1";
+            labelOrderBar.AutoSize = true;
+            labelOrderBar.Font = new Font("Segoe UI", 19F, FontStyle.Regular, GraphicsUnit.Point);
+            labelOrderBar.Location = new Point(112, 145);
+            labelOrderBar.Name = "labelOrderBar";
+            labelOrderBar.Size = new Size(109, 45);
+            labelOrderBar.TabIndex = 3;
+            labelOrderBar.Text = "Order:";
+            // 
+            // labelOrderItemBar
+            // 
+            labelOrderItemBar.AutoSize = true;
+            labelOrderItemBar.Font = new Font("Segoe UI", 19F, FontStyle.Regular, GraphicsUnit.Point);
+            labelOrderItemBar.Location = new Point(94, 501);
+            labelOrderItemBar.Name = "labelOrderItemBar";
+            labelOrderItemBar.Size = new Size(183, 45);
+            labelOrderItemBar.TabIndex = 4;
+            labelOrderItemBar.Text = "Order Item:";
+            // 
+            // buttonSetToReady
+            // 
+            buttonSetToReady.Location = new Point(112, 559);
+            buttonSetToReady.Name = "buttonSetToReady";
+            buttonSetToReady.Size = new Size(146, 77);
+            buttonSetToReady.TabIndex = 5;
+            buttonSetToReady.Text = "Set To Ready";
+            buttonSetToReady.UseVisualStyleBackColor = true;
+            // 
+            // SetToPreparedButton
+            // 
+            SetToPreparedButton.Location = new Point(112, 670);
+            SetToPreparedButton.Name = "SetToPreparedButton";
+            SetToPreparedButton.Size = new Size(146, 79);
+            SetToPreparedButton.TabIndex = 6;
+            SetToPreparedButton.Text = "Set To Perpare";
+            SetToPreparedButton.UseVisualStyleBackColor = true;
             // 
             // KitchenAndBarView
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1269, 965);
-            Controls.Add(label1);
+            Controls.Add(SetToPreparedButton);
+            Controls.Add(buttonSetToReady);
+            Controls.Add(labelOrderItemBar);
+            Controls.Add(labelOrderBar);
             Controls.Add(listViewOrderItemBar);
             Controls.Add(ListViewOpenOrderBar);
             Controls.Add(pictureBoxChapau);
@@ -94,6 +150,13 @@
         private PictureBox pictureBoxChapau;
         private ListView ListViewOpenOrderBar;
         private ListView listViewOrderItemBar;
-        private Label label1;
+        private Label labelOrderBar;
+        private Label labelOrderItemBar;
+        private Button buttonSetToReady;
+        private Button SetToPreparedButton;
+        private ColumnHeader ViewTableID;
+        private ColumnHeader OrderIDBar;
+        private ColumnHeader OrderTimeBar;
+        private ColumnHeader columnHeader4;
     }
 }

@@ -27,11 +27,27 @@ namespace ChapeauDAL
                 {
                     TableID = (int)row["TableID"],
                     TableNumber = (int)row["TableNumber"],
-                    TableStatus = row["TableStatus"].ToString()
+                    TableStatus = (int)row["TableStatus"]
                 };
                 tables.Add(table);
             }
             return tables;
+        }
+
+        public Table GetTableById(int tableID)
+        {
+            string query = "SELECT TableID, TableNumber, EmployeeID, TableStatus FROM [ABLE] WHERE tableID = @tableID";
+            SqlParameter[] sqlParameters = new SqlParameter[1];
+            sqlParameters[0] = new SqlParameter("@tableID", tableID);
+            List<Table> tables = ReadTables(ExecuteSelectQuery(query, sqlParameters));
+            if (tables.Count > 0)
+            {
+                return tables[0];
+            }
+            else
+            {
+                return null;
+            }
         }
     }   
 }

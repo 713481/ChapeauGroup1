@@ -13,7 +13,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\ChapeauDAL\ChapeauDAL.csproj" />
-    <ProjectReference Include="..\ChapeauModel\ChapeauModel.csproj" />
   </ItemGroup>
 
 </Project>
