@@ -18,8 +18,60 @@ namespace ChapeauDAL
             itemDao = new ItemDao();
             tableDao = new TableDao();
         }
-
-        //OrderItem
+        //-Order-Alex-----------------------------------------------------------------------------------------------------------------------------------------------------------
+        // Creating an order
+        public int CreateOrder(Order order)
+        {
+            string query = "INSERT INTO [Order] (TableID, EmployeeID, OrderDate) OUTPUT INSERTED.OrderID VALUES (@TableID, @EmployeeID, @OrderDate)";
+            SqlParameter[] sqlParameters = new SqlParameter[]
+            {
+                new SqlParameter("@TableID", order.TableID),
+                new SqlParameter("@EmployeeID", order.EmployeeID),
+                new SqlParameter("@OrderDate", DateTime.Now)
+            };
+            return ExecuteInsertQuery(query, sqlParameters);
+        }
+        // Add an item to an existing order
+        public void AddOrderItem(OrderItem orderItem)
+        {
+            string query = "INSERT INTO [OrderItem] (OrderID, ItemID, OrderCount, OrderStatus, OrderDescription, OrderTime) VALUES (@OrderID, @ItemID, @OrderCount, @OrderStatus, @OrderDescription, @OrderTime)";
+            SqlParameter[] sqlParameters = new SqlParameter[]
+            {
+                new SqlParameter("@OrderID", orderItem.OrderID),
+                new SqlParameter("@ItemID", orderItem.MenuItem.ItemID),
+                new SqlParameter("@OrderCount", orderItem.OrderCount),
+                new SqlParameter("@OrderStatus", (int)orderItem.StatusItem),
+                new SqlParameter("@OrderDescription", orderItem.Notes),
+                new SqlParameter("@OrderTime", DateTime.Now)
+            };
+            ExecuteEditQuery(query, sqlParameters);
+        }
+        // Get orders by table ID
+        public List<Order> GetOrdersByTable(int tableId)
+        {
+            string query = "SELECT OrderID, TableID, EmployeeID FROM [Order] WHERE TableID = @TableID";
+            SqlParameter[] sqlParameters = new SqlParameter[]
+            {
+                new SqlParameter("@TableID", tableId)
+            };
+            return ReadOrderTables(ExecuteSelectQuery(query, sqlParameters));
+        }
+        private List<Order> ReadOrderTables(DataTable dataTable)
+        {
+            List<Order> orders = new List<Order>();
+            foreach (DataRow row in dataTable.Rows)
+            {
+                Order order = new Order()
+                {
+                    OrderID = (int)row["OrderID"],
+                    TableID = (int)row["TableID"],
+                    EmployeeID = (int)row["EmployeeID"]
+                };
+                orders.Add(order);
+            }
+            return orders;
+        }
+        //-OrderItem----Ro Bben-------------------------------------------------------------------------------------------------------------------------------------------------
         public void ChangeStatus(OrderItem item, ItemStatus changeStatus) //It update the OrderStatus 
         {
             string query = "UPDATE [Orderitem]" +

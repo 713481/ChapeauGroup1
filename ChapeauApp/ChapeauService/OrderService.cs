@@ -10,13 +10,26 @@ namespace ChapeauService
 {
     public class OrderService
     {
+        // Alex
         private OrderDao orderDao;
         public OrderService() 
         { 
             orderDao = new OrderDao(); 
         }
-        // Below are the added methods
+        public int CreateOrder(Order order)
+        {
+            return orderDao.CreateOrder(order);
+        }
 
+        public void AddOrderItem(OrderItem orderItem)
+        {
+            orderDao.AddOrderItem(orderItem);
+        }
+        public List<Order> GetOrdersByTable(int tableId)
+        {
+            return orderDao.GetOrdersByTable(tableId);
+        }
+        // Ro Bben
         public void ChangeStatus(OrderItem orderItem, ItemStatus statusToChange)
         {
             orderDao.ChangeStatus(orderItem, statusToChange);
