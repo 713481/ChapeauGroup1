@@ -11,6 +11,6 @@ namespace ChapeauModel
         public int OrderID { get; set; }
         public int TableID { get; set; }
         public int EmployeeID { get; set; }
-        public List<Order> OrderList { get; set; }
+        public List<OrderItem> OrderList { get; set; }
     }
 }

@@ -116,5 +116,29 @@ namespace ChapeauDAL
 
             return dataTable;
         }
+        /* For Insert Queries that return the new ID */
+        protected int ExecuteInsertQuery(string query, SqlParameter[] sqlParameters)
+        {
+            SqlCommand command = new SqlCommand();
+
+            try
+            {
+                command.Connection = OpenConnection();
+                command.CommandText = query;
+                command.Parameters.AddRange(sqlParameters);
+                // This will execute the query and return the value of the first column of the first row in the result set.
+                int newId = (int)command.ExecuteScalar();
+                return newId;
+            }
+            catch (SqlException e)
+            {
+                // Print.ErrorLog(e);
+                throw;
+            }
+            finally
+            {
+                CloseConnection();
+            }
+        }
     }
 }
