@@ -19,7 +19,11 @@ namespace ChapeauService
         {
             return tableDao.GetTables();
         }
-     //   public Table UpdateTableStatus()
+        public void UpdateTableStatus(int tableNumber, int tableStatus)
+        {
+            tableDao.UpdatesTableStatus(tableNumber, tableStatus);
+        }
+     
      
     }
 }

@@ -116,5 +116,31 @@ namespace ChapeauDAL
 
             return dataTable;
         }
+
+        protected object ExecuteScalar(string sqlQuery, Action<SqlCommand> parameterSetter = null)
+        {
+            object result = null;
+            SqlCommand command = new SqlCommand(sqlQuery, conn);
+            try
+            {
+                command.Connection = OpenConnection();
+                parameterSetter?.Invoke(command);
+                var scalarResult = command.ExecuteScalar();
+                if (scalarResult != DBNull.Value)
+                {
+                    result = scalarResult;
+                }
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+            finally
+            {
+                CloseConnection();
+            }
+            return result;
+        }
+
     }
 }
