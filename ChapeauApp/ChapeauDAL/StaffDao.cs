@@ -6,6 +6,7 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Security.Cryptography;
 
 namespace ChapeauDAL
 {
@@ -13,34 +14,46 @@ namespace ChapeauDAL
     {
         public List<Employee> GetUserNameAndPassword(string userName, string hashPassword)
         {
-            string query = "SELECT UserName, Password, Role, EmployeeID FROM EMPLOYEE" +
-                            "WHERE userName = @UserName AND hashPassword = @hashPassword" ;
+            string query = "SELECT UserName, Password, Role, EmployeeID FROM EMPLOYEE " +
+                           "WHERE UserName = @UserName AND Password = @HashPassword";
 
             SqlParameter[] parameters = {
-                new SqlParameter("@StartDate", userName),
-                new SqlParameter("@EndDate", hashPassword)
+                new SqlParameter("@UserName", userName),
+                new SqlParameter("@HashPassword", hashPassword)
             };
             DataTable dataTable = ExecuteSelectQuery(query, parameters);
             return ReadTables(dataTable);
 
         }
+
+        public bool CheckUserName(string username)
+        {
+            string query = "SELECT COUNT(*) FROM EMPLOYEE WHERE UserName = @UserName";
+            int result = Convert.ToInt32(ExecuteScalar(query, command =>
+            {
+                command.Parameters.AddWithValue("@UserName", username);
+            }));
+
+            return result > 0;
+        }
         private List<Employee> ReadTables(DataTable dataTable)
         {
-            List<Employee> tables = new List<Employee>();
+            List<Employee> employees = new List<Employee>();
             foreach (DataRow row in dataTable.Rows)
             {
-                Employee table = new Employee()
+                Employee employee = new Employee()
                 {
                     EmployeeID = (int)row["EmployeeID"],
                     UserName = row["UserName"].ToString(),
-                    Password = (int)row["Password"],
-                    Role = (int)row["Role"]
+                    Password = row["Password"].ToString(),
+                    Role = (StaffRole)row["Role"]
                 };
-                tables.Add(table);
+                employees.Add(employee);
             }
-            return tables;
+            return employees;
         }
-       
-        
+
+
+
     }
 }
