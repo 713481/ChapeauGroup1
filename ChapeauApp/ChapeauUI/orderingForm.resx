@@ -118,10 +118,10 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="pnlLogo.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <data name="pnlOrderingLogo.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAAQ4AAADwCAYAAADxXop4AAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        vwAADr8BOAVTJAAAL0FJREFUeF7t3QeULUURBmBzzllURAWRbEJQRBQEDOQnggpmRBBBQUEMBB88QZIk
+        vAAADrwBlbxySQAAL0FJREFUeF7t3QeULUURBmBzzllURAWRbEJQRBQEDOQnggpmRBBBQUEMBB88QZIk
         0YeIoGACFFFACQKiooiIAgqKYs4JcxzPN2yt/Ya59+3s3rt7d7f+c+rMDdM9PT1df1dXV/fcqkokEomO
         SOJIJBKdkcSRSCQ6I4kjkUh0RhJHIpHojCSORCLRGUkciUSiM5I4EolEZyRxJBKJzkjiSCQSnZHEkUgk
         OiOJI5FIdEYSRyKR6IwkjkQi0RlJHIlEojOSOBKJRGckcSQSic5I4kgkEp2RxJFIJDojiSORSHRGEkci
@@ -329,7 +329,7 @@
   <data name="btnOrderingReturn.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAAKMAAACOCAYAAABdXrhoAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        wAAADsABataJCQAAA61JREFUeF7t3eFpKlEUReGHpdiBJdiJ6UQ7SUcpIXZgCT72wwHxnZgzOjN3nzvr
+        vAAADrwBlbxySQAAA61JREFUeF7t3eFpKlEUReGHpdiBJdiJ6UQ7SUcpIXZgCT72wwHxnZgzOjN3nzvr
         gw0hP0QOCwkxwT9XwAQxwgYxwgYxwgYxwgYxwgYxwgYxwgYxwgYxwgYxwgYxwgYxwgYxwgYxwgYxwgYx
         wgYxwgYxwgYxwgYxwgYxwgYxwgYxwgYxwgYxwgYxwgYxwgYxwgYxwgYxwgYxwgYxwgYxwgYxwgYxwgYx
         wgYxwgYxwgYxwgYxwkY3MV4ul9tXqKqLGE+n03W73V7P5/PtO6iofIwKcbPZ/BtBvm6/37+84/F4e5T3
