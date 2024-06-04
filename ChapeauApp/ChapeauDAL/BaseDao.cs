@@ -116,5 +116,14 @@ namespace ChapeauDAL
 
             return dataTable;
         }
+
+        protected int ExecuteScalarQuery(string query, SqlParameter[] sqlParameters)
+        {
+            SqlCommand command = new SqlCommand(query, OpenConnection());
+            command.Parameters.AddRange(sqlParameters);
+            object result = command.ExecuteScalar();
+            CloseConnection();
+            return Convert.ToInt32(result);
+        }
     }
 }
