@@ -74,20 +74,26 @@ namespace ChapeauDAL
         //-OrderItem----Ro Bben-------------------------------------------------------------------------------------------------------------------------------------------------
         public void ChangeStatus(OrderItem item, ItemStatus changeStatus) //It update the OrderStatus 
         {
-            string query = "UPDATE [Orderitem]" +
-                           "SET [OrderStatus] = @Status" +
-                           "WHERE OrderID = @OrderID AND ItemID = @ItemID AND OrderDescription ";
+            string query = "UPDATE [Orderitem] " +
+                   "SET [ItemStatus] = @Status";
+
             List<SqlParameter> sqlParameters = new List<SqlParameter>
             {
-                new SqlParameter("@Status", (int)changeStatus),
-                new SqlParameter("@OrderID", item.OrderID),
-                new SqlParameter("@ItemID", item.MenuItem.ItemID)
+            new SqlParameter("@Status", (int)changeStatus),
+            new SqlParameter("@ItemID", item.MenuItem.ItemID)
             };
-            if (item.Notes != "")
+
+            // Check if the notes are not empty, then include the description in the query and parameters
+            if (!string.IsNullOrEmpty(item.Notes))
             {
-                query = query + "@Description";
+                query += ", [OrderDescription] = @Description";
                 sqlParameters.Add(new SqlParameter("@Description", item.Notes));
             }
+
+            // Add the WHERE clause to specify the item to update
+            query += " WHERE ItemID = @ItemID";
+
+            // Execute the query with the constructed SQL string and parameters
             ExecuteEditQuery(query, sqlParameters.ToArray());
         }
 
@@ -99,8 +105,9 @@ namespace ChapeauDAL
                 OrderItem orderItem = new OrderItem()
                 {
                     MenuItem = itemDao.GetItemById((int)dr["ItemID"]),
+                    //ItemID = (int)dr["ItemID"],
                     OrderID = (int)dr["OrderID"],
-                    StatusItem = (ItemStatus)dr["OrderStatus"],
+                    StatusItem = (ItemStatus)dr["ItemStatus"],
                     OrderCount = (int)dr["OrderCount"],
                     Notes = dr["OrderDescription"].ToString(),
                     OrderTime = (DateTime)dr["OrderTime"],
@@ -110,18 +117,36 @@ namespace ChapeauDAL
             return list;
         }
 
-        public List<OrderItem> GetOrderItems(bool isABar, bool isAOpenOrders, int id) 
+        public List<OrderItem> GetOrderItems(bool isABar, bool isAOpenOrders, int orderId) 
         {
-            string query = "SELECT OrderID, " +
-                           "FROM [Orderitem] AS OI" +
-                           "JOIN [MENUITEM] AS M ON M.ItemID = OI.ItemID" +
-                           "WHERE orderID = @OrderID AND OrderStatus";
-            query += (isABar) ? "AND MealsType = 3" : "AND MealsType !=3";
-            query += (isAOpenOrders) ? "<= 2" : ">2 ";
+            string query = "SELECT OI.OrderID, OI.ItemID, OI.OrderCount, OI.ItemStatus, OI.OrderDescription, OI.OrderTime " +
+                  "FROM [Orderitem] AS OI " +
+                  "JOIN [MENUITEM] AS M ON M.ItemID = OI.ItemID " +
+                  "WHERE OI.OrderID = @OrderID ";
+            if (isABar)
+            {
+                query += "AND M.MealsType = 3 ";
+            }
+            else
+            {
+                query += "AND M.MealsType != 3 ";
+            }
+
+            if (!isAOpenOrders)
+            {
+                query += "AND OI.ItemStatus > 2";
+            }
+            else
+            {
+                query += "AND OI.ItemStatus <= 2";
+            }
+            query += "ORDER BY M.CategoryType, OI.OrderTime";
+
             SqlParameter[] sqlParameters = new SqlParameter[]
             {
-                new SqlParameter("@id", id)
+                new SqlParameter("@OrderID", orderId)
             };
+
             return ReadOrderItemTables(ExecuteSelectQuery(query, sqlParameters));
 
         }
@@ -138,5 +163,114 @@ namespace ChapeauDAL
             };
             ExecuteEditQuery(query, sqlParameters.ToArray());
         }
+
+    
+
+        public List<Order> GetOrders(bool isBar, bool isOpenOrders)
+        {
+            string query = "SELECT O.OrderID, O.TableID, O.OrderTime " +  //MAX(O.OrderStatus) AS OrderStatus
+                "FROM [ORDER] AS O " +
+                "JOIN [OrderItem] AS OI ON O.OrderID = OI.OrderID " +
+                "JOIN [MENUITEM] AS MI ON OI.ItemID = MI.ItemID ";  // Join with MENUITEM table
+
+            // Append conditions based on isBar
+            if (isBar)
+            {
+                // For bar orders, consider only orders with MealType 3 (drinks)
+                query += "WHERE MI.MealsType = 3";
+            }
+            else
+            {
+                // For kitchen orders, consider only orders with MealType 1 or 2 (food)
+                query += "WHERE MI.MealsType IN (1, 2)";
+            }
+            if (isOpenOrders)
+            {
+                query += " AND OI.ItemStatus <= 2"; ////////////////////////////////Change it to OI.OrderStatus
+            }
+            else
+            {
+                query += " AND CAST(GETDATE() AS date) = CAST(O.OrderTime AS date) " +            //get orders from the same day
+                         "AND O.OrderID NOT IN (SELECT DISTINCT OrderID " +                    //closed orders will be grouped together
+                                                "FROM [Orderitem] AS OI " +
+                                                "JOIN [MENUITEM] AS I ON OI.ItemID = I.ItemID " +
+                                                "WHERE ItemStatus <= 2 " +
+                                                "AND MealsType ";
+                if (!isBar)
+                {
+                    query += "!= 3";
+                }
+                else
+                {
+                    query += "= 3";
+                }
+            }
+
+            // Group by all non-aggregated columns
+            query += " GROUP BY O.OrderID, O.TableID, O.OrderTime";
+
+            // Order the results by OrderTime
+            query += " ORDER BY O.OrderTime";
+            return ReadOrderTables(ExecuteSelectQuery(query), isBar, isOpenOrders);
+            // Execute the query and retrieve the data
+            //List<Order> orders = ReadOrders(ExecuteSelectQuery(query));
+
+            //// loop orders and get order items
+            // foreach (Order order in orders)
+            //{
+            //    List<OrderItem> orderItems = GetOrderItems(isBar, isOpenOrders, order.OrderID);
+            //}
+            ///// 
+
+            //return orders;
+        }
+
+        //private List<Order> ReadOrders(DataTable dataTable)
+        //{
+        //    List<Order> orders = new List<Order>();
+        //    foreach (DataRow dr in dataTable.Rows)
+        //    {
+        //        Order order = new Order()
+        //        {
+        //            OrderID = (int)dr["OrderID"],
+        //            TableID = (int)dr["TableID"],
+        //            //OrderStatus = (OrderStatus)dr["OrderStatus"],
+        //            OrderTime = (DateTime)dr["OrderTime"]
+        //        };
+
+        //        orders.Add(order);
+        //    }
+        //    return orders;
+        //}
+
+        private List<Order> ReadOrderTables(DataTable dataTable, bool isBar, bool isOpenOrders)
+    {
+       List<Order> listOforder = new List<Order>();
+       List<int> listOrderId = new List<int>();
+
+         int tableOrderID;
+
+            foreach (DataRow dr in dataTable.Rows)
+             {
+                tableOrderID = (int)dr["orderID"];
+
+                if (listOrderId.Contains(tableOrderID))
+                    continue;
+
+                Order order = new Order()
+                {
+                    OrderID = tableOrderID,
+                    //Table = tableDao.GetTableById((int)dr["tableID"]),
+                    TableID = (int)dr["tableID"],
+                    OrderTime = (DateTime)dr["OrderTime"],
+                };
+               listOrderId.Add(tableOrderID);
+                order.OrderList = GetOrderItems(isBar, isOpenOrders, order.OrderID);
+                listOforder.Add(order);
+            }
+            return listOforder;
+        }
+
+
     }
 }

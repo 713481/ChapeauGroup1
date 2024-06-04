@@ -17,6 +17,7 @@ namespace ChapeauModel
         public string Notes { get; set; }
 
         public int tableID {  get; set; }
+        public int ItemID { get; set; }
         public TimeSpan WaitingTime
         {
             get

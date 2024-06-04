@@ -40,9 +40,14 @@ namespace ChapeauService
            orderDao.OrderStatusUpdate(orderId, orderStatus);
         }
 
-        public void GetOrderItem(bool isABar, bool isAOpenOrders, int id)
+        public List<OrderItem> GetOrderItem(bool isABar, bool isAOpenOrders, int id)
         {
-            orderDao.GetOrderItems(isABar, isAOpenOrders, id);
+            return orderDao.GetOrderItems(isABar, isAOpenOrders, id);
+        }
+
+        public List<Order> GetOrders(bool isBar, bool isOpenOrders)
+        {
+            return orderDao.GetOrders(isBar, isOpenOrders);
         }
     }
 }
