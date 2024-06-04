@@ -12,5 +12,16 @@ namespace ChapeauModel
         public int TableID { get; set; }
         public int EmployeeID { get; set; }
         public List<OrderItem> OrderList { get; set; }
+        public Table Table { get; set; }
+        //public OrderStatus OrderStatus { get; set; }
+        public TimeSpan CustomerWaitingTime
+        {
+            get
+            {
+                return DateTime.Now - OrderTime;
+            }
+        }
+        public DateTime OrderTime { get; set; }
+      
     }
 }

@@ -47,16 +47,21 @@ namespace ChapeauDAL
             ExecuteEditQuery(query, sqlParameters.ToArray());
         }
 
-
-
-
-
-
-
-
-
-
-
+        public Table GetTableById(int tableID)
+        {
+            string query = "SELECT TableID, TableNumber, TableStatus FROM [Table] WHERE TableID = @tableID";
+            SqlParameter[] sqlParameters = new SqlParameter[1];
+            sqlParameters[0] = new SqlParameter("@TableID", tableID);
+            List<Table> tables = ReadTables(ExecuteSelectQuery(query, sqlParameters));
+            if (tables.Count > 0)
+            {
+                return tables[0];
+            }
+            else
+            {
+                return null;
+            }
+        }
 
     }
 }

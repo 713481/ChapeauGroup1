@@ -13,7 +13,7 @@ namespace ChapeauDAL
     {
         public List<MenuItem> GetItem()
         {
-            string query = "Select ItemID, Stock, MenuType, ItemName, Price, VAT, CategoryType FROM MENUITEM WHERE ItemID = @id";
+            string query = "Select ItemID, Stock, MealsType, ItemName, Price, VAT, CategoryType FROM MENUITEM WHERE ItemID = @id";
             SqlParameter[] sqlParameters = new SqlParameter[1];
             return ReadTables(ExecuteSelectQuery(query, sqlParameters));
         }
@@ -24,12 +24,12 @@ namespace ChapeauDAL
             {
                 MenuItem item = new MenuItem()
                 {
-                    ItemID = (MenuItem)row["id"],
+                    ItemID = (int)row["id"],
                     ItemName = row["ItemName"].ToString(),
                     Stock = (int)row["Stock"],
                     MenuType = (MenuType)row["MenuType"],
-                    Price = (double)row["Price"],
-                    VAT = (int)row["VAT"]
+                    Price = (decimal)row["Price"],
+                    VAT = (decimal)row["VAT"]
                 };
                 items.Add(item);
             }
@@ -38,7 +38,7 @@ namespace ChapeauDAL
 
         public MenuItem GetItemById(int id)
         {
-            string query = "Select ItemID, Stock, MenuType, ItemName, Price, VAT, CategoryType FROM MENUITEM WHERE ItemID = @id";
+            string query = "Select ItemID, Stock, MealsType, ItemName, Price, VAT, CategoryType FROM MENUITEM WHERE ItemID = @id";
             SqlParameter[] sqlParameters = new SqlParameter[1];
             sqlParameters[0] = new SqlParameter("@id", id);
             List<MenuItem> items = ReadTablesId(ExecuteSelectQuery(query, sqlParameters));
@@ -58,12 +58,12 @@ namespace ChapeauDAL
             {
                 MenuItem item = new MenuItem()
                 {
-                    ItemID = (MenuItem)row["id"],
+                    ItemID = (int)row["ItemID"],
                     ItemName = row["ItemName"].ToString(),
                     Stock = (int)row["Stock"],
-                    MenuType = (MenuType)row["MenuType"],
-                    Price = (double)row["Price"],
-                    VAT = (int)row["VAT"],
+                    MenuType = (MenuType)row["MealsType"],
+                    Price = (decimal)row["Price"],
+                    VAT = (decimal)row["VAT"],
                     Category = (ItemCategory)row["CategoryType"]
                 };
                 items.Add(item);
