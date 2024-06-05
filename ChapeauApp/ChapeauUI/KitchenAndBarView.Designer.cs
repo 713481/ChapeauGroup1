@@ -49,6 +49,7 @@
             butLogOutKitchen = new Button();
             butChangeStatus = new Button();
             HistoryButton = new Button();
+            ReturnButton = new Button();
             ((System.ComponentModel.ISupportInitialize)pictureBoxChaupauKitchenBar).BeginInit();
             SuspendLayout();
             // 
@@ -56,7 +57,7 @@
             // 
             lblKitchenOrders.AutoSize = true;
             lblKitchenOrders.Font = new Font("Segoe UI", 25.2F, FontStyle.Bold, GraphicsUnit.Point);
-            lblKitchenOrders.Location = new Point(60, 165);
+            lblKitchenOrders.Location = new Point(23, 206);
             lblKitchenOrders.Name = "lblKitchenOrders";
             lblKitchenOrders.Size = new Size(169, 57);
             lblKitchenOrders.TabIndex = 0;
@@ -66,7 +67,7 @@
             // 
             lblKitchenItems.AutoSize = true;
             lblKitchenItems.Font = new Font("Segoe UI", 25.2F, FontStyle.Bold, GraphicsUnit.Point);
-            lblKitchenItems.Location = new Point(22, 553);
+            lblKitchenItems.Location = new Point(13, 594);
             lblKitchenItems.Name = "lblKitchenItems";
             lblKitchenItems.Size = new Size(289, 57);
             lblKitchenItems.TabIndex = 1;
@@ -77,7 +78,7 @@
             ListViewOrdersKitchen.BackColor = SystemColors.MenuBar;
             ListViewOrdersKitchen.Columns.AddRange(new ColumnHeader[] { KITCHENORDERID, KITCHENTABLEID, KITCHENORDERSTIME, KITCHENWAITINGTIME });
             ListViewOrdersKitchen.FullRowSelect = true;
-            ListViewOrdersKitchen.Location = new Point(351, 165);
+            ListViewOrdersKitchen.Location = new Point(308, 206);
             ListViewOrdersKitchen.Name = "ListViewOrdersKitchen";
             ListViewOrdersKitchen.Size = new Size(527, 293);
             ListViewOrdersKitchen.TabIndex = 2;
@@ -110,7 +111,7 @@
             listViewKitchenOrderItem.BackColor = SystemColors.MenuBar;
             listViewKitchenOrderItem.Columns.AddRange(new ColumnHeader[] { BARORDERID, BARITEMID, BARORDERCOUNT, BARITEMSTATUS, BARORDERTIME, ORDERDESCRIPTION });
             listViewKitchenOrderItem.FullRowSelect = true;
-            listViewKitchenOrderItem.Location = new Point(351, 553);
+            listViewKitchenOrderItem.Location = new Point(308, 594);
             listViewKitchenOrderItem.Name = "listViewKitchenOrderItem";
             listViewKitchenOrderItem.Size = new Size(851, 277);
             listViewKitchenOrderItem.TabIndex = 3;
@@ -153,7 +154,7 @@
             // 
             lblViewKitchenBar.AutoSize = true;
             lblViewKitchenBar.Font = new Font("Segoe UI", 30F, FontStyle.Bold, GraphicsUnit.Point);
-            lblViewKitchenBar.Location = new Point(553, 65);
+            lblViewKitchenBar.Location = new Point(488, 110);
             lblViewKitchenBar.Name = "lblViewKitchenBar";
             lblViewKitchenBar.Size = new Size(143, 67);
             lblViewKitchenBar.TabIndex = 4;
@@ -162,7 +163,7 @@
             // butSetToReady
             // 
             butSetToReady.BackColor = Color.LawnGreen;
-            butSetToReady.Location = new Point(60, 639);
+            butSetToReady.Location = new Point(71, 680);
             butSetToReady.Name = "butSetToReady";
             butSetToReady.Size = new Size(218, 75);
             butSetToReady.TabIndex = 5;
@@ -194,7 +195,7 @@
             // butChangeStatus
             // 
             butChangeStatus.BackColor = Color.Bisque;
-            butChangeStatus.Location = new Point(60, 738);
+            butChangeStatus.Location = new Point(71, 779);
             butChangeStatus.Name = "butChangeStatus";
             butChangeStatus.Size = new Size(218, 81);
             butChangeStatus.TabIndex = 8;
@@ -206,7 +207,7 @@
             // 
             HistoryButton.BackColor = Color.Cornsilk;
             HistoryButton.Font = new Font("Segoe UI", 19.8000011F, FontStyle.Bold, GraphicsUnit.Point);
-            HistoryButton.Location = new Point(838, 12);
+            HistoryButton.Location = new Point(858, 12);
             HistoryButton.Name = "HistoryButton";
             HistoryButton.Size = new Size(183, 67);
             HistoryButton.TabIndex = 9;
@@ -214,12 +215,25 @@
             HistoryButton.UseVisualStyleBackColor = false;
             HistoryButton.Click += HistoryButton_Click;
             // 
+            // ReturnButton
+            // 
+            ReturnButton.BackColor = SystemColors.ScrollBar;
+            ReturnButton.Font = new Font("Segoe UI", 20F, FontStyle.Regular, GraphicsUnit.Point);
+            ReturnButton.Location = new Point(670, 12);
+            ReturnButton.Name = "ReturnButton";
+            ReturnButton.Size = new Size(165, 67);
+            ReturnButton.TabIndex = 10;
+            ReturnButton.Text = "Return";
+            ReturnButton.UseVisualStyleBackColor = false;
+            ReturnButton.Click += ReturnButton_Click;
+            // 
             // KitchenAndBarView
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.ActiveCaption;
-            ClientSize = new Size(1229, 867);
+            ClientSize = new Size(1229, 893);
+            Controls.Add(ReturnButton);
             Controls.Add(HistoryButton);
             Controls.Add(butChangeStatus);
             Controls.Add(butLogOutKitchen);
@@ -259,5 +273,6 @@
         private Button butLogOutKitchen;
         private Button butChangeStatus;
         private Button HistoryButton;
+        private Button ReturnButton;
     }
 }
