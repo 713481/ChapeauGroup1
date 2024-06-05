@@ -151,14 +151,14 @@ namespace ChapeauDAL
 
         }
 
-        public void OrderStatusUpdate(int orderID, ItemStatus status)
+        public void OrderStatusUpdate(int orderID, OrderStatus status)
         {
             string query = "UPDATE [Orderitem]" +
                            "SET OrderStatus = @orderStatus" +
                            "WHERE OrderID = @orderID";
             List<SqlParameter> sqlParameters = new List<SqlParameter>();
             {
-                new SqlParameter("@orderStatus", (int)status);
+                new SqlParameter("@orderStatus", status);
                 new SqlParameter("@order", orderID);
             };
             ExecuteEditQuery(query, sqlParameters.ToArray());
@@ -212,41 +212,15 @@ namespace ChapeauDAL
             // Order the results by OrderTime
             query += " ORDER BY O.OrderTime";
             return ReadOrderTables(ExecuteSelectQuery(query), isBar, isOpenOrders);
-            // Execute the query and retrieve the data
-            //List<Order> orders = ReadOrders(ExecuteSelectQuery(query));
-
-            //// loop orders and get order items
-            // foreach (Order order in orders)
-            //{
-            //    List<OrderItem> orderItems = GetOrderItems(isBar, isOpenOrders, order.OrderID);
-            //}
-            ///// 
-
-            //return orders;
+           
         }
 
-        //private List<Order> ReadOrders(DataTable dataTable)
-        //{
-        //    List<Order> orders = new List<Order>();
-        //    foreach (DataRow dr in dataTable.Rows)
-        //    {
-        //        Order order = new Order()
-        //        {
-        //            OrderID = (int)dr["OrderID"],
-        //            TableID = (int)dr["TableID"],
-        //            //OrderStatus = (OrderStatus)dr["OrderStatus"],
-        //            OrderTime = (DateTime)dr["OrderTime"]
-        //        };
-
-        //        orders.Add(order);
-        //    }
-        //    return orders;
-        //}
+ 
 
         private List<Order> ReadOrderTables(DataTable dataTable, bool isBar, bool isOpenOrders)
-    {
-       List<Order> listOforder = new List<Order>();
-       List<int> listOrderId = new List<int>();
+       {
+          List<Order> listOforder = new List<Order>();
+          List<int> listOrderId = new List<int>();
 
          int tableOrderID;
 
@@ -271,6 +245,48 @@ namespace ChapeauDAL
             return listOforder;
         }
 
+        public List<Order> GetHistoryOrders(OrderStatus status, bool isBar, bool isOpenOrders)
+        {
+            // Define the SQL query to retrieve orders within the specified date range
+            string query = @"SELECT OrderID, TableID, OrderTime
+                     FROM [ORDER]
+                     WHERE OrderStatus = @orderStatus";
+
+            // Create parameters for the start and end date
+            SqlParameter[] parameters = {
+             new SqlParameter("@orderStatus", status),
+            };
+
+            // Execute the query and retrieve the results
+            DataTable resultTable = ExecuteSelectQuery(query, parameters);
+            List<Order> historyOrders = new List<Order>();
+            List<int> listOrderId = new List<int>();
+            int tableOrderID;
+
+
+            // Process the result table
+            foreach (DataRow row in resultTable.Rows)
+            {
+                tableOrderID = (int)row["orderID"];
+
+                if (listOrderId.Contains(tableOrderID))
+                    continue;
+                // Create an Order object and populate its properties
+                Order order = new Order
+                {
+                    OrderID = (int)row["OrderID"],
+                    TableID = (int)row["TableID"],
+                    OrderTime = (DateTime)row["OrderTime"]
+                };
+
+                // Add the Order object to the list
+                listOrderId.Add(tableOrderID);
+                order.OrderList = GetOrderItems(isBar, isOpenOrders, order.OrderID);
+                historyOrders.Add(order);
+            }
+
+            return historyOrders;
+        }
 
     }
 }

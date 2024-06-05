@@ -35,7 +35,7 @@ namespace ChapeauService
             orderDao.ChangeStatus(orderItem, statusToChange);
         }
 
-        public void OrderStatusUpdate(int orderId, ItemStatus orderStatus) 
+        public void OrderStatusUpdate(int orderId, OrderStatus orderStatus) 
         {
            orderDao.OrderStatusUpdate(orderId, orderStatus);
         }
@@ -48,6 +48,11 @@ namespace ChapeauService
         public List<Order> GetOrders(bool isBar, bool isOpenOrders)
         {
             return orderDao.GetOrders(isBar, isOpenOrders);
+        }
+
+        public List<Order> GetHistoryOrders(OrderStatus status, bool isBar, bool isOpenOrders)
+        {
+            return orderDao.GetHistoryOrders(status, isBar, isOpenOrders);
         }
     }
 }

@@ -22,6 +22,6 @@ namespace ChapeauModel
             }
         }
         public DateTime OrderTime { get; set; }
-      
+       public OrderStatus orderStatus { get; set; }
     }
 }

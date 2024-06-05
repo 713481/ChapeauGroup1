@@ -22,11 +22,11 @@ namespace ChapeauUI
             InitializeComponent();
             if (employee.Role == StaffRole.Chef)
             {
-                isBar = true;
+                isBar = false;
             }
             else
             {
-                isBar = false;
+                isBar = true;
             }
 
             if (isBar)
@@ -106,9 +106,9 @@ namespace ChapeauUI
                 {
                     Order selectedOrder = (Order)ListViewOrdersKitchen.SelectedItems[0].Tag;
                     if (selectedOrder != null)
-                    {
-                        // Only call DisplayOrderItems once with the selectedOrder
-                        DisplayOrderItems(selectedOrder);
+                    { 
+                            DisplayOrderItems(selectedOrder);
+                      
                     }
                     else
                     {
@@ -156,6 +156,7 @@ namespace ChapeauUI
                     if (allItemsReady)
                     {
                         Order order = (Order)ListViewOrdersKitchen.SelectedItems[0].Tag;
+                        orderService.OrderStatusUpdate(order.OrderID, OrderStatus.Served);
                         ListViewOrdersKitchen.Items.Remove(ListViewOrdersKitchen.SelectedItems[0]);
                         MessageBox.Show($"Order {order.OrderID} is served");
 
@@ -166,6 +167,92 @@ namespace ChapeauUI
                     MessageBox.Show("Error: " + ex.Message);
                 }
             }
+
+
+        }
+
+        private void butChangeStatus_Click(object sender, EventArgs e)
+        {
+            ChangStatusOfItem(ItemStatus.Preparing);
+        }
+
+        void ChangStatusOfItem(ItemStatus changeStatus)
+        {
+            try
+            {
+                foreach (ListViewItem li in listViewKitchenOrderItem.SelectedItems)
+                {
+                    OrderItem currentItem = (OrderItem)li.Tag;
+
+                    if (changeStatus <= currentItem.StatusItem)
+                    {
+                        MessageBox.Show("You should choose an item with a higher or the same status.");
+                        return; // Exit the method to prevent further processing
+                    }
+
+                    // Check if the difference between changeStatus and currentItem's status is greater than 1
+                    if (changeStatus - currentItem.StatusItem > 1)
+                    {
+                        DialogResult result = MessageBox.Show("Are you sure you want to break the sequence of statuses?", "Sequence of Statuses", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                        if (result == DialogResult.No)
+                        {
+                            return; // Exit the method if the user chooses not to break the sequence
+                        }
+                        break; // Break out of the loop if the user confirms breaking the sequence
+                    }
+                    orderService.ChangeStatus((OrderItem)li.Tag, changeStatus);
+                    li.SubItems[3].Text = changeStatus.ToString();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"There are some errors: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void butLogOutKitchen_Click(object sender, EventArgs e)
+        {
+            if (MessageBox.Show("Are you sure you want to log out?", "Log Out", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+            {
+                Close();
+            }
+        }
+
+        void HistoryOrdersDisplaying()
+        {
+            try
+            {
+                List<Order> orders = orderService.GetHistoryOrders(OrderStatus.Served, isBar, isOpenOrder);
+                ListViewOrdersKitchen.Items.Clear();
+                listViewKitchenOrderItem.Items.Clear();
+                foreach (Order order in orders)
+                {
+                    ListViewItem li = new ListViewItem(order.OrderID.ToString());
+                    li.SubItems.Add(order.TableID.ToString());
+                    li.SubItems.Add(order.OrderTime.ToString("H:mm"));
+                    if (isOpenOrder)
+                    {
+                        li.SubItems.Add($"{order.CustomerWaitingTime.TotalHours:0}:{order.CustomerWaitingTime.Minutes:00}");
+                    }
+                    //li.SubItems.Add(order.OrderStatus.ToString());
+                    li.Tag = order;
+                    ListViewOrdersKitchen.Items.Add(li);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Something went wrong: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void HistoryButton_Click(object sender, EventArgs e)
+        {
+            HistoryButton.Text = isOpenOrder ? "Show Orders" : "Show History";
+            lblViewKitchenBar.Text = isOpenOrder ? "History" : "Open Orders";
+            butSetToReady.Enabled = isOpenOrder;
+            butChangeStatus.Enabled = isOpenOrder;
+            isOpenOrder = !isOpenOrder;
+            HistoryOrdersDisplaying();
         }
     }
 }
