@@ -106,9 +106,9 @@ namespace ChapeauUI
                 {
                     Order selectedOrder = (Order)ListViewOrdersKitchen.SelectedItems[0].Tag;
                     if (selectedOrder != null)
-                    { 
-                            DisplayOrderItems(selectedOrder);
-                      
+                    {
+                        DisplayOrderItems(selectedOrder);
+
                     }
                     else
                     {
@@ -253,6 +253,19 @@ namespace ChapeauUI
             butChangeStatus.Enabled = isOpenOrder;
             isOpenOrder = !isOpenOrder;
             HistoryOrdersDisplaying();
+        }
+
+        private void ReturnButton_Click(object sender, EventArgs e)
+        {
+            if (isBar)
+            {
+                lblViewKitchenBar.Text = "Bar View";
+            }
+            else
+            {
+                lblViewKitchenBar.Text = "Kitchen View";
+            }
+            OrdersDisplaying();
         }
     }
 }
