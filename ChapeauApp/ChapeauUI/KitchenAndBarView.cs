@@ -52,11 +52,7 @@ namespace ChapeauUI
                 foreach (Order order in orders)
                 {
                     // Calculate the waiting time in hours
-                    double totalWaitingHours = order.CustomerWaitingTime.TotalHours;
-
-                    // Check if waiting time exceeds 7 hours
-                    if (totalWaitingHours <= 7)
-                    {
+            
                         ListViewItem li = new ListViewItem(order.OrderID.ToString());
                         li.SubItems.Add(order.TableID.ToString());
                         li.SubItems.Add(order.OrderTime.ToString("H:mm"));
@@ -64,13 +60,13 @@ namespace ChapeauUI
                         // Add waiting time only if isOpenOrder is true
                         if (isOpenOrder)
                         {
-                            li.SubItems.Add($"{totalWaitingHours:0}:{order.CustomerWaitingTime.Minutes:00}");
+                            li.SubItems.Add($"{order.CustomerWaitingTime.Hours:0}:{order.CustomerWaitingTime.Minutes:00}");
                         }
 
                         //li.SubItems.Add(order.OrderStatus.ToString());
                         li.Tag = order;
                         ListViewOrdersKitchen.Items.Add(li);
-                    }
+                    
                 }
             }
             catch (Exception ex)
@@ -255,9 +251,7 @@ namespace ChapeauUI
                 foreach (Order order in orders)
                 {
                     // Check if waiting time exceeds 24 hours
-                    double totalWaitingHours = order.CustomerWaitingTime.TotalHours;
-                    if (totalWaitingHours <= 7)
-                    {
+                 
                         // Add order details to list view
                         ListViewItem li = new ListViewItem(order.OrderID.ToString());
                         li.SubItems.Add(order.TableID.ToString());
@@ -265,7 +259,6 @@ namespace ChapeauUI
                         li.Tag = order;
 
                         ListViewOrdersKitchen.Items.Add(li); // Add to listViewKitchenOrderItem for history orders
-                    }
                 }
             }
             catch (Exception ex)
