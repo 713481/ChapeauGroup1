@@ -170,51 +170,44 @@ namespace ChapeauDAL
 
         public List<Order> GetOrders(bool isBar, bool isOpenOrders)
         {
-            string query = "SELECT O.OrderID, O.TableID, O.OrderTime " +  //MAX(O.OrderStatus) AS OrderStatus
-                "FROM [ORDER] AS O " +
-                "JOIN [OrderItem] AS OI ON O.OrderID = OI.OrderID " +
-                "JOIN [MENUITEM] AS MI ON OI.ItemID = MI.ItemID ";  // Join with MENUITEM table
+            string query = @"
+              SELECT O.OrderID, O.TableID, O.OrderTime
+              FROM [ORDER] AS O
+             JOIN [OrderItem] AS OI ON O.OrderID = OI.OrderID
+             JOIN [MENUITEM] AS MI ON OI.ItemID = MI.ItemID
+             WHERE ";
 
             // Append conditions based on isBar
             if (isBar)
             {
-                // For bar orders, consider only orders with MealType 3 (drinks)
-                query += "WHERE MI.MealsType = 3";
+                query += "MI.MealsType = 3"; // For bar orders, consider only drinks
             }
             else
             {
-                // For kitchen orders, consider only orders with MealType 1 or 2 (food)
-                query += "WHERE MI.MealsType IN (1, 2)";
+                query += "MI.MealsType IN (1, 2)"; // For kitchen orders, consider only food
             }
+
+            // Append conditions based on isOpenOrders
             if (isOpenOrders)
             {
-                query += " AND OI.ItemStatus <= 2"; ////////////////////////////////Change it to OI.OrderStatus
+                query += " AND OI.ItemStatus <= 2"; // Only open orders
             }
             else
             {
-                query += " AND CAST(GETDATE() AS date) = CAST(O.OrderTime AS date) " +            //get orders from the same day
-                         "AND O.OrderID NOT IN (SELECT DISTINCT OrderID " +                    //closed orders will be grouped together
-                                                "FROM [Orderitem] AS OI " +
-                                                "JOIN [MENUITEM] AS I ON OI.ItemID = I.ItemID " +
-                                                "WHERE ItemStatus <= 2 " +
-                                                "AND MealsType ";
+                query += " AND CAST(GETDATE() AS date) = CAST(O.OrderTime AS date)"; // Only orders from the same day
                 if (!isBar)
                 {
-                    query += "!= 3";
-                }
-                else
-                {
-                    query += "= 3";
+                    query += " AND MI.MealsType != 3"; // Exclude drinks for kitchen orders
                 }
             }
 
-            // Group by all non-aggregated columns
-            query += " GROUP BY O.OrderID, O.TableID, O.OrderTime";
+            // Group by all non-aggregated columns and order by OrderTime
+                query += @"
+               GROUP BY O.OrderID, O.TableID, O.OrderTime
+               ORDER BY O.OrderTime";
 
-            // Order the results by OrderTime
-            query += " ORDER BY O.OrderTime";
             return ReadOrderTables(ExecuteSelectQuery(query), isBar, isOpenOrders);
-           
+
         }
 
  
@@ -250,29 +243,25 @@ namespace ChapeauDAL
         public List<Order> GetHistoryOrders(OrderStatus status, bool isBar, bool isOpenOrders)
         {
             // Define the SQL query to retrieve orders within the specified date range
-            string query = @"SELECT OrderID, TableID, OrderTime
-                     FROM [ORDER]
-                     WHERE OrderStatus = @orderStatus";
+            string query = @"
+            SELECT OrderID, TableID, OrderTime
+            FROM [ORDER]
+            WHERE 
+            OrderStatus = @orderStatus
+            AND CAST(OrderTime AS date) = CAST(GETDATE() AS date)";
 
-            // Create parameters for the start and end date
+            // Create parameters for the order status
             SqlParameter[] parameters = {
-             new SqlParameter("@orderStatus",(int)status), ////////////////////////////////////////////////////////////////////////////////////////////
-            };
+        new SqlParameter("@orderStatus", (int)status)
+    };
 
             // Execute the query and retrieve the results
             DataTable resultTable = ExecuteSelectQuery(query, parameters);
             List<Order> historyOrders = new List<Order>();
-            List<int> listOrderId = new List<int>();
-            int tableOrderID;
-
 
             // Process the result table
             foreach (DataRow row in resultTable.Rows)
             {
-                tableOrderID = (int)row["orderID"];
-
-                if (listOrderId.Contains(tableOrderID))
-                    continue;
                 // Create an Order object and populate its properties
                 Order order = new Order
                 {
@@ -282,7 +271,6 @@ namespace ChapeauDAL
                 };
 
                 // Add the Order object to the list
-                listOrderId.Add(tableOrderID);
                 order.OrderList = GetOrderItems(isBar, isOpenOrders, order.OrderID);
                 historyOrders.Add(order);
             }
