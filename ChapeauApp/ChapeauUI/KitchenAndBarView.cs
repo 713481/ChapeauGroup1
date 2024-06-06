@@ -51,16 +51,26 @@ namespace ChapeauUI
                 listViewKitchenOrderItem.Items.Clear();
                 foreach (Order order in orders)
                 {
-                    ListViewItem li = new ListViewItem(order.OrderID.ToString());
-                    li.SubItems.Add(order.TableID.ToString());
-                    li.SubItems.Add(order.OrderTime.ToString("H:mm"));
-                    if (isOpenOrder)
+                    // Calculate the waiting time in hours
+                    double totalWaitingHours = order.CustomerWaitingTime.TotalHours;
+
+                    // Check if waiting time exceeds 7 hours
+                    if (totalWaitingHours <= 7)
                     {
-                        li.SubItems.Add($"{order.CustomerWaitingTime.TotalHours:0}:{order.CustomerWaitingTime.Minutes:00}");
+                        ListViewItem li = new ListViewItem(order.OrderID.ToString());
+                        li.SubItems.Add(order.TableID.ToString());
+                        li.SubItems.Add(order.OrderTime.ToString("H:mm"));
+
+                        // Add waiting time only if isOpenOrder is true
+                        if (isOpenOrder)
+                        {
+                            li.SubItems.Add($"{totalWaitingHours:0}:{order.CustomerWaitingTime.Minutes:00}");
+                        }
+
+                        //li.SubItems.Add(order.OrderStatus.ToString());
+                        li.Tag = order;
+                        ListViewOrdersKitchen.Items.Add(li);
                     }
-                    //li.SubItems.Add(order.OrderStatus.ToString());
-                    li.Tag = order;
-                    ListViewOrdersKitchen.Items.Add(li);
                 }
             }
             catch (Exception ex)
@@ -83,7 +93,7 @@ namespace ChapeauUI
                 foreach (var item in selectedOrder.OrderList)
                 {
                     ListViewItem li = new ListViewItem(item.OrderID.ToString());
-                    li.SubItems.Add(item.MenuItem.ItemID.ToString());
+                    li.SubItems.Add(item.ItemName.ToString());
                     li.SubItems.Add(item.OrderCount.ToString());
                     li.SubItems.Add(item.StatusItem.ToString());
                     li.SubItems.Add(item.Notes.ToString());
@@ -107,8 +117,17 @@ namespace ChapeauUI
                     Order selectedOrder = (Order)ListViewOrdersKitchen.SelectedItems[0].Tag;
                     if (selectedOrder != null)
                     {
-                        DisplayOrderItems(selectedOrder);
-
+                        // Determine if it's a current order or a history order
+                        if (selectedOrder.orderStatus < OrderStatus.Ready)
+                        {
+                            // Current order selected, display its items
+                            DisplayOrderItems(selectedOrder);
+                        }
+                        else
+                        {
+                            // History order selected, display its items
+                            DisplayHistoryOrderItems(selectedOrder);
+                        }
                     }
                     else
                     {
@@ -138,9 +157,12 @@ namespace ChapeauUI
                     orderService.ChangeStatus(selectedItem, ItemStatus.Ready);
 
                     // Optionally, you can update the UI or perform any other actions here
-
                     MessageBox.Show("Item status updated to Ready.");
+
+                    // Remove the selected item from listViewKitchenOrderItem
                     listViewKitchenOrderItem.Items.Remove(listViewKitchenOrderItem.SelectedItems[0]);
+
+                    // Check if all items in the order are ready
                     bool allItemsReady = true;
                     foreach (ListViewItem item in listViewKitchenOrderItem.Items)
                     {
@@ -156,8 +178,13 @@ namespace ChapeauUI
                     if (allItemsReady)
                     {
                         Order order = (Order)ListViewOrdersKitchen.SelectedItems[0].Tag;
+
+                        // Update order status to "Served" in the database
                         orderService.OrderStatusUpdate(order.OrderID, OrderStatus.Served);
+
+                        // Remove the order from ListViewOrdersKitchen
                         ListViewOrdersKitchen.Items.Remove(ListViewOrdersKitchen.SelectedItems[0]);
+
                         MessageBox.Show($"Order {order.OrderID} is served");
 
                     }
@@ -223,20 +250,22 @@ namespace ChapeauUI
             try
             {
                 List<Order> orders = orderService.GetHistoryOrders(OrderStatus.Served, isBar, isOpenOrder);
-                ListViewOrdersKitchen.Items.Clear();
-                listViewKitchenOrderItem.Items.Clear();
+                ListViewOrdersKitchen.Items.Clear(); // Clear only the items in listViewKitchenOrderItem
+
                 foreach (Order order in orders)
                 {
-                    ListViewItem li = new ListViewItem(order.OrderID.ToString());
-                    li.SubItems.Add(order.TableID.ToString());
-                    li.SubItems.Add(order.OrderTime.ToString("H:mm"));
-                    if (isOpenOrder)
+                    // Check if waiting time exceeds 24 hours
+                    double totalWaitingHours = order.CustomerWaitingTime.TotalHours;
+                    if (totalWaitingHours <= 7)
                     {
-                        li.SubItems.Add($"{order.CustomerWaitingTime.TotalHours:0}:{order.CustomerWaitingTime.Minutes:00}");
+                        // Add order details to list view
+                        ListViewItem li = new ListViewItem(order.OrderID.ToString());
+                        li.SubItems.Add(order.TableID.ToString());
+                        li.SubItems.Add(order.OrderTime.ToString("H:mm"));
+                        li.Tag = order;
+
+                        ListViewOrdersKitchen.Items.Add(li); // Add to listViewKitchenOrderItem for history orders
                     }
-                    //li.SubItems.Add(order.OrderStatus.ToString());
-                    li.Tag = order;
-                    ListViewOrdersKitchen.Items.Add(li);
                 }
             }
             catch (Exception ex)
@@ -244,19 +273,51 @@ namespace ChapeauUI
                 MessageBox.Show($"Something went wrong: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+        private void DisplayHistoryOrderItems(Order selectedOrder)
+        {
+            // Clear the list view
+            listViewKitchenOrderItem.Items.Clear();
+
+            // Check if selectedOrder and its OrderList are not null
+            if (selectedOrder != null && selectedOrder.OrderList != null)
+            {
+                // Display the items of the history order
+                foreach (var item in selectedOrder.OrderList)
+                {
+                    // Create list view item
+                    ListViewItem li = new ListViewItem(item.OrderID.ToString());
+                    li.SubItems.Add(item.MenuItem.ItemID.ToString());
+                    li.SubItems.Add(item.OrderCount.ToString());
+                    li.SubItems.Add(item.StatusItem.ToString());
+                    li.SubItems.Add(item.Notes.ToString());
+                    li.SubItems.Add(item.OrderTime.ToString("h:mm"));
+                    li.Tag = item;
+
+                    // Add the item to the list view
+                    listViewKitchenOrderItem.Items.Add(li);
+                }
+            }
+            else
+            {
+                // Handle the case when selectedOrder or its OrderList is null
+                MessageBox.Show("No order items to display.");
+            }
+        }
 
         private void HistoryButton_Click(object sender, EventArgs e)
-        {
-            HistoryButton.Text = isOpenOrder ? "Show Orders" : "Show History";
-            lblViewKitchenBar.Text = isOpenOrder ? "History" : "Open Orders";
-            butSetToReady.Enabled = isOpenOrder;
-            butChangeStatus.Enabled = isOpenOrder;
-            isOpenOrder = !isOpenOrder;
-            HistoryOrdersDisplaying();
+        {   
+            lblViewKitchenBar.Text = "History";
+            butSetToReady.Enabled = false;
+            butChangeStatus.Enabled = false;
+            isOpenOrder = false;
+            listViewKitchenOrderItem.Items.Clear(); // Clear the History Orders list view
+            HistoryOrdersDisplaying(); // Populate the History Orders list view
         }
 
         private void ReturnButton_Click(object sender, EventArgs e)
         {
+            isOpenOrder = true;
+            OrdersDisplaying();
             if (isBar)
             {
                 lblViewKitchenBar.Text = "Bar View";
@@ -265,7 +326,6 @@ namespace ChapeauUI
             {
                 lblViewKitchenBar.Text = "Kitchen View";
             }
-            OrdersDisplaying();
         }
     }
 }

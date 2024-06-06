@@ -15,6 +15,7 @@ namespace ChapeauModel
 
         public ItemStatus StatusItem { get; set; }
         public string Notes { get; set; }
+        public string ItemName { get; set; }
 
         public int tableID {  get; set; }
         public int ItemID { get; set; }
