@@ -111,6 +111,7 @@ namespace ChapeauDAL
                     OrderCount = (int)dr["OrderCount"],
                     Notes = dr["OrderDescription"].ToString(),
                     OrderTime = (DateTime)dr["OrderTime"],
+                    ItemName = dr["ItemName"].ToString(),
                 };
             list.Add(orderItem);
             }
@@ -119,7 +120,7 @@ namespace ChapeauDAL
 
         public List<OrderItem> GetOrderItems(bool isABar, bool isAOpenOrders, int orderId) 
         {
-            string query = "SELECT OI.OrderID, OI.ItemID, OI.OrderCount, OI.ItemStatus, OI.OrderDescription, OI.OrderTime " +
+            string query = "SELECT OI.OrderID, OI.ItemID, OI.OrderCount, OI.ItemStatus, OI.OrderDescription, OI.OrderTime, M.ItemName " +
                   "FROM [Orderitem] AS OI " +
                   "JOIN [MENUITEM] AS M ON M.ItemID = OI.ItemID " +
                   "WHERE OI.OrderID = @OrderID ";
@@ -153,13 +154,14 @@ namespace ChapeauDAL
 
         public void OrderStatusUpdate(int orderID, OrderStatus status)
         {
-            string query = "UPDATE [Orderitem]" +
-                           "SET OrderStatus = @orderStatus" +
-                           "WHERE OrderID = @orderID";
-            List<SqlParameter> sqlParameters = new List<SqlParameter>();
+            string query = "UPDATE [Order] " +
+                    "SET [OrderStatus] = @orderStatus " +
+                    "WHERE OrderID = @orderID";
+
+            List<SqlParameter> sqlParameters = new List<SqlParameter>
             {
-                new SqlParameter("@orderStatus", status);
-                new SqlParameter("@order", orderID);
+               new SqlParameter("@orderStatus", (int)status), 
+               new SqlParameter("@orderID", orderID)
             };
             ExecuteEditQuery(query, sqlParameters.ToArray());
         }
@@ -254,7 +256,7 @@ namespace ChapeauDAL
 
             // Create parameters for the start and end date
             SqlParameter[] parameters = {
-             new SqlParameter("@orderStatus", status),
+             new SqlParameter("@orderStatus",(int)status), ////////////////////////////////////////////////////////////////////////////////////////////
             };
 
             // Execute the query and retrieve the results

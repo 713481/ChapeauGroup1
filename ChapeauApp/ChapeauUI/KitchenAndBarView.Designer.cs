@@ -38,7 +38,7 @@
             KITCHENWAITINGTIME = new ColumnHeader();
             listViewKitchenOrderItem = new ListView();
             BARORDERID = new ColumnHeader();
-            BARITEMID = new ColumnHeader();
+            BARITEMNAME = new ColumnHeader();
             BARORDERCOUNT = new ColumnHeader();
             BARITEMSTATUS = new ColumnHeader();
             BARORDERTIME = new ColumnHeader();
@@ -49,7 +49,7 @@
             butLogOutKitchen = new Button();
             butChangeStatus = new Button();
             HistoryButton = new Button();
-            ReturnButton = new Button();
+            RunningOrderButton = new Button();
             ((System.ComponentModel.ISupportInitialize)pictureBoxChaupauKitchenBar).BeginInit();
             SuspendLayout();
             // 
@@ -109,11 +109,11 @@
             // listViewKitchenOrderItem
             // 
             listViewKitchenOrderItem.BackColor = SystemColors.MenuBar;
-            listViewKitchenOrderItem.Columns.AddRange(new ColumnHeader[] { BARORDERID, BARITEMID, BARORDERCOUNT, BARITEMSTATUS, BARORDERTIME, ORDERDESCRIPTION });
+            listViewKitchenOrderItem.Columns.AddRange(new ColumnHeader[] { BARORDERID, BARITEMNAME, BARORDERCOUNT, BARITEMSTATUS, BARORDERTIME, ORDERDESCRIPTION });
             listViewKitchenOrderItem.FullRowSelect = true;
             listViewKitchenOrderItem.Location = new Point(308, 594);
             listViewKitchenOrderItem.Name = "listViewKitchenOrderItem";
-            listViewKitchenOrderItem.Size = new Size(851, 277);
+            listViewKitchenOrderItem.Size = new Size(957, 277);
             listViewKitchenOrderItem.TabIndex = 3;
             listViewKitchenOrderItem.UseCompatibleStateImageBehavior = false;
             listViewKitchenOrderItem.View = View.Details;
@@ -123,10 +123,10 @@
             BARORDERID.Text = "Order ID";
             BARORDERID.Width = 130;
             // 
-            // BARITEMID
+            // BARITEMNAME
             // 
-            BARITEMID.Text = "Item ID";
-            BARITEMID.Width = 130;
+            BARITEMNAME.Text = "Item Name";
+            BARITEMNAME.Width = 230;
             // 
             // BARORDERCOUNT
             // 
@@ -163,7 +163,7 @@
             // butSetToReady
             // 
             butSetToReady.BackColor = Color.LawnGreen;
-            butSetToReady.Location = new Point(71, 680);
+            butSetToReady.Location = new Point(71, 796);
             butSetToReady.Name = "butSetToReady";
             butSetToReady.Size = new Size(218, 75);
             butSetToReady.TabIndex = 5;
@@ -195,11 +195,11 @@
             // butChangeStatus
             // 
             butChangeStatus.BackColor = Color.Bisque;
-            butChangeStatus.Location = new Point(71, 779);
+            butChangeStatus.Location = new Point(71, 683);
             butChangeStatus.Name = "butChangeStatus";
             butChangeStatus.Size = new Size(218, 81);
             butChangeStatus.TabIndex = 8;
-            butChangeStatus.Text = "Change Status";
+            butChangeStatus.Text = "Set To Prepare";
             butChangeStatus.UseVisualStyleBackColor = false;
             butChangeStatus.Click += butChangeStatus_Click;
             // 
@@ -215,25 +215,25 @@
             HistoryButton.UseVisualStyleBackColor = false;
             HistoryButton.Click += HistoryButton_Click;
             // 
-            // ReturnButton
+            // RunningOrderButton
             // 
-            ReturnButton.BackColor = SystemColors.ScrollBar;
-            ReturnButton.Font = new Font("Segoe UI", 20F, FontStyle.Regular, GraphicsUnit.Point);
-            ReturnButton.Location = new Point(670, 12);
-            ReturnButton.Name = "ReturnButton";
-            ReturnButton.Size = new Size(165, 67);
-            ReturnButton.TabIndex = 10;
-            ReturnButton.Text = "Return";
-            ReturnButton.UseVisualStyleBackColor = false;
-            ReturnButton.Click += ReturnButton_Click;
+            RunningOrderButton.BackColor = SystemColors.ScrollBar;
+            RunningOrderButton.Font = new Font("Segoe UI", 15F, FontStyle.Regular, GraphicsUnit.Point);
+            RunningOrderButton.Location = new Point(647, 12);
+            RunningOrderButton.Name = "RunningOrderButton";
+            RunningOrderButton.Size = new Size(188, 67);
+            RunningOrderButton.TabIndex = 10;
+            RunningOrderButton.Text = "Running Order";
+            RunningOrderButton.UseVisualStyleBackColor = false;
+            RunningOrderButton.Click += ReturnButton_Click;
             // 
             // KitchenAndBarView
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.ActiveCaption;
-            ClientSize = new Size(1229, 893);
-            Controls.Add(ReturnButton);
+            ClientSize = new Size(1277, 893);
+            Controls.Add(RunningOrderButton);
             Controls.Add(HistoryButton);
             Controls.Add(butChangeStatus);
             Controls.Add(butLogOutKitchen);
@@ -263,7 +263,7 @@
         private ColumnHeader KITCHENTABLEID;
         private ColumnHeader KITCHENORDERSTIME;
         private ColumnHeader BARORDERID;
-        private ColumnHeader BARITEMID;
+        private ColumnHeader BARITEMNAME;
         private ColumnHeader BARORDERCOUNT;
         private ColumnHeader BARITEMSTATUS;
         private ColumnHeader ORDERDESCRIPTION;
@@ -273,6 +273,6 @@
         private Button butLogOutKitchen;
         private Button butChangeStatus;
         private Button HistoryButton;
-        private Button ReturnButton;
+        private Button RunningOrderButton;
     }
 }
