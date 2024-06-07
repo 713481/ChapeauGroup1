@@ -50,6 +50,7 @@
             butChangeStatus = new Button();
             HistoryButton = new Button();
             RunningOrderButton = new Button();
+            butRefresh = new Button();
             ((System.ComponentModel.ISupportInitialize)pictureBoxChaupauKitchenBar).BeginInit();
             SuspendLayout();
             // 
@@ -80,7 +81,7 @@
             ListViewOrdersKitchen.FullRowSelect = true;
             ListViewOrdersKitchen.Location = new Point(308, 206);
             ListViewOrdersKitchen.Name = "ListViewOrdersKitchen";
-            ListViewOrdersKitchen.Size = new Size(527, 293);
+            ListViewOrdersKitchen.Size = new Size(957, 293);
             ListViewOrdersKitchen.TabIndex = 2;
             ListViewOrdersKitchen.UseCompatibleStateImageBehavior = false;
             ListViewOrdersKitchen.View = View.Details;
@@ -89,22 +90,22 @@
             // KITCHENORDERID
             // 
             KITCHENORDERID.Text = "Order ID";
-            KITCHENORDERID.Width = 130;
+            KITCHENORDERID.Width = 250;
             // 
             // KITCHENTABLEID
             // 
-            KITCHENTABLEID.Text = "Table ID";
-            KITCHENTABLEID.Width = 130;
+            KITCHENTABLEID.Text = "Table Number";
+            KITCHENTABLEID.Width = 250;
             // 
             // KITCHENORDERSTIME
             // 
             KITCHENORDERSTIME.Text = "Order Time";
-            KITCHENORDERSTIME.Width = 130;
+            KITCHENORDERSTIME.Width = 250;
             // 
             // KITCHENWAITINGTIME
             // 
             KITCHENWAITINGTIME.Text = "Waiting Time";
-            KITCHENWAITINGTIME.Width = 130;
+            KITCHENWAITINGTIME.Width = 250;
             // 
             // listViewKitchenOrderItem
             // 
@@ -227,12 +228,24 @@
             RunningOrderButton.UseVisualStyleBackColor = false;
             RunningOrderButton.Click += ReturnButton_Click;
             // 
+            // butRefresh
+            // 
+            butRefresh.BackColor = Color.Tan;
+            butRefresh.Location = new Point(37, 275);
+            butRefresh.Name = "butRefresh";
+            butRefresh.Size = new Size(132, 70);
+            butRefresh.TabIndex = 11;
+            butRefresh.Text = "Refresh";
+            butRefresh.UseVisualStyleBackColor = false;
+            butRefresh.Click += button1_Click;
+            // 
             // KitchenAndBarView
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.ActiveCaption;
             ClientSize = new Size(1277, 893);
+            Controls.Add(butRefresh);
             Controls.Add(RunningOrderButton);
             Controls.Add(HistoryButton);
             Controls.Add(butChangeStatus);
@@ -274,5 +287,6 @@
         private Button butChangeStatus;
         private Button HistoryButton;
         private Button RunningOrderButton;
+        private Button butRefresh;
     }
 }
