@@ -149,8 +149,8 @@ namespace ChapeauUI
                 {
                     OrderItem selectedItem = (OrderItem)listViewKitchenOrderItem.SelectedItems[0].Tag;
 
-                    // Call the ChangeStatus method to update the status to Ready
-                    orderService.ChangeStatus(selectedItem, ItemStatus.Ready);
+                    // Call the ChangeStatus method to update the status to Served
+                    orderService.ChangeStatus(selectedItem, ItemStatus.Served);
 
                     // Optionally, you can update the UI or perform any other actions here
                     MessageBox.Show("Item status updated to Ready.");
@@ -163,7 +163,7 @@ namespace ChapeauUI
                     foreach (ListViewItem item in listViewKitchenOrderItem.Items)
                     {
                         OrderItem orderItem = (OrderItem)item.Tag;
-                        if (orderItem.StatusItem != ItemStatus.Ready)
+                        if (orderItem.StatusItem != ItemStatus.Served)
                         {
                             allItemsReady = false;
                             break;
@@ -310,6 +310,8 @@ namespace ChapeauUI
         private void ReturnButton_Click(object sender, EventArgs e)
         {
             isOpenOrder = true;
+            butSetToReady.Enabled = true;
+            butChangeStatus.Enabled = true;
             OrdersDisplaying();
             if (isBar)
             {
