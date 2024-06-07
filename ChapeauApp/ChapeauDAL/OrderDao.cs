@@ -190,11 +190,11 @@ namespace ChapeauDAL
             // Append conditions based on isOpenOrders
             if (isOpenOrders)
             {
-                query += " AND OI.ItemStatus <= 2"; // Only open orders
+                query += " AND OrderStatus <= 2"; // Only open orders
+                query += " AND CAST(GETDATE() AS date) = CAST(O.OrderTime AS date)"; // Only orders from the same day
             }
             else
             {
-                query += " AND CAST(GETDATE() AS date) = CAST(O.OrderTime AS date)"; // Only orders from the same day
                 if (!isBar)
                 {
                     query += " AND MI.MealsType != 3"; // Exclude drinks for kitchen orders

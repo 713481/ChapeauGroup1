@@ -52,21 +52,21 @@ namespace ChapeauUI
                 foreach (Order order in orders)
                 {
                     // Calculate the waiting time in hours
-            
-                        ListViewItem li = new ListViewItem(order.OrderID.ToString());
-                        li.SubItems.Add(order.TableID.ToString());
-                        li.SubItems.Add(order.OrderTime.ToString("H:mm"));
 
-                        // Add waiting time only if isOpenOrder is true
-                        if (isOpenOrder)
-                        {
-                            li.SubItems.Add($"{order.CustomerWaitingTime.Hours:0}:{order.CustomerWaitingTime.Minutes:00}");
-                        }
+                    ListViewItem li = new ListViewItem(order.OrderID.ToString());
+                    li.SubItems.Add(order.TableID.ToString());
+                    li.SubItems.Add(order.OrderTime.ToString("H:mm"));
 
-                        //li.SubItems.Add(order.OrderStatus.ToString());
-                        li.Tag = order;
-                        ListViewOrdersKitchen.Items.Add(li);
-                    
+                    // Add waiting time only if isOpenOrder is true
+                    if (isOpenOrder)
+                    {
+                        li.SubItems.Add($"{order.CustomerWaitingTime.Hours:0}:{order.CustomerWaitingTime.Minutes:00}");
+                    }
+
+                    //li.SubItems.Add(order.OrderStatus.ToString());
+                    li.Tag = order;
+                    ListViewOrdersKitchen.Items.Add(li);
+
                 }
             }
             catch (Exception ex)
@@ -251,14 +251,14 @@ namespace ChapeauUI
                 foreach (Order order in orders)
                 {
                     // Check if waiting time exceeds 24 hours
-                 
-                        // Add order details to list view
-                        ListViewItem li = new ListViewItem(order.OrderID.ToString());
-                        li.SubItems.Add(order.TableID.ToString());
-                        li.SubItems.Add(order.OrderTime.ToString("H:mm"));
-                        li.Tag = order;
 
-                        ListViewOrdersKitchen.Items.Add(li); // Add to listViewKitchenOrderItem for history orders
+                    // Add order details to list view
+                    ListViewItem li = new ListViewItem(order.OrderID.ToString());
+                    li.SubItems.Add(order.TableID.ToString());
+                    li.SubItems.Add(order.OrderTime.ToString("H:mm"));
+                    li.Tag = order;
+
+                    ListViewOrdersKitchen.Items.Add(li); // Add to listViewKitchenOrderItem for history orders
                 }
             }
             catch (Exception ex)
@@ -298,10 +298,11 @@ namespace ChapeauUI
         }
 
         private void HistoryButton_Click(object sender, EventArgs e)
-        {   
+        {
             lblViewKitchenBar.Text = "History";
             butSetToReady.Enabled = false;
             butChangeStatus.Enabled = false;
+            butRefresh.Enabled = false;
             isOpenOrder = false;
             listViewKitchenOrderItem.Items.Clear(); // Clear the History Orders list view
             HistoryOrdersDisplaying(); // Populate the History Orders list view
@@ -312,6 +313,8 @@ namespace ChapeauUI
             isOpenOrder = true;
             butSetToReady.Enabled = true;
             butChangeStatus.Enabled = true;
+            butRefresh.Enabled=true;
+            listViewKitchenOrderItem.Items.Clear(); // Clear the Orders list view
             OrdersDisplaying();
             if (isBar)
             {
@@ -321,6 +324,22 @@ namespace ChapeauUI
             {
                 lblViewKitchenBar.Text = "Kitchen View";
             }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            butSetToReady.Enabled = true;
+            butChangeStatus.Enabled = true;
+            if (isBar)
+            {
+                lblViewKitchenBar.Text = "Bar View";
+            }
+            else
+            {
+                lblViewKitchenBar.Text = "Kitchen View";
+            }
+            listViewKitchenOrderItem.Items.Clear();
+            OrdersDisplaying();
         }
     }
 }
