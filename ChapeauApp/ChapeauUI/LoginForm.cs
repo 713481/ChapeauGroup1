@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using ChapeauModel;
 using ChapeauService;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
 
 namespace ChapeauUI
 {
@@ -17,16 +18,20 @@ namespace ChapeauUI
         public LoginForm()
         {
             InitializeComponent();
+        
         }
-       
+
         private void OpenView(Employee employee)
         {
+           
             switch (employee.Role)
             {
                 case StaffRole.Waiter:
-                    Show();
+                  orderingForm orderingForm = new orderingForm();
+                    orderingForm.ShowDialog();
                     break;
                 case StaffRole.Chef:
+                    // ...
                     Show();
                     break;
                 case StaffRole.Bartender:
@@ -44,25 +49,43 @@ namespace ChapeauUI
             string userName = textBoxUsernameInput.Text;
             string password = textBoxPassowrdInput.Text;
 
-            StaffService staffService = new StaffService();
 
-            if (!staffService.CheckUserNameExist(userName))
+            
+            if (VerifyCheck(userName, password))
             {
-                lblInvalid.Text = "Username does not exit";
-
-            }
-            string hashedPassword = staffService.HashPasword(password);
-            List<Employee> employees = new List<Employee>();
-            if (employees.Count > 0)
-            {
-                Employee employeeAccess = employees[0];
-                OpenView(employeeAccess);
-
+                StaffService staffService = new StaffService();
+                Employee employee = staffService.GetUserNameAndPassword(userName, password);
+                 if(employee != null)
+                {
+                    OpenView(employee);
+                } 
+                else
+                {
+                    lblInvalid.Text = "Incorrect password, please try again";
+                }
             }
             else
             {
-                lblInvalid.Text = "Incorrect password please try again";
+                lblInvalid.Text = "Incorrect username or password";
             }
+
+
         }
+        private bool VerifyCheck(string username, string password)
+        {
+
+            if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password))
+            {
+                lblInvalid.Text = "Please Enter your Username and Password";
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+
+        }
+
+        
     }
 }

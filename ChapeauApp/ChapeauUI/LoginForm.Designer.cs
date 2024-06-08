@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(LoginForm));
             lblInvalid = new Label();
             btnLogin = new Button();
             label3 = new Label();
@@ -36,12 +37,13 @@
             textBoxUsernameInput = new TextBox();
             label1 = new Label();
             lblLogin = new Label();
+            pnlLoginLogo = new Panel();
             SuspendLayout();
             // 
             // lblInvalid
             // 
             lblInvalid.AutoSize = true;
-            lblInvalid.Location = new Point(108, 280);
+            lblInvalid.Location = new Point(32, 301);
             lblInvalid.Name = "lblInvalid";
             lblInvalid.Size = new Size(12, 20);
             lblInvalid.TabIndex = 15;
@@ -49,7 +51,7 @@
             // 
             // btnLogin
             // 
-            btnLogin.Location = new Point(108, 303);
+            btnLogin.Location = new Point(32, 334);
             btnLogin.Name = "btnLogin";
             btnLogin.Size = new Size(202, 29);
             btnLogin.TabIndex = 14;
@@ -60,7 +62,7 @@
             // label3
             // 
             label3.AutoSize = true;
-            label3.Location = new Point(108, 227);
+            label3.Location = new Point(32, 248);
             label3.Name = "label3";
             label3.Size = new Size(73, 20);
             label3.TabIndex = 13;
@@ -69,7 +71,7 @@
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new Point(108, 162);
+            label2.Location = new Point(32, 195);
             label2.Name = "label2";
             label2.Size = new Size(78, 20);
             label2.TabIndex = 12;
@@ -77,14 +79,14 @@
             // 
             // textBoxPassowrdInput
             // 
-            textBoxPassowrdInput.Location = new Point(108, 250);
+            textBoxPassowrdInput.Location = new Point(32, 271);
             textBoxPassowrdInput.Name = "textBoxPassowrdInput";
             textBoxPassowrdInput.Size = new Size(202, 27);
             textBoxPassowrdInput.TabIndex = 11;
             // 
             // textBoxUsernameInput
             // 
-            textBoxUsernameInput.Location = new Point(108, 185);
+            textBoxUsernameInput.Location = new Point(32, 218);
             textBoxUsernameInput.Name = "textBoxUsernameInput";
             textBoxUsernameInput.Size = new Size(202, 27);
             textBoxUsernameInput.TabIndex = 10;
@@ -93,7 +95,7 @@
             // 
             label1.AutoSize = true;
             label1.Font = new Font("Segoe UI Semilight", 9F, FontStyle.Regular, GraphicsUnit.Point);
-            label1.Location = new Point(108, 113);
+            label1.Location = new Point(32, 142);
             label1.Name = "label1";
             label1.Size = new Size(179, 20);
             label1.TabIndex = 9;
@@ -102,17 +104,30 @@
             // lblLogin
             // 
             lblLogin.AutoSize = true;
-            lblLogin.Location = new Point(108, 80);
+            lblLogin.Location = new Point(32, 113);
             lblLogin.Name = "lblLogin";
             lblLogin.Size = new Size(46, 20);
             lblLogin.TabIndex = 8;
             lblLogin.Text = "Login";
             // 
+            // pnlLoginLogo
+            // 
+            pnlLoginLogo.BackColor = Color.White;
+            pnlLoginLogo.BackgroundImage = (Image)resources.GetObject("pnlLoginLogo.BackgroundImage");
+            pnlLoginLogo.BackgroundImageLayout = ImageLayout.Stretch;
+            pnlLoginLogo.Location = new Point(80, 13);
+            pnlLoginLogo.Margin = new Padding(3, 4, 3, 4);
+            pnlLoginLogo.Name = "pnlLoginLogo";
+            pnlLoginLogo.Size = new Size(105, 86);
+            pnlLoginLogo.TabIndex = 16;
+            // 
             // LoginForm
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(367, 450);
+            BackColor = Color.FromArgb(128, 128, 255);
+            ClientSize = new Size(291, 450);
+            Controls.Add(pnlLoginLogo);
             Controls.Add(lblInvalid);
             Controls.Add(btnLogin);
             Controls.Add(label3);
@@ -137,5 +152,6 @@
         private TextBox textBoxUsernameInput;
         private Label label1;
         private Label lblLogin;
+        private Panel pnlLoginLogo;
     }
 }
