@@ -12,21 +12,34 @@ namespace ChapeauService
     public class StaffService
     {
         StaffDao staffDao;
-
+      
         public StaffService()
         {
+
             staffDao = new StaffDao();
+        
         }
         //adding method 
-        public List<Employee> GetUserNameAndPassword(string userName, string hashPassword)
+        public Employee GetUserNameAndPassword(string userName, string password)
         {
+            // ... hash
+            string hashPassword = HashPassword(password);
+
             return staffDao.GetUserNameAndPassword(userName, hashPassword);
+
         }
-        public bool CheckUserNameExist(string username)
+        public void HashAndStorePasswords()
         {
-            return staffDao.CheckUserName(username);
+            List<Employee> employees = staffDao.GetEmployees();
+
+            foreach (Employee employee in employees)
+            {
+                string hashedPassword = HashPassword(employee.Password);
+                staffDao.UpdatePassword(employee.UserName, hashedPassword);
+            }
         }
-        public string HashPasword(string password)
+       
+        private string HashPassword(string password)
         {
             using (SHA256 sha256 = SHA256.Create())
             {
@@ -34,6 +47,18 @@ namespace ChapeauService
                 return BitConverter.ToString(hashBytes).Replace("-", "").ToLower();
             }
         }
+        public void CreateUser(string userName, string password)
+        {
+            string hashedPassword = HashPassword(password);
+            staffDao.CreateUser(userName, hashedPassword);
+        }
+        public void CreateMultipleUsers()
+        {
+            StaffService staffService = new StaffService();
+            
+
+        }
+
 
     }
     
