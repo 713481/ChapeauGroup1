@@ -9,27 +9,27 @@ using System.Threading.Tasks;
 
 namespace ChapeauDAL
 {
-    internal class ItemDao : BaseDao
+    public class ItemDao : BaseDao
     {
         public List<MenuItem> GetItem()
         {
-            string query = "Select ItemID, Stock, MenuType, ItemName, Price, VAT, CategoryType FROM MENUITEM WHERE ItemID = @id";
+            string query = "Select ItemID, Stock, MealsType, ItemName, Price, VAT, CategoryType FROM MENUITEM WHERE ItemID = @id";
             SqlParameter[] sqlParameters = new SqlParameter[1];
             return ReadTables(ExecuteSelectQuery(query, sqlParameters));
         }
         private List<MenuItem> ReadTables(DataTable dataTable)
         {
-            List <MenuItem> items = new List<MenuItem>();
+            List<MenuItem> items = new List<MenuItem>();
             foreach (DataRow row in dataTable.Rows)
             {
                 MenuItem item = new MenuItem()
                 {
-                    ItemID = (MenuItem)row["id"],
+                    ItemID = (int)row["ItemID"],
                     ItemName = row["ItemName"].ToString(),
                     Stock = (int)row["Stock"],
-                    MenuType = (MenuType)row["MenuType"],
-                    Price = (double)row["Price"],
-                    VAT = (int)row["VAT"]
+                    MenuType = (MenuType)((int)row["MealsType"]),
+                    Price = (decimal)row["Price"],
+                    VAT = (decimal)row["VAT"]
                 };
                 items.Add(item);
             }
@@ -38,7 +38,7 @@ namespace ChapeauDAL
 
         public MenuItem GetItemById(int id)
         {
-            string query = "Select ItemID, Stock, MenuType, ItemName, Price, VAT, CategoryType FROM MENUITEM WHERE ItemID = @id";
+            string query = "Select ItemID, Stock, MealsType, ItemName, Price, VAT, CategoryType FROM MENUITEM WHERE ItemID = @id";
             SqlParameter[] sqlParameters = new SqlParameter[1];
             sqlParameters[0] = new SqlParameter("@id", id);
             List<MenuItem> items = ReadTablesId(ExecuteSelectQuery(query, sqlParameters));
@@ -58,17 +58,23 @@ namespace ChapeauDAL
             {
                 MenuItem item = new MenuItem()
                 {
-                    ItemID = (MenuItem)row["id"],
+                    ItemID = (int)row["id"],
                     ItemName = row["ItemName"].ToString(),
                     Stock = (int)row["Stock"],
                     MenuType = (MenuType)row["MenuType"],
-                    Price = (double)row["Price"],
+                    Price = (decimal)row["Price"],
                     VAT = (int)row["VAT"],
                     Category = (ItemCategory)row["CategoryType"]
                 };
                 items.Add(item);
             }
             return items;
+        }
+        public List<MenuItem> GetAllItems()
+        {
+            string query = "SELECT ItemID, Stock, MealsType, ItemName, Price, VAT, CategoryType FROM MENUITEM";
+            SqlParameter[] sqlParameters = new SqlParameter[0]; // No parameters required
+            return ReadTables(ExecuteSelectQuery(query, sqlParameters));
         }
     }
 }
