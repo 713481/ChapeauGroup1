@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Security.Cryptography.Xml;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -23,7 +24,15 @@ namespace ChapeauUI
 
         private void OpenView(Employee employee)
         {
-           
+            //close all open forms while leaving the current one open
+            foreach (Form form in Application.OpenForms)
+            {
+                if (form != this)
+                {
+                    form.Close();
+                }
+            }
+
             switch (employee.Role)
             {
                 case StaffRole.Waiter:
@@ -31,11 +40,13 @@ namespace ChapeauUI
                     orderingForm.ShowDialog();
                     break;
                 case StaffRole.Chef:
-                    // ...
-                    Show();
+                    KitchenAndBarView kitchenAndBarView = new KitchenAndBarView( employee);
+                    kitchenAndBarView.ShowDialog();
+              
                     break;
                 case StaffRole.Bartender:
-                    Show();
+                    PaymentForm paymentForm = new PaymentForm();
+                    paymentForm.ShowDialog();
                     break;
                 case StaffRole.Manger:
                     Show();
