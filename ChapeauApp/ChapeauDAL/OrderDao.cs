@@ -288,5 +288,48 @@ namespace ChapeauDAL
             return historyOrders;
         }
 
+        //OrderDao--Iskren Dobrev--------------------------------------------------------------------------------------------------------------------------------------------------------- 
+        public List<OrderDetail> GetOrderDetailsByTableNumber(int tableID)
+        {
+            string query = @"
+                SELECT oi.ItemId, oi.OrderID, oi.OrderCount, oi.OrderTime, oi.ItemStatus, oi.OrderDescription, 
+                       mi.ItemName, mi.Price, mi.VAT
+                FROM OrderItem oi
+                JOIN [ORDER] o ON oi.OrderID = o.OrderID
+                JOIN MENUITEM mi ON oi.ItemId = mi.ItemId
+                WHERE o.TableID = @TableID";
+
+            SqlParameter[] sqlParameters = new SqlParameter[]
+            {
+                new SqlParameter("@TableID", tableID)
+            };
+
+            DataTable dataTable = ExecuteSelectQuery(query, sqlParameters);
+            return ReadOrderDetails(dataTable);
+        }
+
+        private List<OrderDetail> ReadOrderDetails(DataTable dataTable)
+        {
+            List<OrderDetail> orderDetails = new List<OrderDetail>();
+
+            foreach (DataRow row in dataTable.Rows)
+            {
+                OrderDetail detail = new OrderDetail
+                {
+                    ItemId = Convert.ToInt32(row["ItemId"]),
+                    OrderId = Convert.ToInt32(row["OrderID"]),
+                    OrderCount = Convert.ToInt32(row["OrderCount"]),
+                    OrderTime = Convert.ToDateTime(row["OrderTime"]),
+                    ItemStatus = Convert.ToInt32(row["ItemStatus"]),
+                    OrderDescription = row["OrderDescription"].ToString(),
+                    ItemName = row["ItemName"].ToString(),
+                    Price = Convert.ToDecimal(row["Price"]),
+                    VAT = Convert.ToDecimal(row["VAT"])
+                };
+                orderDetails.Add(detail);
+            }
+
+            return orderDetails;
+        }
     }
 }
