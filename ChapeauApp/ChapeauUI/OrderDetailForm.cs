@@ -78,16 +78,20 @@ namespace ChapeauUI
 
         private void AddTipTxtBox_TextChanged(object sender, EventArgs e)
         {
-            decimal totalprice = CalculateTotalPriceWithoutTip();
-            var cultureInfo = new CultureInfo("fr-FR");
+            UpdateFinalPriceWithTip();
+        }
 
+        private void UpdateFinalPriceWithTip()
+        {
+            var cultureInfo = new CultureInfo("fr-FR");
+            decimal totalPrice = CalculateTotalPriceWithoutTip();
 
             if (decimal.TryParse(AddTipTxtBox.Text, out decimal tip))
             {
-                totalprice += tip;
+                totalPrice += tip;
             }
 
-            FinalPriceLbl.Text = totalprice.ToString("c", cultureInfo);
+            FinalPriceLbl.Text = totalPrice.ToString("C", cultureInfo);
         }
 
         private decimal CalculateTotalPriceWithoutTip()
@@ -117,21 +121,11 @@ namespace ChapeauUI
                 if(splitBillForm.ShowDialog() == DialogResult.OK)
                 {
                     int numberOfPersons = splitBillForm.NumberOfPersons;
-                    decimal totalprice = 0;
+                    decimal totalprice = CalculateTotalPriceWithoutTip();
 
                     var cultureInfo = new CultureInfo("fr-FR");
 
-                    foreach (ListViewItem item in OrderDetailsListView.Items)
-                    {
-                        if (decimal.TryParse(item.SubItems[1].Text, NumberStyles.Currency, cultureInfo, out decimal itemPrice))
-                        {
-                            var itemCountText = item.Text.Split('x')[1].Trim();
-                            if (int.TryParse(itemCountText, out int itemCount))
-                            {
-                                totalprice += itemPrice * itemCount;
-                            }
-                        }
-                    }
+                  
 
                     if(decimal.TryParse(AddTipTxtBox.Text,out decimal tip))
                     {
