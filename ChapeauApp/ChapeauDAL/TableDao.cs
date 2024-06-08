@@ -27,7 +27,7 @@ namespace ChapeauDAL
                 {
                     TableID = (int)row["TableID"],
                     TableNumber = (int)row["TableNumber"],
-                    TableStatus = row["TableStatus"].ToString()
+                    TableStatus = (int)row["TableStatus"]
                 };
                 tables.Add(table);
             }
