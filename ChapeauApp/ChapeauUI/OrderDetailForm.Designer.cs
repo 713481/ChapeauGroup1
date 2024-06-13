@@ -32,9 +32,12 @@
             PictureLogo2 = new PictureBox();
             OrderDetailLbl = new Label();
             OrderDetailPanel = new Panel();
+            SplittedPriceLbl = new Label();
+            SplittedPrice = new Label();
+            SplitBillBtn = new Button();
             PayPinBtn = new Button();
             label1 = new Label();
-            PayCashTxtBox = new Button();
+            PayCashBtn = new Button();
             FinalPriceLbl = new Label();
             TotalPriceLbl = new Label();
             AddTipTxtBox = new TextBox();
@@ -44,9 +47,6 @@
             columnHeader2 = new ColumnHeader();
             columnHeader3 = new ColumnHeader();
             ShowTableNbLbl = new Label();
-            SplitBillBtn = new Button();
-            SplittedPrice = new Label();
-            SplittedPriceLbl = new Label();
             ColorPanel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)PictureLogo2).BeginInit();
             OrderDetailPanel.SuspendLayout();
@@ -88,7 +88,7 @@
             OrderDetailPanel.Controls.Add(SplitBillBtn);
             OrderDetailPanel.Controls.Add(PayPinBtn);
             OrderDetailPanel.Controls.Add(label1);
-            OrderDetailPanel.Controls.Add(PayCashTxtBox);
+            OrderDetailPanel.Controls.Add(PayCashBtn);
             OrderDetailPanel.Controls.Add(FinalPriceLbl);
             OrderDetailPanel.Controls.Add(TotalPriceLbl);
             OrderDetailPanel.Controls.Add(AddTipTxtBox);
@@ -103,6 +103,34 @@
             OrderDetailPanel.TabIndex = 1;
             OrderDetailPanel.Paint += panel1_Paint;
             // 
+            // SplittedPriceLbl
+            // 
+            SplittedPriceLbl.AutoSize = true;
+            SplittedPriceLbl.Location = new Point(459, 659);
+            SplittedPriceLbl.Name = "SplittedPriceLbl";
+            SplittedPriceLbl.Size = new Size(50, 20);
+            SplittedPriceLbl.TabIndex = 14;
+            SplittedPriceLbl.Text = "label2";
+            // 
+            // SplittedPrice
+            // 
+            SplittedPrice.AutoSize = true;
+            SplittedPrice.Location = new Point(353, 659);
+            SplittedPrice.Name = "SplittedPrice";
+            SplittedPrice.Size = new Size(100, 20);
+            SplittedPrice.TabIndex = 13;
+            SplittedPrice.Text = "Splitted Price:";
+            // 
+            // SplitBillBtn
+            // 
+            SplitBillBtn.Location = new Point(353, 614);
+            SplitBillBtn.Name = "SplitBillBtn";
+            SplitBillBtn.Size = new Size(94, 29);
+            SplitBillBtn.TabIndex = 12;
+            SplitBillBtn.Text = "Split Bill";
+            SplitBillBtn.UseVisualStyleBackColor = true;
+            SplitBillBtn.Click += SplitBillBtn_Click;
+            // 
             // PayPinBtn
             // 
             PayPinBtn.BackColor = Color.GreenYellow;
@@ -112,6 +140,7 @@
             PayPinBtn.TabIndex = 11;
             PayPinBtn.Text = "Pay with Credit/Debit";
             PayPinBtn.UseVisualStyleBackColor = false;
+            PayPinBtn.Click += PayPinBtn_Click;
             // 
             // label1
             // 
@@ -121,15 +150,16 @@
             label1.Size = new Size(0, 20);
             label1.TabIndex = 10;
             // 
-            // PayCashTxtBox
+            // PayCashBtn
             // 
-            PayCashTxtBox.BackColor = Color.GreenYellow;
-            PayCashTxtBox.Location = new Point(658, 614);
-            PayCashTxtBox.Name = "PayCashTxtBox";
-            PayCashTxtBox.Size = new Size(140, 29);
-            PayCashTxtBox.TabIndex = 8;
-            PayCashTxtBox.Text = "Pay with cash";
-            PayCashTxtBox.UseVisualStyleBackColor = false;
+            PayCashBtn.BackColor = Color.GreenYellow;
+            PayCashBtn.Location = new Point(658, 614);
+            PayCashBtn.Name = "PayCashBtn";
+            PayCashBtn.Size = new Size(140, 29);
+            PayCashBtn.TabIndex = 8;
+            PayCashBtn.Text = "Pay with cash";
+            PayCashBtn.UseVisualStyleBackColor = false;
+            PayCashBtn.Click += PayCashBtn_Click;
             // 
             // FinalPriceLbl
             // 
@@ -203,34 +233,6 @@
             ShowTableNbLbl.TabIndex = 2;
             ShowTableNbLbl.Text = "label1";
             // 
-            // SplitBillBtn
-            // 
-            SplitBillBtn.Location = new Point(353, 614);
-            SplitBillBtn.Name = "SplitBillBtn";
-            SplitBillBtn.Size = new Size(94, 29);
-            SplitBillBtn.TabIndex = 12;
-            SplitBillBtn.Text = "Split Bill";
-            SplitBillBtn.UseVisualStyleBackColor = true;
-            SplitBillBtn.Click += SplitBillBtn_Click;
-            // 
-            // SplittedPrice
-            // 
-            SplittedPrice.AutoSize = true;
-            SplittedPrice.Location = new Point(353, 659);
-            SplittedPrice.Name = "SplittedPrice";
-            SplittedPrice.Size = new Size(100, 20);
-            SplittedPrice.TabIndex = 13;
-            SplittedPrice.Text = "Splitted Price:";
-            // 
-            // SplittedPriceLbl
-            // 
-            SplittedPriceLbl.AutoSize = true;
-            SplittedPriceLbl.Location = new Point(459, 659);
-            SplittedPriceLbl.Name = "SplittedPriceLbl";
-            SplittedPriceLbl.Size = new Size(50, 20);
-            SplittedPriceLbl.TabIndex = 14;
-            SplittedPriceLbl.Text = "label2";
-            // 
             // OrderDetailForm
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
@@ -260,7 +262,7 @@
         private Label TotalPriceLbl;
         private TextBox AddTipTxtBox;
         private Label AddTipLbl;
-        private Button PayCashTxtBox;
+        private Button PayCashBtn;
         private Label FinalPriceLbl;
         private Label label1;
         private ColumnHeader columnHeader3;
