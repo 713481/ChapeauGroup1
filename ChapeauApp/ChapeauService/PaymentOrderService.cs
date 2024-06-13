@@ -5,11 +5,13 @@ using System.Text;
 using System.Threading.Tasks;
 using ChapeauModel;
 using ChapeauDAL;
+using System.Data.SqlClient;
 
 namespace ChapeauService
 {
     public class PaymentOrderService
     {
+        private string connectionString;
         private OrderDao orderDao; // Assuming you have an OrderDao to interact with the database
 
         public PaymentOrderService()
@@ -20,7 +22,9 @@ namespace ChapeauService
         public List<OrderDetail> GetOrderDetailsByTableNumber(int tableNumber)
         {
             // Implement the method to fetch order details based on table number
-            return orderDao.GetOrderDetailsByTableNumber(tableNumber);
+            return orderDao.GetUnpaidOrderDetailsByTableNumber(tableNumber);
         }
+
+       
     }
 }

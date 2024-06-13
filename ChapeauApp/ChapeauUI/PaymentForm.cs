@@ -3,7 +3,9 @@ using ChapeauService;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Configuration;
 using System.Data;
+using System.Data.SqlClient;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -30,6 +32,7 @@ namespace ChapeauUI
         {
             try
             {
+                ListViewTables.Items.Clear();
                 var tables = tableService.GetAllTable();
                 foreach (var table in tables)
                 {
@@ -67,17 +70,59 @@ namespace ChapeauUI
                 string selectedTableText = ListViewTables.SelectedItems[0].Text;
                 int tableNumber = int.Parse(selectedTableText.Split(' ')[1]);
 
-                // Open OrderDetailForm with the selected table number
-                OrderDetailForm orderDetailForm = new OrderDetailForm(tableNumber);
-                orderDetailForm.Show();
+                int orderId = GetOrderIdByTableNumber(tableNumber);
+
+                if (orderId != -1)
+                {
+                    // Open OrderDetailForm with the selected table number
+                    OrderDetailForm orderDetailForm = new OrderDetailForm(orderId);
+                    if (orderDetailForm.ShowDialog() == DialogResult.OK)
+                    {
+                        LoadTablesFromDatabase();
+                    }
+                    
+
+
+                }
+                else
+                {
+                    MessageBox.Show("No order found for the selected table.");
+                }
+
+
 
                 // Close the PaymentForm
-                
+
             }
             else
             {
                 MessageBox.Show("Please select a table.");
             }
+        }
+
+        private int GetOrderIdByTableNumber(int tableNumber)
+        {
+            int orderId = -1;
+            string connectionString = ConfigurationManager.ConnectionStrings["ChapeauDatabase"].ConnectionString;
+
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+                string query = "SELECT OrderID FROM [ORDER] WHERE TableID = (SELECT TableID FROM [TABLE] WHERE TableNumber = @TableNumber)";
+
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@TableNumber", tableNumber);
+                    object result = command.ExecuteScalar();
+
+                    if (result != null && int.TryParse(result.ToString(), out orderId))
+                    {
+                        return orderId;
+                    }
+                }
+            }
+
+            return orderId;
         }
     }
 }

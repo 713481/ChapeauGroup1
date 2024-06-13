@@ -279,7 +279,7 @@ namespace ChapeauDAL
         }
 
         //OrderDao--Iskren Dobrev--------------------------------------------------------------------------------------------------------------------------------------------------------- 
-        public List<OrderDetail> GetOrderDetailsByTableNumber(int tableID)
+        public List<OrderDetail> GetUnpaidOrderDetailsByTableNumber(int tableID)
         {
             string query = @"
                 SELECT oi.ItemId, oi.OrderID, oi.OrderCount, oi.OrderTime, oi.ItemStatus, oi.OrderDescription, 
@@ -287,11 +287,12 @@ namespace ChapeauDAL
                 FROM OrderItem oi
                 JOIN [ORDER] o ON oi.OrderID = o.OrderID
                 JOIN MENUITEM mi ON oi.ItemId = mi.ItemId
-                WHERE o.TableID = @TableID";
+                WHERE o.TableID = @TableID AND o.OrderStatus != @OrderStatus";
 
             SqlParameter[] sqlParameters = new SqlParameter[]
             {
-                new SqlParameter("@TableID", tableID)
+                new SqlParameter("@TableID", tableID),
+                new SqlParameter("@OrderStatus", (int)OrderStatus.Paid)
             };
 
             DataTable dataTable = ExecuteSelectQuery(query, sqlParameters);
@@ -300,10 +301,10 @@ namespace ChapeauDAL
 
         private List<OrderDetail> ReadOrderDetails(DataTable dataTable)
         {
-            List<OrderDetail> orderDetails = new List<OrderDetail>();
+            var orderDetails = new List<OrderDetail>();
 
             foreach (DataRow row in dataTable.Rows)
-            {
+            {   
                 OrderDetail detail = new OrderDetail
                 {
                     ItemId = Convert.ToInt32(row["ItemId"]),

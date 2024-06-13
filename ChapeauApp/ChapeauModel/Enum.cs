@@ -10,7 +10,7 @@ namespace ChapeauModel
     public enum ItemCategory { Starters = 1, Entrements, Mains, Deserts, SoftDrinks, Beers, Wines, SpiritDrinks, CoffeeTea }
     public enum MenuType { Lunch = 1, Dinner, Drinks }
     public enum StaffRole { Waiter = 1, Chef, Manger, Bartender }
-    public enum OrderStatus { Open = 1, Preparing, Ready, Served }
+    public enum OrderStatus { Open = 1, Preparing, Ready, Served, Paid = 5 }
     public enum TableStatus { free = 1, occupied = 2 }
     
 }

@@ -97,5 +97,39 @@ namespace ChapeauDAL
             }
         }
 
+        public void DeleteOrder(int orderId)
+        {
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+
+                // Begin a transaction to ensure atomicity
+                using (var transaction = connection.BeginTransaction())
+                {
+                    try
+                    {
+                        // Delete order details associated with the order
+                        var deleteOrderDetailsCmd = new SqlCommand("DELETE FROM OrderItem WHERE OrderId = @orderId", connection, transaction);
+                        deleteOrderDetailsCmd.Parameters.AddWithValue("@orderId", orderId);
+                        deleteOrderDetailsCmd.ExecuteNonQuery();
+
+                        // Delete the order itself
+                        var deleteOrderCmd = new SqlCommand("DELETE FROM [ORDER] WHERE OrderId = @orderId", connection, transaction);
+                        deleteOrderCmd.Parameters.AddWithValue("@orderId", orderId);
+                        deleteOrderCmd.ExecuteNonQuery();
+
+                        // Commit the transaction
+                        transaction.Commit();
+                    }
+                    catch
+                    {
+                        // Rollback the transaction if there is an error
+                        transaction.Rollback();
+                        throw;
+                    }
+                }
+            }
+        }
+
     }
 }
