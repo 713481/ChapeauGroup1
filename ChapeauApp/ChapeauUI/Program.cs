@@ -14,7 +14,7 @@ namespace ChapeauUI
             // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
             Employee employee = new Employee();
-            Application.Run(new PaymentForm());
+            Application.Run(new orderingForm());
         }
     }
 }
