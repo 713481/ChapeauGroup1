@@ -47,6 +47,7 @@
             columnHeader2 = new ColumnHeader();
             columnHeader3 = new ColumnHeader();
             ShowTableNbLbl = new Label();
+            LogOutOrderDetailBtn = new Button();
             ColorPanel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)PictureLogo2).BeginInit();
             OrderDetailPanel.SuspendLayout();
@@ -55,6 +56,7 @@
             // ColorPanel2
             // 
             ColorPanel2.BackColor = SystemColors.MenuHighlight;
+            ColorPanel2.Controls.Add(LogOutOrderDetailBtn);
             ColorPanel2.Controls.Add(PictureLogo2);
             ColorPanel2.Location = new Point(3, 3);
             ColorPanel2.Name = "ColorPanel2";
@@ -233,6 +235,16 @@
             ShowTableNbLbl.TabIndex = 2;
             ShowTableNbLbl.Text = "label1";
             // 
+            // LogOutOrderDetailBtn
+            // 
+            LogOutOrderDetailBtn.Location = new Point(640, 28);
+            LogOutOrderDetailBtn.Name = "LogOutOrderDetailBtn";
+            LogOutOrderDetailBtn.Size = new Size(142, 50);
+            LogOutOrderDetailBtn.TabIndex = 1;
+            LogOutOrderDetailBtn.Text = "Log Out";
+            LogOutOrderDetailBtn.UseVisualStyleBackColor = true;
+            LogOutOrderDetailBtn.Click += LogOutOrderDetailBtn_Click;
+            // 
             // OrderDetailForm
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
@@ -270,5 +282,6 @@
         private Button SplitBillBtn;
         private Label SplittedPriceLbl;
         private Label SplittedPrice;
+        private Button LogOutOrderDetailBtn;
     }
 }
