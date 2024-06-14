@@ -1,4 +1,6 @@
-﻿using ChapeauModel;
+﻿using ChapeauDAL;
+using ChapeauModel;
+using ChapeauService;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -14,6 +16,7 @@ namespace ChapeauUI
     public partial class MyOrder : Form
     {
         private List<OrderItem> userOrder;
+
         public MyOrder()
         {
             InitializeComponent();
@@ -36,7 +39,25 @@ namespace ChapeauUI
 
         private void btnMyOrderOrder_Click(object sender, EventArgs e)
         {
+            try
+            {
+                Order order = new Order
+                {
+                    TableID = 1,  // Set the table ID
+                    EmployeeID = 2,  // Set the employee ID
+                    orderStatus = OrderStatus.Open,  // Assuming Open is the status for a new order
+                    OrderTime = DateTime.Now
+                };
 
+                OrderService orderService = new OrderService();
+                orderService.FinishOrder(order, userOrder);
+
+                MessageBox.Show("Order finalized successfully!");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"An error occurred: {ex.Message}");
+            }
         }
         private void FillUserOrder()
         {
@@ -45,16 +66,21 @@ namespace ChapeauUI
             foreach (OrderItem orderItem in userOrder)
             {
                 ListViewItem listViewItem = new ListViewItem(orderItem.OrderCount.ToString());
+
+                // Add subitems
                 listViewItem.SubItems.Add(orderItem.MenuItem.ItemName);
                 listViewItem.SubItems.Add(orderItem.MenuItem.Price.ToString("0.00"));
-                listViewItem.SubItems.Add(orderItem.Notes);
+
+                // Ensure Notes is not null
+                string notes = orderItem.Notes ?? "";  // If Notes is null, default to empty string
+                listViewItem.SubItems.Add(notes);
+
                 lvMyOrderList.Items.Add(listViewItem);
             }
         }
         private void MyOrder_Load(object sender, EventArgs e)
         {
-            decimal totalPrice = CalculateTotalPrice();
-            lblMyOrderTotalPrice.Text = $"€{totalPrice.ToString("0.00")}";
+
         }
         private decimal CalculateTotalPrice()
         {
@@ -70,6 +96,12 @@ namespace ChapeauUI
         {
             // close the dialogue
             this.Close();
+        }
+
+        private void MyOrder_Load_1(object sender, EventArgs e)
+        {
+            decimal totalPrice = CalculateTotalPrice();
+            lblMyOrderTotalPrice.Text = $"€{totalPrice.ToString("0.00")}";
         }
     }
 }

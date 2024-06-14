@@ -22,29 +22,38 @@ namespace ChapeauDAL
         // Creating an order
         public int CreateOrder(Order order)
         {
-            string query = "INSERT INTO [Order] (TableID, EmployeeID, OrderDate) OUTPUT INSERTED.OrderID VALUES (@TableID, @EmployeeID, @OrderDate)";
+            string query = "INSERT INTO [Order] (TableID, EmployeeID, OrderTime) OUTPUT INSERTED.OrderID VALUES (@TableID, @EmployeeID, @OrderTime)";
             SqlParameter[] sqlParameters = new SqlParameter[]
             {
                 new SqlParameter("@TableID", order.TableID),
                 new SqlParameter("@EmployeeID", order.EmployeeID),
-                new SqlParameter("@OrderDate", DateTime.Now)
+                new SqlParameter("@OrderTime", DateTime.Now)
             };
             return ExecuteInsertQuery(query, sqlParameters);
         }
         // Add an item to an existing order
         public void AddOrderItem(OrderItem orderItem)
         {
-            string query = "INSERT INTO [OrderItem] (OrderID, ItemID, OrderCount, OrderStatus, OrderDescription, OrderTime) VALUES (@OrderID, @ItemID, @OrderCount, @OrderStatus, @OrderDescription, @OrderTime)";
+            string query = "INSERT INTO [OrderItem] (ItemID, OrderID, OrderCount, OrderTime, ItemStatus, OrderDescription) VALUES (@ItemID, @OrderID, @OrderCount, @OrderTime, @ItemStatus, @OrderDescription)";
             SqlParameter[] sqlParameters = new SqlParameter[]
             {
-                new SqlParameter("@OrderID", orderItem.OrderID),
                 new SqlParameter("@ItemID", orderItem.MenuItem.ItemID),
+                new SqlParameter("@OrderID", orderItem.OrderID),
                 new SqlParameter("@OrderCount", orderItem.OrderCount),
-                new SqlParameter("@OrderStatus", (int)orderItem.StatusItem),
-                new SqlParameter("@OrderDescription", orderItem.Notes),
-                new SqlParameter("@OrderTime", DateTime.Now)
+                new SqlParameter("@OrderTime", orderItem.OrderTime),
+                new SqlParameter("@ItemStatus", (int)orderItem.StatusItem),
+                new SqlParameter("@OrderDescription", orderItem.Notes)
             };
             ExecuteEditQuery(query, sqlParameters);
+
+            // Update MenuItem stock
+            string updateStockQuery = "UPDATE MENUITEM SET Stock = Stock - 1 WHERE ItemID = @ItemID";
+            SqlParameter[] updateStockParams = new SqlParameter[]
+            {
+                new SqlParameter("@ItemID", orderItem.MenuItem.ItemID)
+            };
+
+            ExecuteEditQuery(updateStockQuery, updateStockParams);
         }
         // Get orders by table ID
         public List<Order> GetOrdersByTable(int tableId)
