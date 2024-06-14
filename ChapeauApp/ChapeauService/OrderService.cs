@@ -12,9 +12,11 @@ namespace ChapeauService
     {
         // Alex
         private OrderDao orderDao;
+        private ItemDao itemDao;
         public OrderService() 
         { 
             orderDao = new OrderDao(); 
+            itemDao = new ItemDao();
         }
         public int CreateOrder(Order order)
         {
@@ -28,6 +30,10 @@ namespace ChapeauService
         public List<Order> GetOrdersByTable(int tableId)
         {
             return orderDao.GetOrdersByTable(tableId);
+        }
+        public List<MenuItem> GetAllMenuItems()
+        {
+            return itemDao.GetAllItems();
         }
         // Ro Bben
         public void ChangeStatus(OrderItem orderItem, ItemStatus statusToChange)
