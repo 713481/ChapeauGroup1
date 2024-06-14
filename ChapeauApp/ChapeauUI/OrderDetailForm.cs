@@ -24,8 +24,10 @@ namespace ChapeauUI
         private PaymentOrderService paymentOrderService;
         private OrderDao orderDao;
         private bool hasShownMessage = false;
+        private PaymentForm PaymentForm;
+        
 
-        public OrderDetailForm( int orderId)
+        public OrderDetailForm(int orderId, PaymentForm paymentForm)
         {
             InitializeComponent();
             string connectionString = ConfigurationManager.ConnectionStrings["ChapeauDatabase"].ConnectionString;
@@ -34,12 +36,16 @@ namespace ChapeauUI
             this.paymentOrderService = new PaymentOrderService();
             this.paymentService = new PaymentService(connectionString);
             this.orderDao = new OrderDao();
-
+            this.PaymentForm = new PaymentForm();
+            this.PaymentForm = paymentForm;
             
-           
+
+
+
 
 
         }
+
 
         private void LoadOrderDetails()
         {
@@ -56,7 +62,7 @@ namespace ChapeauUI
                         hasShownMessage = true; // Set the flag
                     }
 
-                    
+
                     OrderDetailsListView.Items.Clear();
                     FinalPriceLbl.Text = "0,00 €";
                     return;
@@ -64,7 +70,7 @@ namespace ChapeauUI
 
                 orderDetails = orderDetails.Where(detail => detail.orderStatus != OrderStatus.Paid).ToList();
 
-                
+
 
                 var groupedOrderDetails = orderDetails.GroupBy(detail => new { detail.ItemName, detail.Price, detail.VAT }).Select(group => new
                 {
@@ -87,7 +93,7 @@ namespace ChapeauUI
                     OrderDetailsListView.Items.Add(listViewItem);
 
                     totalprice += totalItemPrice;
-                }   
+                }
                 FinalPriceLbl.Text = totalprice.ToString("C", cultureInfo);
             }
             catch (Exception ex)
@@ -118,7 +124,7 @@ namespace ChapeauUI
             var cultureInfo = new CultureInfo("fr-FR");
             decimal totalPrice = CalculateTotalPriceWithoutTip();
 
-            if (decimal.TryParse(AddTipTxtBox.Text, out decimal tip))
+            if (decimal.TryParse(AddTipTxtBox.Text,NumberStyles.Currency,cultureInfo, out decimal tip))
             {
                 totalPrice += tip;
             }
@@ -233,7 +239,7 @@ namespace ChapeauUI
                 this.DialogResult = DialogResult.OK;
 
                 LoadOrderDetails();
-                
+
             }
             else
             {
@@ -310,15 +316,27 @@ namespace ChapeauUI
             AddTipTxtBox.Text = string.Empty;
         }
 
-            
 
-        
+
+
 
         private void PayPinBtn_Click(object sender, EventArgs e)
         {
             OpenCommentForm("Debit");
             SetOrderStatusToPaid(orderId);
             LoadOrderDetails();
+
+        }
+
+        private void LogOutOrderDetailBtn_Click(object sender, EventArgs e)
+        {
+            if (PaymentForm != null)
+            {
+                PaymentForm.Close();
+            }
+
+            
+            this.Close();
 
         }
     }

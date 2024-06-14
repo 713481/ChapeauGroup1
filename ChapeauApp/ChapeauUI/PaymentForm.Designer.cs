@@ -33,10 +33,11 @@
             TableSelectPnl = new Panel();
             NextBtn = new Button();
             ListViewTables = new ListView();
-            SelectTableLbl = new Label();
-            Payment1Lbl = new Label();
             columnHeader1 = new ColumnHeader();
             columnHeader2 = new ColumnHeader();
+            SelectTableLbl = new Label();
+            Payment1Lbl = new Label();
+            PaymentLogOutBtn = new Button();
             ColorPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)ChapeauPictureLogo).BeginInit();
             TableSelectPnl.SuspendLayout();
@@ -45,6 +46,7 @@
             // ColorPanel1
             // 
             ColorPanel1.BackColor = SystemColors.MenuHighlight;
+            ColorPanel1.Controls.Add(PaymentLogOutBtn);
             ColorPanel1.Controls.Add(ChapeauPictureLogo);
             ColorPanel1.Location = new Point(3, 3);
             ColorPanel1.Name = "ColorPanel1";
@@ -94,6 +96,16 @@
             ListViewTables.View = View.Details;
             ListViewTables.SelectedIndexChanged += listView1_SelectedIndexChanged;
             // 
+            // columnHeader1
+            // 
+            columnHeader1.Text = "Table Number";
+            columnHeader1.Width = 140;
+            // 
+            // columnHeader2
+            // 
+            columnHeader2.Text = "Table Status";
+            columnHeader2.Width = 120;
+            // 
             // SelectTableLbl
             // 
             SelectTableLbl.AutoSize = true;
@@ -116,15 +128,15 @@
             Payment1Lbl.Text = "PAYMENT";
             Payment1Lbl.Click += Payment1Lbl_Click;
             // 
-            // columnHeader1
+            // PaymentLogOutBtn
             // 
-            columnHeader1.Text = "Table Number";
-            columnHeader1.Width = 140;
-            // 
-            // columnHeader2
-            // 
-            columnHeader2.Text = "Table Status";
-            columnHeader2.Width = 120;
+            PaymentLogOutBtn.Location = new Point(415, 43);
+            PaymentLogOutBtn.Name = "PaymentLogOutBtn";
+            PaymentLogOutBtn.Size = new Size(126, 42);
+            PaymentLogOutBtn.TabIndex = 1;
+            PaymentLogOutBtn.Text = "Log Out";
+            PaymentLogOutBtn.UseVisualStyleBackColor = true;
+            PaymentLogOutBtn.Click += PaymentLogOutBtn_Click;
             // 
             // PaymentForm
             // 
@@ -153,5 +165,6 @@
         private Button NextBtn;
         private ColumnHeader columnHeader1;
         private ColumnHeader columnHeader2;
+        private Button PaymentLogOutBtn;
     }
 }

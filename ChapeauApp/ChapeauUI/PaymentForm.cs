@@ -75,12 +75,12 @@ namespace ChapeauUI
                 if (orderId != -1)
                 {
                     // Open OrderDetailForm with the selected table number
-                    OrderDetailForm orderDetailForm = new OrderDetailForm(orderId);
+                    OrderDetailForm orderDetailForm = new OrderDetailForm(orderId, this);
                     if (orderDetailForm.ShowDialog() == DialogResult.OK)
                     {
                         LoadTablesFromDatabase();
                     }
-                    
+
 
 
                 }
@@ -123,6 +123,13 @@ namespace ChapeauUI
             }
 
             return orderId;
+        }
+
+        private void PaymentLogOutBtn_Click(object sender, EventArgs e)
+        {
+            
+
+            this.Close();
         }
     }
 }
