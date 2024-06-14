@@ -35,11 +35,13 @@
             lblOrderingTableNumber = new Label();
             btnOrderingAddDishes = new Button();
             btnOrderingMyOrder = new Button();
-            cmbOrderingCategory = new ComboBox();
             lvOrderingMenuItems = new ListView();
             chDishName = new ColumnHeader();
             chPrice = new ColumnHeader();
             chStock = new ColumnHeader();
+            btnOrderingLunch = new Button();
+            btnOrderingDiner = new Button();
+            btnOrderingDrink = new Button();
             pnlOrderingHeaderBackground.SuspendLayout();
             SuspendLayout();
             // 
@@ -93,6 +95,7 @@
             btnOrderingAddDishes.TabIndex = 9;
             btnOrderingAddDishes.Text = "Add";
             btnOrderingAddDishes.UseVisualStyleBackColor = true;
+            btnOrderingAddDishes.Click += btnOrderingAddDishes_Click;
             // 
             // btnOrderingMyOrder
             // 
@@ -103,21 +106,14 @@
             btnOrderingMyOrder.TabIndex = 10;
             btnOrderingMyOrder.Text = "My order";
             btnOrderingMyOrder.UseVisualStyleBackColor = true;
-            // 
-            // cmbOrderingCategory
-            // 
-            cmbOrderingCategory.FormattingEnabled = true;
-            cmbOrderingCategory.Location = new Point(27, 139);
-            cmbOrderingCategory.Name = "cmbOrderingCategory";
-            cmbOrderingCategory.Size = new Size(121, 23);
-            cmbOrderingCategory.TabIndex = 11;
+            btnOrderingMyOrder.Click += btnOrderingMyOrder_Click;
             // 
             // lvOrderingMenuItems
             // 
             lvOrderingMenuItems.Columns.AddRange(new ColumnHeader[] { chDishName, chPrice, chStock });
-            lvOrderingMenuItems.Location = new Point(27, 177);
+            lvOrderingMenuItems.Location = new Point(27, 203);
             lvOrderingMenuItems.Name = "lvOrderingMenuItems";
-            lvOrderingMenuItems.Size = new Size(324, 179);
+            lvOrderingMenuItems.Size = new Size(333, 445);
             lvOrderingMenuItems.TabIndex = 12;
             lvOrderingMenuItems.UseCompatibleStateImageBehavior = false;
             lvOrderingMenuItems.View = View.Details;
@@ -137,14 +133,46 @@
             chStock.Text = "Stock";
             chStock.Width = 50;
             // 
+            // btnOrderingLunch
+            // 
+            btnOrderingLunch.Location = new Point(27, 139);
+            btnOrderingLunch.Name = "btnOrderingLunch";
+            btnOrderingLunch.Size = new Size(111, 58);
+            btnOrderingLunch.TabIndex = 15;
+            btnOrderingLunch.Text = "Lunch";
+            btnOrderingLunch.UseVisualStyleBackColor = true;
+            btnOrderingLunch.Click += btnOrderingLunch_Click;
+            // 
+            // btnOrderingDiner
+            // 
+            btnOrderingDiner.Location = new Point(138, 139);
+            btnOrderingDiner.Name = "btnOrderingDiner";
+            btnOrderingDiner.Size = new Size(111, 58);
+            btnOrderingDiner.TabIndex = 16;
+            btnOrderingDiner.Text = "Diner";
+            btnOrderingDiner.UseVisualStyleBackColor = true;
+            btnOrderingDiner.Click += btnOrderingDiner_Click;
+            // 
+            // btnOrderingDrink
+            // 
+            btnOrderingDrink.Location = new Point(249, 139);
+            btnOrderingDrink.Name = "btnOrderingDrink";
+            btnOrderingDrink.Size = new Size(111, 58);
+            btnOrderingDrink.TabIndex = 17;
+            btnOrderingDrink.Text = "Drink";
+            btnOrderingDrink.UseVisualStyleBackColor = true;
+            btnOrderingDrink.Click += btnOrderingDrink_Click;
+            // 
             // orderingForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.MediumSlateBlue;
             ClientSize = new Size(384, 800);
+            Controls.Add(btnOrderingDrink);
+            Controls.Add(btnOrderingDiner);
+            Controls.Add(btnOrderingLunch);
             Controls.Add(lvOrderingMenuItems);
-            Controls.Add(cmbOrderingCategory);
             Controls.Add(btnOrderingMyOrder);
             Controls.Add(btnOrderingAddDishes);
             Controls.Add(lblOrderingTableNumber);
@@ -166,10 +194,12 @@
         private Label lblOrderingTableNumber;
         private Button btnOrderingAddDishes;
         private Button btnOrderingMyOrder;
-        private ComboBox cmbOrderingCategory;
         private ListView lvOrderingMenuItems;
         private ColumnHeader chDishName;
         private ColumnHeader chPrice;
         private ColumnHeader chStock;
+        private Button btnOrderingLunch;
+        private Button btnOrderingDiner;
+        private Button btnOrderingDrink;
     }
 }

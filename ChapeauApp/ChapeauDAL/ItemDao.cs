@@ -9,12 +9,18 @@ using System.Threading.Tasks;
 
 namespace ChapeauDAL
 {
-    internal class ItemDao : BaseDao
+    public class ItemDao : BaseDao
     {
         public List<MenuItem> GetItem()
         {
             string query = "Select ItemID, Stock, MealsType, ItemName, Price, VAT, CategoryType FROM MENUITEM WHERE ItemID = @id";
             SqlParameter[] sqlParameters = new SqlParameter[1];
+            return ReadTables(ExecuteSelectQuery(query, sqlParameters));
+        }
+        public List<MenuItem> GetAllItems()
+        {
+            string query = "SELECT ItemID, Stock, MealsType, ItemName, Price, VAT, CategoryType FROM MENUITEM";
+            SqlParameter[] sqlParameters = new SqlParameter[0]; // No parameters required
             return ReadTables(ExecuteSelectQuery(query, sqlParameters));
         }
         private List<MenuItem> ReadTables(DataTable dataTable)
@@ -24,10 +30,10 @@ namespace ChapeauDAL
             {
                 MenuItem item = new MenuItem()
                 {
-                    ItemID = (int)row["id"],
+                    ItemID = (int)row["ItemID"],
                     ItemName = row["ItemName"].ToString(),
                     Stock = (int)row["Stock"],
-                    MenuType = (MenuType)row["MenuType"],
+                    MenuType = (MenuType)((int)row["MealsType"]),
                     Price = (decimal)row["Price"],
                     VAT = (decimal)row["VAT"]
                 };
