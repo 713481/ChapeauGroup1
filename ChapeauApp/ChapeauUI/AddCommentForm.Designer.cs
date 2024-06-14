@@ -65,11 +65,11 @@
             // 
             // AddBtn
             // 
-            AddBtn.Location = new Point(124, 256);
+            AddBtn.Location = new Point(107, 263);
             AddBtn.Name = "AddBtn";
-            AddBtn.Size = new Size(122, 48);
+            AddBtn.Size = new Size(162, 48);
             AddBtn.TabIndex = 3;
-            AddBtn.Text = "ADD";
+            AddBtn.Text = "Finish Payment";
             AddBtn.UseVisualStyleBackColor = true;
             AddBtn.Click += AddBtn_Click;
             // 
@@ -83,7 +83,7 @@
             Controls.Add(AddCommentLbl2);
             Controls.Add(AddCommentLbl);
             Name = "AddCommentForm";
-            Text = "AddCommentForm";
+            Text = "AddComments";
             Load += AddCommentForm_Load;
             ResumeLayout(false);
             PerformLayout();
