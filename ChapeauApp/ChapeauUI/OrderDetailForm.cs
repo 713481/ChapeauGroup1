@@ -194,6 +194,11 @@ namespace ChapeauUI
 
         private void PayCashBtn_Click(object sender, EventArgs e)
         {
+            if (!OrderDetailsListView.Items.Cast<ListViewItem>().Any())
+            {
+                MessageBox.Show("There are no orders to pay for.");
+                return;
+            }
             OpenCommentForm("Cash");
             SetOrderStatusToPaid(orderId);
             LoadOrderDetails();
@@ -322,6 +327,11 @@ namespace ChapeauUI
 
         private void PayPinBtn_Click(object sender, EventArgs e)
         {
+            if (!OrderDetailsListView.Items.Cast<ListViewItem>().Any())
+            {
+                MessageBox.Show("There are no orders to pay for.");
+                return;
+            }
             OpenCommentForm("Debit");
             SetOrderStatusToPaid(orderId);
             LoadOrderDetails();
