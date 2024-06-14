@@ -176,6 +176,7 @@
             Controls.Add(pnlMyOrderingHeaderBackground);
             Name = "MyOrder";
             Text = "MyOrder";
+            Load += MyOrder_Load_1;
             pnlMyOrderingHeaderBackground.ResumeLayout(false);
             ResumeLayout(false);
             PerformLayout();

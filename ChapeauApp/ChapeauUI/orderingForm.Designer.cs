@@ -111,6 +111,7 @@
             // lvOrderingMenuItems
             // 
             lvOrderingMenuItems.Columns.AddRange(new ColumnHeader[] { chDishName, chPrice, chStock });
+            lvOrderingMenuItems.FullRowSelect = true;
             lvOrderingMenuItems.Location = new Point(27, 203);
             lvOrderingMenuItems.Name = "lvOrderingMenuItems";
             lvOrderingMenuItems.Size = new Size(333, 445);
