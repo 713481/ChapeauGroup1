@@ -37,7 +37,7 @@
             textBoxUsernameInput = new TextBox();
             label1 = new Label();
             lblLogin = new Label();
-            pnlLoginLogo = new Panel();
+            pnlLoginnigLogo = new Panel();
             SuspendLayout();
             // 
             // lblInvalid
@@ -110,16 +110,16 @@
             lblLogin.TabIndex = 8;
             lblLogin.Text = "Login";
             // 
-            // pnlLoginLogo
+            // pnlLoginnigLogo
             // 
-            pnlLoginLogo.BackColor = Color.White;
-            pnlLoginLogo.BackgroundImage = (Image)resources.GetObject("pnlLoginLogo.BackgroundImage");
-            pnlLoginLogo.BackgroundImageLayout = ImageLayout.Stretch;
-            pnlLoginLogo.Location = new Point(80, 13);
-            pnlLoginLogo.Margin = new Padding(3, 4, 3, 4);
-            pnlLoginLogo.Name = "pnlLoginLogo";
-            pnlLoginLogo.Size = new Size(105, 86);
-            pnlLoginLogo.TabIndex = 16;
+            pnlLoginnigLogo.BackColor = Color.White;
+            pnlLoginnigLogo.BackgroundImage = (Image)resources.GetObject("pnlLoginnigLogo.BackgroundImage");
+            pnlLoginnigLogo.BackgroundImageLayout = ImageLayout.Stretch;
+            pnlLoginnigLogo.Location = new Point(87, 24);
+            pnlLoginnigLogo.Margin = new Padding(3, 4, 3, 4);
+            pnlLoginnigLogo.Name = "pnlLoginnigLogo";
+            pnlLoginnigLogo.Size = new Size(98, 85);
+            pnlLoginnigLogo.TabIndex = 16;
             // 
             // LoginForm
             // 
@@ -127,7 +127,7 @@
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(128, 128, 255);
             ClientSize = new Size(291, 450);
-            Controls.Add(pnlLoginLogo);
+            Controls.Add(pnlLoginnigLogo);
             Controls.Add(lblInvalid);
             Controls.Add(btnLogin);
             Controls.Add(label3);
@@ -152,6 +152,6 @@
         private TextBox textBoxUsernameInput;
         private Label label1;
         private Label lblLogin;
-        private Panel pnlLoginLogo;
+        private Panel pnlLoginnigLogo;
     }
 }
