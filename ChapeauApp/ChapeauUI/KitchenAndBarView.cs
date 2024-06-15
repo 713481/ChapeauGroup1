@@ -315,7 +315,7 @@ namespace ChapeauUI
             isOpenOrder = true;
             butSetToReady.Enabled = true;
             butChangeStatus.Enabled = true;
-            butRefresh.Enabled=true;
+            butRefresh.Enabled = true;
             listViewKitchenOrderItem.Items.Clear(); // Clear the Orders list view
             RunningOrderButton.Enabled = false;
             HistoryButton.Enabled = true;

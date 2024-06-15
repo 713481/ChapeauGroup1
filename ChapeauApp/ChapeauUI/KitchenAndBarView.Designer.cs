@@ -127,7 +127,7 @@
             // BARITEMNAME
             // 
             BARITEMNAME.Text = "Item Name";
-            BARITEMNAME.Width = 230;
+            BARITEMNAME.Width = 330;
             // 
             // BARORDERCOUNT
             // 
