@@ -21,7 +21,7 @@ namespace ChapeauUI
             InitializeComponent();
         
         }
-
+        // Method to open the form based on the employee's role
         private void OpenView(Employee employee)
         {
             //close all open forms while leaving the current one open
@@ -36,8 +36,8 @@ namespace ChapeauUI
             switch (employee.Role)
             {
                 case StaffRole.Waiter:
-                  orderingForm orderingForm = new orderingForm();
-                    orderingForm.ShowDialog();
+                  TableViewForm tableViewForm = new TableViewForm();
+                    tableViewForm.ShowDialog();
                     break;
                 case StaffRole.Chef:
                     KitchenAndBarView kitchenAndBarView = new KitchenAndBarView( employee);
@@ -45,10 +45,12 @@ namespace ChapeauUI
               
                     break;
                 case StaffRole.Bartender:
-                    PaymentForm paymentForm = new PaymentForm();
-                    paymentForm.ShowDialog();
+                   KitchenAndBarView barView = new KitchenAndBarView( employee);
+                    barView.ShowDialog();
                     break;
                 case StaffRole.Manger:
+                    PaymentForm paymentForm = new PaymentForm();
+                    paymentForm.ShowDialog();
                     Show();
                     break;
 
@@ -57,31 +59,36 @@ namespace ChapeauUI
 
         private void btnLogin_Click_1(object sender, EventArgs e)
         {
+            // Get the username and password from the text boxes
             string userName = textBoxUsernameInput.Text;
             string password = textBoxPassowrdInput.Text;
 
 
-            
+            // Validate the input fields
             if (VerifyCheck(userName, password))
             {
                 StaffService staffService = new StaffService();
                 Employee employee = staffService.GetUserNameAndPassword(userName, password);
                  if(employee != null)
                 {
+                    // Open the form if authentication is successful
                     OpenView(employee);
                 } 
                 else
                 {
+                    // Show error message for incorrect password
                     lblInvalid.Text = "Incorrect password, please try again";
                 }
             }
             else
             {
+                // Show error message for validation failure
                 lblInvalid.Text = "Incorrect username or password";
             }
 
 
         }
+        // Method to check that both username and password fields are not empty
         private bool VerifyCheck(string username, string password)
         {
 
