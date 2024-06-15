@@ -304,6 +304,8 @@ namespace ChapeauUI
             butChangeStatus.Enabled = false;
             butRefresh.Enabled = false;
             isOpenOrder = false;
+            HistoryButton.Enabled = false;
+            RunningOrderButton.Enabled = true;
             listViewKitchenOrderItem.Items.Clear(); // Clear the History Orders list view
             HistoryOrdersDisplaying(); // Populate the History Orders list view
         }
@@ -315,6 +317,8 @@ namespace ChapeauUI
             butChangeStatus.Enabled = true;
             butRefresh.Enabled=true;
             listViewKitchenOrderItem.Items.Clear(); // Clear the Orders list view
+            RunningOrderButton.Enabled = false;
+            HistoryButton.Enabled = true;
             OrdersDisplaying();
             if (isBar)
             {
