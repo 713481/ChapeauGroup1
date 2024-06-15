@@ -98,16 +98,32 @@ namespace ChapeauUI
 
                 if (selectedMenuItem != null)
                 {
-                    OrderItem orderItem = new OrderItem
-                    {
-                        MenuItem = selectedMenuItem,
-                        OrderCount = 1, // You might want to ask for a count or manage it differently
-                        Notes = "", // Add any notes if necessary
-                        OrderTime = DateTime.Now,
-                        StatusItem = ItemStatus.Open
-                    };
+                    // Check if the item already exists in userOrder
+                    OrderItem existingOrderItem = userOrder.FirstOrDefault(item => item.MenuItem.ItemID == selectedMenuItem.ItemID);
 
-                    userOrder.Add(orderItem);
+                    if (existingOrderItem != null)
+                    {
+                        // Increment the count if it exists
+                        existingOrderItem.OrderCount++;
+                    }
+                    else
+                    {
+                        // Add a new order item if it doesn't exist
+                        OrderItem orderItem = new OrderItem
+                        {
+                            MenuItem = selectedMenuItem,
+                            OrderCount = 1, // Initially set to 1
+                            Notes = "", // Add any notes if necessary
+                            OrderTime = DateTime.Now,
+                            StatusItem = ItemStatus.Open
+                        };
+
+                        userOrder.Add(orderItem);
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Selected menu item not found.");
                 }
             }
             else
