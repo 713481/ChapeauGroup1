@@ -15,16 +15,18 @@ namespace ChapeauUI
 {
     public partial class MyOrder : Form
     {
+        private Form orderingForm;
         private List<OrderItem> userOrder;
 
         public MyOrder()
         {
             InitializeComponent();
         }
-        public MyOrder(List<OrderItem> userOrder)
+        public MyOrder(List<OrderItem> userOrder, Form orderingForm)
         {
             InitializeComponent();
             this.userOrder = userOrder;
+            this.orderingForm = orderingForm;
             FillUserOrder();
         }
         private void btnMyOrderClearOrder_Click(object sender, EventArgs e)
@@ -53,10 +55,71 @@ namespace ChapeauUI
                 orderService.FinishOrder(order, userOrder);
 
                 MessageBox.Show("Order finalized successfully!");
+                this.Close();
+                orderingForm.Close();
             }
             catch (Exception ex)
             {
                 MessageBox.Show($"An error occurred: {ex.Message}");
+            }
+        }
+        private void btnMyOrderEditDish_Click(object sender, EventArgs e)
+        {
+            if (lvMyOrderList.SelectedItems.Count > 0)
+            {
+                ListViewItem selectedItem = lvMyOrderList.SelectedItems[0];
+                int selectedIndex = selectedItem.Index;
+
+                // Get the corresponding OrderItem from userOrder
+                OrderItem selectedOrderItem = userOrder[selectedIndex];
+
+                // Open DishEditor form to edit the selected OrderItem
+                using (DishEditor editorForm = new DishEditor(selectedOrderItem))
+                {
+                    if (editorForm.ShowDialog() == DialogResult.OK)
+                    {
+                        // Refresh the ListView to reflect changes
+                        FillUserOrder();
+                        decimal totalPrice = CalculateTotalPrice();
+                        lblMyOrderTotalPrice.Text = $"€{totalPrice.ToString("0.00")}";
+                    }
+                }
+            }
+            else
+            {
+                MessageBox.Show("Please select an item to edit.");
+            }
+        }
+        private void btnMyOrderRemoveDish_Click(object sender, EventArgs e)
+        {
+            // Check if an item is selected in the ListView
+            if (lvMyOrderList.SelectedItems.Count > 0)
+            {
+                // Get the selected item
+                ListViewItem selectedItem = lvMyOrderList.SelectedItems[0];
+
+                // Assuming the first subitem is the OrderCount and the second is the ItemName
+                string itemName = selectedItem.SubItems[1].Text;
+
+                // Find the corresponding OrderItem in the userOrder list
+                OrderItem orderItemToRemove = userOrder.FirstOrDefault(item => item.MenuItem.ItemName == itemName);
+
+                if (orderItemToRemove != null)
+                {
+                    // Remove the item from the order list
+                    userOrder.Remove(orderItemToRemove);
+
+                    // Refresh the ListView
+                    FillUserOrder();
+
+                    // Update the total price label
+                    decimal totalPrice = CalculateTotalPrice();
+                    lblMyOrderTotalPrice.Text = $"€{totalPrice.ToString("0.00")}";
+                }
+            }
+            else
+            {
+                MessageBox.Show("Please select an item to remove.");
             }
         }
         private void FillUserOrder()
@@ -112,32 +175,6 @@ namespace ChapeauUI
         {
             decimal totalPrice = CalculateTotalPrice();
             lblMyOrderTotalPrice.Text = $"€{totalPrice.ToString("0.00")}";
-        }
-
-        private void btnMyOrderEditDish_Click(object sender, EventArgs e)
-        {
-            if (lvMyOrderList.SelectedItems.Count > 0)
-            {
-                ListViewItem selectedItem = lvMyOrderList.SelectedItems[0];
-                int selectedIndex = selectedItem.Index;
-
-                // Get the corresponding OrderItem from userOrder
-                OrderItem selectedOrderItem = userOrder[selectedIndex];
-
-                // Open DishEditor form to edit the selected OrderItem
-                using (DishEditor editorForm = new DishEditor(selectedOrderItem))
-                {
-                    if (editorForm.ShowDialog() == DialogResult.OK)
-                    {
-                        // Refresh the ListView to reflect changes
-                        FillUserOrder();
-                    }
-                }
-            }
-            else
-            {
-                MessageBox.Show("Please select an item to edit.");
-            }
         }
     }
 }
