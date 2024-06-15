@@ -43,6 +43,7 @@
             btnMyOrderOrder = new Button();
             lblMyOrderTotalPrice = new Label();
             btnMyOrderEditDish = new Button();
+            btnMyOrderRemoveDish = new Button();
             pnlMyOrderingHeaderBackground.SuspendLayout();
             SuspendLayout();
             // 
@@ -135,7 +136,7 @@
             // 
             btnMyOrderClearOrder.Location = new Point(29, 661);
             btnMyOrderClearOrder.Name = "btnMyOrderClearOrder";
-            btnMyOrderClearOrder.Size = new Size(127, 53);
+            btnMyOrderClearOrder.Size = new Size(100, 53);
             btnMyOrderClearOrder.TabIndex = 12;
             btnMyOrderClearOrder.Text = "Clear Order";
             btnMyOrderClearOrder.UseVisualStyleBackColor = true;
@@ -163,13 +164,23 @@
             // 
             // btnMyOrderEditDish
             // 
-            btnMyOrderEditDish.Location = new Point(226, 661);
+            btnMyOrderEditDish.Location = new Point(253, 661);
             btnMyOrderEditDish.Name = "btnMyOrderEditDish";
-            btnMyOrderEditDish.Size = new Size(127, 53);
+            btnMyOrderEditDish.Size = new Size(100, 53);
             btnMyOrderEditDish.TabIndex = 15;
             btnMyOrderEditDish.Text = "Edit dish";
             btnMyOrderEditDish.UseVisualStyleBackColor = true;
             btnMyOrderEditDish.Click += btnMyOrderEditDish_Click;
+            // 
+            // btnMyOrderRemoveDish
+            // 
+            btnMyOrderRemoveDish.Location = new Point(142, 661);
+            btnMyOrderRemoveDish.Name = "btnMyOrderRemoveDish";
+            btnMyOrderRemoveDish.Size = new Size(100, 53);
+            btnMyOrderRemoveDish.TabIndex = 16;
+            btnMyOrderRemoveDish.Text = "Remove Dish";
+            btnMyOrderRemoveDish.UseVisualStyleBackColor = true;
+            btnMyOrderRemoveDish.Click += btnMyOrderRemoveDish_Click;
             // 
             // MyOrder
             // 
@@ -177,6 +188,7 @@
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.MediumSlateBlue;
             ClientSize = new Size(384, 800);
+            Controls.Add(btnMyOrderRemoveDish);
             Controls.Add(btnMyOrderEditDish);
             Controls.Add(lblMyOrderTotalPrice);
             Controls.Add(btnMyOrderOrder);
@@ -210,5 +222,6 @@
         private Button btnMyOrderOrder;
         private Label lblMyOrderTotalPrice;
         private Button btnMyOrderEditDish;
+        private Button btnMyOrderRemoveDish;
     }
 }

@@ -58,6 +58,17 @@ namespace ChapeauUI
                 ListViewItem listViewItem = new ListViewItem(item.ItemName.ToString());
                 listViewItem.SubItems.Add(item.Price.ToString(".00"));
                 listViewItem.SubItems.Add(item.Stock.ToString());
+                // Set color based on stock level
+                if (item.Stock == 0)
+                {
+                    listViewItem.ForeColor = Color.White;
+                    listViewItem.BackColor = Color.Red;
+                }
+                else if (item.Stock <= 10)
+                {
+                    listViewItem.ForeColor = Color.White;
+                    listViewItem.BackColor = Color.Orange;
+                }
                 lvOrderingMenuItems.Items.Add(listViewItem);
             }
         }
@@ -78,14 +89,24 @@ namespace ChapeauUI
                 ListViewItem listViewItem = new ListViewItem(item.ItemName);
                 listViewItem.SubItems.Add(item.Price.ToString(".00")); // Format as currency
                 listViewItem.SubItems.Add(item.Stock.ToString());
-
+                // Set color based on stock level
+                if (item.Stock == 0)
+                {
+                    listViewItem.ForeColor = Color.White;
+                    listViewItem.BackColor = Color.Red;
+                }
+                else if (item.Stock <= 10)
+                {
+                    listViewItem.ForeColor = Color.White;
+                    listViewItem.BackColor = Color.Orange;
+                }
                 lvOrderingMenuItems.Items.Add(listViewItem);
             }
         }
 
         private void btnOrderingMyOrder_Click(object sender, EventArgs e)
         {
-            MyOrder myOrderForm = new MyOrder(userOrder);
+            MyOrder myOrderForm = new MyOrder(userOrder, this);
             myOrderForm.ShowDialog();
         }
 
