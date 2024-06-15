@@ -69,7 +69,10 @@ namespace ChapeauUI
 
                 // Add subitems
                 listViewItem.SubItems.Add(orderItem.MenuItem.ItemName);
-                listViewItem.SubItems.Add(orderItem.MenuItem.Price.ToString("0.00"));
+
+                // Calculate total price of a dish
+                decimal totalPrice = orderItem.MenuItem.Price * orderItem.OrderCount;
+                listViewItem.SubItems.Add(totalPrice.ToString("0.00"));  // Display total price for this item
 
                 // Ensure Notes is not null
                 string notes = orderItem.Notes ?? "";  // If Notes is null, default to empty string
@@ -84,7 +87,14 @@ namespace ChapeauUI
         }
         private decimal CalculateTotalPrice()
         {
-            return userOrder.Sum(item => item.TotalPrice);
+            decimal totalPrice = 0;
+
+            foreach (OrderItem orderItem in userOrder)
+            {
+                totalPrice += orderItem.MenuItem.Price * orderItem.OrderCount;
+            }
+
+            return totalPrice;
         }
 
         private void lblMyOrderTotalPriceText_Click(object sender, EventArgs e)
@@ -102,6 +112,32 @@ namespace ChapeauUI
         {
             decimal totalPrice = CalculateTotalPrice();
             lblMyOrderTotalPrice.Text = $"€{totalPrice.ToString("0.00")}";
+        }
+
+        private void btnMyOrderEditDish_Click(object sender, EventArgs e)
+        {
+            if (lvMyOrderList.SelectedItems.Count > 0)
+            {
+                ListViewItem selectedItem = lvMyOrderList.SelectedItems[0];
+                int selectedIndex = selectedItem.Index;
+
+                // Get the corresponding OrderItem from userOrder
+                OrderItem selectedOrderItem = userOrder[selectedIndex];
+
+                // Open DishEditor form to edit the selected OrderItem
+                using (DishEditor editorForm = new DishEditor(selectedOrderItem))
+                {
+                    if (editorForm.ShowDialog() == DialogResult.OK)
+                    {
+                        // Refresh the ListView to reflect changes
+                        FillUserOrder();
+                    }
+                }
+            }
+            else
+            {
+                MessageBox.Show("Please select an item to edit.");
+            }
         }
     }
 }
