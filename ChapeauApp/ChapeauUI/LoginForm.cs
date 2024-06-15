@@ -24,36 +24,33 @@ namespace ChapeauUI
         // Method to open the form based on the employee's role
         private void OpenView(Employee employee)
         {
-            //close all open forms while leaving the current one open
-            foreach (Form form in Application.OpenForms)
-            {
-                if (form != this)
-                {
-                    form.Close();
-                }
-            }
+            Form newForm = null;
 
             switch (employee.Role)
             {
+                //method to open the form base on the employee role
                 case StaffRole.Waiter:
-                  TableViewForm tableViewForm = new TableViewForm();
-                    tableViewForm.ShowDialog();
+               
+                    newForm = new TableViewForm();
                     break;
                 case StaffRole.Chef:
-                    KitchenAndBarView kitchenAndBarView = new KitchenAndBarView( employee);
-                    kitchenAndBarView.ShowDialog();
-              
+                    newForm = new KitchenAndBarView( employee);
                     break;
                 case StaffRole.Bartender:
-                   KitchenAndBarView barView = new KitchenAndBarView( employee);
-                    barView.ShowDialog();
+                   newForm = new KitchenAndBarView( employee);
+                    
                     break;
                 case StaffRole.Manger:
-                    PaymentForm paymentForm = new PaymentForm();
-                    paymentForm.ShowDialog();
-                    Show();
+                    newForm = new PaymentForm();
                     break;
 
+            }
+            //Show the new form and hide and close the login form
+            if (newForm != null)
+            {
+                this.Hide();
+                newForm.ShowDialog();
+                this.Close();
             }
         }
 

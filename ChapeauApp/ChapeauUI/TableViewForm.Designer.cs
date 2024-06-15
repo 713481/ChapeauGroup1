@@ -31,7 +31,6 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(TableViewForm));
             pnlTableViewLogo = new Panel();
             buttonLoggingOut = new Button();
-            button2 = new Button();
             buttonShowGreen = new Button();
             buttonShowRed = new Button();
             labelShowAvailable = new Label();
@@ -59,15 +58,6 @@
             buttonLoggingOut.Text = "Logout";
             buttonLoggingOut.UseVisualStyleBackColor = true;
             buttonLoggingOut.Click += buttonLoggingOut_Click;
-            // 
-            // button2
-            // 
-            button2.Location = new Point(247, 92);
-            button2.Name = "button2";
-            button2.Size = new Size(94, 29);
-            button2.TabIndex = 1;
-            button2.Text = "button2";
-            button2.UseVisualStyleBackColor = true;
             // 
             // buttonShowGreen
             // 
@@ -120,6 +110,7 @@
             TableViewsLayoutPanel.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
             TableViewsLayoutPanel.Size = new Size(40, 40);
             TableViewsLayoutPanel.TabIndex = 20;
+            TableViewsLayoutPanel.Paint += TableViewsLayoutPanel_Paint;
             // 
             // TableViewForm
             // 
@@ -131,7 +122,6 @@
             Controls.Add(labelShowOccupied);
             Controls.Add(labelShowAvailable);
             Controls.Add(buttonLoggingOut);
-            Controls.Add(button2);
             Controls.Add(buttonShowGreen);
             Controls.Add(buttonShowRed);
             Controls.Add(pnlTableViewLogo);
@@ -145,7 +135,6 @@
 
         private Panel pnlTableViewLogo;
         private Button buttonLoggingOut;
-        private Button button2;
         private Button buttonShowGreen;
         private Button buttonShowRed;
         private Label labelShowAvailable;

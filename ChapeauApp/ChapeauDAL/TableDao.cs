@@ -36,8 +36,8 @@ namespace ChapeauDAL
         public void UpdatesTableStatus(int tableNumber, int tableStatus)
         {
             string query = "UPDATE [TABLE]" +
-                            "SET tableStatus = @TableStatus" +
-                            "WHERE tableNumber = @TableNumber";
+                            "SET TableStatus = @tableStatus " +
+                            "WHERE TableNumber = @tableNumber";
             List<SqlParameter> sqlParameters = new List<SqlParameter>
             {
                 new SqlParameter("@TableStatus", tableStatus),
@@ -46,12 +46,11 @@ namespace ChapeauDAL
 
             ExecuteEditQuery(query, sqlParameters.ToArray());
         }
-
-        public Table GetTableById(int tableID)
+        public Table GetTableNUmbers(int tableNumber)
         {
-            string query = "SELECT TableID, TableNumber, TableStatus FROM [Table] WHERE TableID = @tableID";
+            string query = "SELECT TableID, TableNumber, TableStatus FROM [Table] WHERE TableNumber = @tableNumber";
             SqlParameter[] sqlParameters = new SqlParameter[1];
-            sqlParameters[0] = new SqlParameter("@TableID", tableID);
+            sqlParameters[0] = new SqlParameter("@TableNumber", tableNumber);
             List<Table> tables = ReadTables(ExecuteSelectQuery(query, sqlParameters));
             if (tables.Count > 0)
             {
@@ -62,6 +61,8 @@ namespace ChapeauDAL
                 return null;
             }
         }
+
+   
 
     }
 }

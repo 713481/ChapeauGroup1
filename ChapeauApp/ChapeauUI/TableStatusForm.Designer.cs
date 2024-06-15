@@ -60,6 +60,7 @@
             buttonOccupyingTables.TabIndex = 1;
             buttonOccupyingTables.Text = "Occupy";
             buttonOccupyingTables.UseVisualStyleBackColor = false;
+            buttonOccupyingTables.Click += buttonOccupyingTables_Click;
             // 
             // buttonFreeingTable
             // 
@@ -70,6 +71,7 @@
             buttonFreeingTable.TabIndex = 2;
             buttonFreeingTable.Text = "Free Table";
             buttonFreeingTable.UseVisualStyleBackColor = false;
+            buttonFreeingTable.Click += buttonFreeingTable_Click;
             // 
             // listViewTableStatusOrderList
             // 
@@ -123,6 +125,7 @@
             TableStatusOrderbutton.TabIndex = 6;
             TableStatusOrderbutton.Text = "New Order";
             TableStatusOrderbutton.UseVisualStyleBackColor = true;
+            TableStatusOrderbutton.Click += TableStatusOrderbutton_Click;
             // 
             // TableStatusPaymentButton
             // 
@@ -132,8 +135,9 @@
             TableStatusPaymentButton.TabIndex = 7;
             TableStatusPaymentButton.Text = "Payment";
             TableStatusPaymentButton.UseVisualStyleBackColor = true;
+            TableStatusPaymentButton.Click += TableStatusPaymentButton_Click;
             // 
-            // TableStatus
+            // TableStatusForm
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
@@ -147,7 +151,7 @@
             Controls.Add(buttonFreeingTable);
             Controls.Add(buttonOccupyingTables);
             Controls.Add(buttonReturnToTableView);
-            Name = "TableStatus";
+            Name = "TableStatusForm";
             Text = "TableStatus";
             ResumeLayout(false);
             PerformLayout();

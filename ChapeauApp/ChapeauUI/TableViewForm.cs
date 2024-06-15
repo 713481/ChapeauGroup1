@@ -21,6 +21,7 @@ namespace ChapeauUI
             TableService = new TableService();
             GetTableControl();
         }
+        // Method to get and display table controls
         private void GetTableControl()
         {
             //when loading, it clear the table first
@@ -60,9 +61,15 @@ namespace ChapeauUI
         }
         private void buttonLoggingOut_Click(object sender, EventArgs e)
         {
-            Hide();
+
+            this.Close();
             LoginForm loginForm = new LoginForm();
             loginForm.ShowDialog();
+           
+        }
+        private void TableViewsLayoutPanel_Paint(object sender, PaintEventArgs e)
+        {
+
         }
     }
 }
