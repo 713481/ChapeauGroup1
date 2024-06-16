@@ -17,16 +17,18 @@ namespace ChapeauUI
     {
         private Form orderingForm;
         private List<OrderItem> userOrder;
+        private int tableNumber;
 
         public MyOrder()
         {
             InitializeComponent();
         }
-        public MyOrder(List<OrderItem> userOrder, Form orderingForm)
+        public MyOrder(int tableNumber, List<OrderItem> userOrder, Form orderingForm)
         {
             InitializeComponent();
             this.userOrder = userOrder;
             this.orderingForm = orderingForm;
+            this.tableNumber = tableNumber;
             FillUserOrder();
         }
         private void btnMyOrderClearOrder_Click(object sender, EventArgs e)
@@ -45,7 +47,7 @@ namespace ChapeauUI
             {
                 Order order = new Order
                 {
-                    TableID = 1,  // Set the table ID
+                    TableID = tableNumber,  // Set the table ID
                     EmployeeID = 2,  // Set the employee ID
                     orderStatus = OrderStatus.Open,  // Assuming Open is the status for a new order
                     OrderTime = DateTime.Now

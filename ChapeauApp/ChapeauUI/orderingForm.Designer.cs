@@ -74,6 +74,7 @@
             btnOrderingReturn.Size = new Size(36, 36);
             btnOrderingReturn.TabIndex = 0;
             btnOrderingReturn.UseVisualStyleBackColor = true;
+            btnOrderingReturn.Click += btnOrderingReturn_Click;
             // 
             // lblOrderingTableNumber
             // 
