@@ -264,11 +264,23 @@ namespace ChapeauDAL
         {
             // Define the SQL query to retrieve orders within the specified date range
             string query = @"
-            SELECT OrderID, TableID, OrderTime
-            FROM [ORDER]
-            WHERE 
-            OrderStatus = @orderStatus
-            AND CAST(OrderTime AS date) = CAST(GETDATE() AS date)";
+    SELECT DISTINCT O.OrderID, O.TableID, O.OrderTime
+    FROM [ORDER] AS O
+    JOIN [OrderItem] AS OI ON O.OrderID = OI.OrderID
+    JOIN [MENUITEM] AS MI ON OI.ItemID = MI.ItemID
+    WHERE 
+    O.OrderStatus = @orderStatus
+    AND CAST(O.OrderTime AS DATE) = CAST(GETDATE() AS DATE)";
+
+            // Append conditions based on isBar
+            if (isBar)
+            {
+                query += " AND MI.MealsType = 3"; // For bar orders, consider only drinks
+            }
+            else
+            {
+                query += " AND MI.MealsType IN (1, 2)"; // For kitchen orders, consider only food
+            }
 
             // Create parameters for the order status
             SqlParameter[] parameters = {
