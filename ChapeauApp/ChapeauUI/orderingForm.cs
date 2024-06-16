@@ -18,7 +18,8 @@ namespace ChapeauUI
         private List<OrderItem> userOrder;
         private OrderService orderService;
         private int tableNumber;
-        public orderingForm(int tableNumber)
+        private Employee employee;
+        public orderingForm(Employee employee, int tableNumber)
         {
             InitializeComponent();
             // creating orderService for methods in orderService
@@ -27,12 +28,13 @@ namespace ChapeauUI
             orderService = new OrderService();
             userOrder = new List<OrderItem>();
             this.tableNumber = tableNumber;
+            this.employee = employee;
 
             // Add table number to label
             lblOrderingTableNumber.Text = $"Table Number: {tableNumber}";
 
             // Fill and Filter menu (listview)
-/*            FillMenuItems();*/
+            /*            FillMenuItems();*/
             FilterMenuItems(MenuType.Lunch);
         }
         private void orderingForm_Load(object sender, EventArgs e)
@@ -55,34 +57,34 @@ namespace ChapeauUI
             FilterMenuItems(MenuType.Drinks);
         }
         // Code previous to the filter to fill the list view with all dishes
-/*        private void FillMenuItems()
-        {
-            // Clear existing items
-            lvOrderingMenuItems.Items.Clear();
-
-            // Retrieve menu items from the database
-            menuItems = orderService.GetAllMenuItems();
-
-            // Add items to the ListView
-            foreach (MenuItem item in menuItems)
-            {
-                ListViewItem listViewItem = new ListViewItem(item.ItemName.ToString());
-                listViewItem.SubItems.Add(item.Price.ToString(".00"));
-                listViewItem.SubItems.Add(item.Stock.ToString());
-                // Set color based on stock level
-                if (item.Stock == 0)
+        /*        private void FillMenuItems()
                 {
-                    listViewItem.ForeColor = Color.White;
-                    listViewItem.BackColor = Color.Red;
-                }
-                else if (item.Stock <= 10)
-                {
-                    listViewItem.ForeColor = Color.White;
-                    listViewItem.BackColor = Color.Orange;
-                }
-                lvOrderingMenuItems.Items.Add(listViewItem);
-            }
-        }*/
+                    // Clear existing items
+                    lvOrderingMenuItems.Items.Clear();
+
+                    // Retrieve menu items from the database
+                    menuItems = orderService.GetAllMenuItems();
+
+                    // Add items to the ListView
+                    foreach (MenuItem item in menuItems)
+                    {
+                        ListViewItem listViewItem = new ListViewItem(item.ItemName.ToString());
+                        listViewItem.SubItems.Add(item.Price.ToString(".00"));
+                        listViewItem.SubItems.Add(item.Stock.ToString());
+                        // Set color based on stock level
+                        if (item.Stock == 0)
+                        {
+                            listViewItem.ForeColor = Color.White;
+                            listViewItem.BackColor = Color.Red;
+                        }
+                        else if (item.Stock <= 10)
+                        {
+                            listViewItem.ForeColor = Color.White;
+                            listViewItem.BackColor = Color.Orange;
+                        }
+                        lvOrderingMenuItems.Items.Add(listViewItem);
+                    }
+                }*/
         // Fill the entire listview with dishes through the filter.
         private void FilterMenuItems(MenuType menuType)
         {
@@ -118,7 +120,8 @@ namespace ChapeauUI
 
         private void btnOrderingMyOrder_Click(object sender, EventArgs e)
         {
-            MyOrder myOrderForm = new MyOrder(tableNumber, userOrder, this);
+            MyOrder myOrderForm = new MyOrder(employee, tableNumber, userOrder, this);
+            this.Hide();
             myOrderForm.ShowDialog();
         }
 
@@ -160,6 +163,7 @@ namespace ChapeauUI
 
                         userOrder.Add(orderItem);
                     }
+                    lblorderingFormDishAdded.Text = $"Added {selectedMenuItem.ItemName}!";
                 }
                 else
                 {

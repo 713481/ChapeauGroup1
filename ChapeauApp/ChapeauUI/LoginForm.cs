@@ -31,7 +31,7 @@ namespace ChapeauUI
                 //method to open the form base on the employee role
                 case StaffRole.Waiter:
                
-                    newForm = new TableViewForm();
+                    newForm = new TableViewForm(employee);
                     break;
                 case StaffRole.Chef:
                     newForm = new KitchenAndBarView( employee);

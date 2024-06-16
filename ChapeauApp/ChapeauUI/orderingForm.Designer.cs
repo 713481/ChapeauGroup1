@@ -42,6 +42,7 @@
             btnOrderingLunch = new Button();
             btnOrderingDiner = new Button();
             btnOrderingDrink = new Button();
+            lblorderingFormDishAdded = new Label();
             pnlOrderingHeaderBackground.SuspendLayout();
             SuspendLayout();
             // 
@@ -79,11 +80,11 @@
             // lblOrderingTableNumber
             // 
             lblOrderingTableNumber.AutoSize = true;
-            lblOrderingTableNumber.Font = new Font("Arial Narrow", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
+            lblOrderingTableNumber.Font = new Font("Arial", 14F, FontStyle.Regular, GraphicsUnit.Point);
             lblOrderingTableNumber.ForeColor = SystemColors.ControlLightLight;
             lblOrderingTableNumber.Location = new Point(27, 113);
             lblOrderingTableNumber.Name = "lblOrderingTableNumber";
-            lblOrderingTableNumber.Size = new Size(57, 23);
+            lblOrderingTableNumber.Size = new Size(66, 22);
             lblOrderingTableNumber.TabIndex = 2;
             lblOrderingTableNumber.Text = "Table: ";
             // 
@@ -165,12 +166,24 @@
             btnOrderingDrink.UseVisualStyleBackColor = true;
             btnOrderingDrink.Click += btnOrderingDrink_Click;
             // 
+            // lblorderingFormDishAdded
+            // 
+            lblorderingFormDishAdded.AutoSize = true;
+            lblorderingFormDishAdded.Font = new Font("Arial", 14F, FontStyle.Regular, GraphicsUnit.Point);
+            lblorderingFormDishAdded.ForeColor = SystemColors.ControlLightLight;
+            lblorderingFormDishAdded.Location = new Point(27, 651);
+            lblorderingFormDishAdded.MaximumSize = new Size(340, 0);
+            lblorderingFormDishAdded.Name = "lblorderingFormDishAdded";
+            lblorderingFormDishAdded.Size = new Size(0, 22);
+            lblorderingFormDishAdded.TabIndex = 18;
+            // 
             // orderingForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.MediumSlateBlue;
             ClientSize = new Size(384, 800);
+            Controls.Add(lblorderingFormDishAdded);
             Controls.Add(btnOrderingDrink);
             Controls.Add(btnOrderingDiner);
             Controls.Add(btnOrderingLunch);
@@ -180,7 +193,10 @@
             Controls.Add(lblOrderingTableNumber);
             Controls.Add(pnlOrderingLogo);
             Controls.Add(pnlOrderingHeaderBackground);
+            MaximizeBox = false;
+            MinimizeBox = false;
             Name = "orderingForm";
+            StartPosition = FormStartPosition.CenterScreen;
             Text = "Ordering";
             Load += orderingForm_Load;
             pnlOrderingHeaderBackground.ResumeLayout(false);
@@ -203,5 +219,6 @@
         private Button btnOrderingLunch;
         private Button btnOrderingDiner;
         private Button btnOrderingDrink;
+        private Label lblorderingFormDishAdded;
     }
 }

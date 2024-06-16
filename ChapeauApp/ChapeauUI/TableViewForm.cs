@@ -15,10 +15,12 @@ namespace ChapeauUI
     public partial class TableViewForm : Form
     {
         public TableService TableService;
-        public TableViewForm()
+        private Employee employee;
+        public TableViewForm(Employee employee)
         {
             InitializeComponent();
             TableService = new TableService();
+            this.employee = employee;
             GetTableControl();
         }
         // Method to get and display table controls
@@ -34,7 +36,7 @@ namespace ChapeauUI
 
             foreach (Table table in tables)
             {
-                UserControlTableView userControlTable = new UserControlTableView(table);
+                UserControlTableView userControlTable = new UserControlTableView(employee, table);
                 //each table number wil be assign to the label in the User Control 
                 userControlTable.AssignTableNumber = table.TableNumber.ToString();
 

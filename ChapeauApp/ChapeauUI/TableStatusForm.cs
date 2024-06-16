@@ -18,11 +18,13 @@ namespace ChapeauUI
         private int tableNumber;
         private TableService tableService;
         private OrderService orderService;
+        private Employee employee;
 
-        public TableStatusForm(int tableNumber)
+        public TableStatusForm(Employee employee, int tableNumber)
         {
             InitializeComponent();
             this.tableNumber = tableNumber;
+            this.employee = employee;
             tableService = new TableService();
             orderService = new OrderService();
             GetTableNumber(tableNumber);
@@ -49,7 +51,7 @@ namespace ChapeauUI
         {
             this.Close();
             Hide();
-            TableViewForm tableViewForm = new TableViewForm();
+            TableViewForm tableViewForm = new TableViewForm(employee);
             tableViewForm.ShowDialog();
         }
         // Method to update the status of the table
@@ -90,7 +92,7 @@ namespace ChapeauUI
         {
 
             this.Hide();
-            orderingForm orderingForm = new orderingForm(tableNumber);
+            orderingForm orderingForm = new orderingForm(employee, tableNumber);
             orderingForm.ShowDialog();
             this.Close();
         }

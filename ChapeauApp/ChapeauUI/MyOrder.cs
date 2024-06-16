@@ -18,17 +18,19 @@ namespace ChapeauUI
         private Form orderingForm;
         private List<OrderItem> userOrder;
         private int tableNumber;
+        private Employee employee;
 
         public MyOrder()
         {
             InitializeComponent();
         }
-        public MyOrder(int tableNumber, List<OrderItem> userOrder, Form orderingForm)
+        public MyOrder(Employee employee, int tableNumber, List<OrderItem> userOrder, Form orderingForm)
         {
             InitializeComponent();
             this.userOrder = userOrder;
             this.orderingForm = orderingForm;
             this.tableNumber = tableNumber;
+            this.employee = employee;
             FillUserOrder();
         }
         private void btnMyOrderClearOrder_Click(object sender, EventArgs e)
@@ -48,7 +50,7 @@ namespace ChapeauUI
                 Order order = new Order
                 {
                     TableID = tableNumber,  // Set the table ID
-                    EmployeeID = 2,  // Set the employee ID
+                    EmployeeID = employee.EmployeeID,  // Set the employee ID
                     orderStatus = OrderStatus.Open,  // Assuming Open is the status for a new order
                     OrderTime = DateTime.Now
                 };
@@ -75,8 +77,11 @@ namespace ChapeauUI
                 // Get the corresponding OrderItem from userOrder
                 OrderItem selectedOrderItem = userOrder[selectedIndex];
 
+                // Hide the current Form
+                this.Hide();
+
                 // Open DishEditor form to edit the selected OrderItem
-                using (DishEditor editorForm = new DishEditor(selectedOrderItem))
+                using (DishEditor editorForm = new DishEditor(selectedOrderItem, this))
                 {
                     if (editorForm.ShowDialog() == DialogResult.OK)
                     {
@@ -169,6 +174,8 @@ namespace ChapeauUI
 
         private void btnMyOrderReturn_Click(object sender, EventArgs e)
         {
+            // Show the orderingForm
+            orderingForm.Show();
             // close the dialogue
             this.Close();
         }

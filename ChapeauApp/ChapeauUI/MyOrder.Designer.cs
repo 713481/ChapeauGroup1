@@ -198,7 +198,10 @@
             Controls.Add(lblOrderingMyOrder);
             Controls.Add(pnlMyOrderingLogo);
             Controls.Add(pnlMyOrderingHeaderBackground);
+            MaximizeBox = false;
+            MinimizeBox = false;
             Name = "MyOrder";
+            StartPosition = FormStartPosition.CenterScreen;
             Text = "MyOrder";
             Load += MyOrder_Load_1;
             pnlMyOrderingHeaderBackground.ResumeLayout(false);

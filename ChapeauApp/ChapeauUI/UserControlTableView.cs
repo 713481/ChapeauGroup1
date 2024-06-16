@@ -17,6 +17,8 @@ namespace ChapeauUI
         public event EventHandler ClickedTable;
         //Defining the Table property
         public Table Table;
+        //Defining the Employee
+        private Employee employee;
         // Property to assign table number to the label
         public string AssignTableNumber
         {
@@ -29,9 +31,10 @@ namespace ChapeauUI
                 labelNumberOfTable.Text = value;
             }
         }
-        public UserControlTableView(Table table)
+        public UserControlTableView(Employee employee, Table table)
         {
             Table = table;
+            this.employee = employee;
             InitializeComponent();
            
         }
@@ -43,7 +46,7 @@ namespace ChapeauUI
 
             //making a new instance of the table status form of the table object
             
-            TableStatusForm tableStatusForm = new TableStatusForm(tableNumber);
+            TableStatusForm tableStatusForm = new TableStatusForm(employee, tableNumber);
             tableStatusForm.Show();
             ClickedOnTable();
             //Call the GetTable method from the tableStatusForm instance
