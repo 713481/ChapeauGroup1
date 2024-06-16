@@ -22,11 +22,11 @@ namespace ChapeauUI
             InitializeComponent();
             if (employee.Role == StaffRole.Chef)
             {
-                isBar = false;
+                isBar = true;
             }
             else
             {
-                isBar = true;
+                isBar = false;
             }
 
             if (isBar)
