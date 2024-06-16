@@ -17,11 +17,21 @@ namespace ChapeauUI
         private List<MenuItem> menuItems;
         private List<OrderItem> userOrder;
         private OrderService orderService;
-        public orderingForm()
+        private int tableNumber;
+        public orderingForm(int tableNumber)
         {
             InitializeComponent();
+            // creating orderService for methods in orderService
+            // creating userOrder to add menuItems into the list as order
+            // calling tableNumber from table overview
             orderService = new OrderService();
             userOrder = new List<OrderItem>();
+            this.tableNumber = tableNumber;
+
+            // Add table number to label
+            lblOrderingTableNumber.Text = $"Table Number: {tableNumber}";
+
+            // Fill and Filter menu (listview)
             FillMenuItems();
             FilterMenuItems(MenuType.Lunch);
         }
@@ -106,7 +116,7 @@ namespace ChapeauUI
 
         private void btnOrderingMyOrder_Click(object sender, EventArgs e)
         {
-            MyOrder myOrderForm = new MyOrder(userOrder, this);
+            MyOrder myOrderForm = new MyOrder(tableNumber, userOrder, this);
             myOrderForm.ShowDialog();
         }
 
@@ -151,6 +161,19 @@ namespace ChapeauUI
             {
                 MessageBox.Show("Please select an item to add.");
             }
+        }
+
+        private void btnOrderingReturn_Click(object sender, EventArgs e)
+        {
+            // Message , Title, Buttons
+            DialogResult result = MessageBox.Show("Are you sure you want to stop ordering?", "Confirm Return", MessageBoxButtons.YesNo);
+
+            // If yes is pressed close form
+            if (result == DialogResult.Yes)
+            {
+                this.Close();
+            }
+            // If no is pressed return and nothing happens.
         }
     }
 }

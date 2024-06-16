@@ -90,7 +90,7 @@ namespace ChapeauUI
         {
 
             this.Hide();
-            orderingForm orderingForm = new orderingForm();
+            orderingForm orderingForm = new orderingForm(tableNumber);
             orderingForm.ShowDialog();
             this.Close();
         }
