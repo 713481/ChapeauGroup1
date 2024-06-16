@@ -88,7 +88,7 @@ namespace ChapeauUI
                 listViewKitchenOrderItem.Items.Clear();
                 foreach (var item in selectedOrder.OrderList)
                 {
-                    ListViewItem li = new ListViewItem(item.OrderID.ToString());
+                    ListViewItem li = new ListViewItem(item.Category.ToString());
                     li.SubItems.Add(item.ItemName.ToString());
                     li.SubItems.Add(item.OrderCount.ToString());
                     li.SubItems.Add(item.StatusItem.ToString());
@@ -278,7 +278,7 @@ namespace ChapeauUI
                 foreach (var item in selectedOrder.OrderList)
                 {
                     // Create list view item
-                    ListViewItem li = new ListViewItem(item.OrderID.ToString());
+                    ListViewItem li = new ListViewItem(item.Category.ToString());
                     li.SubItems.Add(item.MenuItem.ItemID.ToString());
                     li.SubItems.Add(item.OrderCount.ToString());
                     li.SubItems.Add(item.StatusItem.ToString());

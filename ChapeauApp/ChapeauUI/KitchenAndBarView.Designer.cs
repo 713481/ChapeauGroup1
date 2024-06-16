@@ -37,7 +37,7 @@
             KITCHENORDERSTIME = new ColumnHeader();
             KITCHENWAITINGTIME = new ColumnHeader();
             listViewKitchenOrderItem = new ListView();
-            BARORDERID = new ColumnHeader();
+            BARCATEGORYTYPE = new ColumnHeader();
             BARITEMNAME = new ColumnHeader();
             BARORDERCOUNT = new ColumnHeader();
             BARITEMSTATUS = new ColumnHeader();
@@ -110,7 +110,7 @@
             // listViewKitchenOrderItem
             // 
             listViewKitchenOrderItem.BackColor = SystemColors.MenuBar;
-            listViewKitchenOrderItem.Columns.AddRange(new ColumnHeader[] { BARORDERID, BARITEMNAME, BARORDERCOUNT, BARITEMSTATUS, BARORDERTIME, ORDERDESCRIPTION });
+            listViewKitchenOrderItem.Columns.AddRange(new ColumnHeader[] { BARCATEGORYTYPE, BARITEMNAME, BARORDERCOUNT, BARITEMSTATUS, BARORDERTIME, ORDERDESCRIPTION });
             listViewKitchenOrderItem.FullRowSelect = true;
             listViewKitchenOrderItem.Location = new Point(308, 594);
             listViewKitchenOrderItem.Name = "listViewKitchenOrderItem";
@@ -119,15 +119,15 @@
             listViewKitchenOrderItem.UseCompatibleStateImageBehavior = false;
             listViewKitchenOrderItem.View = View.Details;
             // 
-            // BARORDERID
+            // BARCATEGORYTYPE
             // 
-            BARORDERID.Text = "Order ID";
-            BARORDERID.Width = 130;
+            BARCATEGORYTYPE.Text = "Type";
+            BARCATEGORYTYPE.Width = 130;
             // 
             // BARITEMNAME
             // 
             BARITEMNAME.Text = "Item Name";
-            BARITEMNAME.Width = 330;
+            BARITEMNAME.Width = 270;
             // 
             // BARORDERCOUNT
             // 
@@ -275,7 +275,7 @@
         private ColumnHeader KITCHENORDERID;
         private ColumnHeader KITCHENTABLEID;
         private ColumnHeader KITCHENORDERSTIME;
-        private ColumnHeader BARORDERID;
+        private ColumnHeader BARCATEGORYTYPE;
         private ColumnHeader BARITEMNAME;
         private ColumnHeader BARORDERCOUNT;
         private ColumnHeader BARITEMSTATUS;
