@@ -39,7 +39,6 @@ namespace ChapeauService
         {
             // Create the order and get the new OrderID
             int newOrderId = orderDao.CreateOrder(order);
-            order.OrderID = newOrderId;
 
             // Add each order item to the database
             foreach (OrderItem orderItem in orderItems)

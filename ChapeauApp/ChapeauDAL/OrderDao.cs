@@ -22,6 +22,7 @@ namespace ChapeauDAL
         // Creating an order
         public int CreateOrder(Order order)
         {
+            // Add the needed information to create a new order, OrderID and OrderStatus are auto
             string query = "INSERT INTO [Order] (TableID, EmployeeID, OrderTime) OUTPUT INSERTED.OrderID VALUES (@TableID, @EmployeeID, @OrderTime)";
             SqlParameter[] sqlParameters = new SqlParameter[]
             {
@@ -31,10 +32,11 @@ namespace ChapeauDAL
             };
             return ExecuteInsertQuery(query, sqlParameters);
         }
-        // Add an item to an existing order
+        // Add an item to an order
         public void AddOrderItem(OrderItem orderItem)
         {
-            string query = "INSERT INTO [OrderItem] (ItemID, OrderID, OrderCount, OrderTime, ItemStatus, OrderDescription) VALUES (@ItemID, @OrderID, @OrderCount, @OrderTime, @ItemStatus, @OrderDescription)";
+            string query = "INSERT INTO [OrderItem] (ItemID, OrderID, OrderCount, OrderTime, ItemStatus, OrderDescription) " +
+                           "VALUES (@ItemID, @OrderID, @OrderCount, @OrderTime, @ItemStatus, @OrderDescription)";
             SqlParameter[] sqlParameters = new SqlParameter[]
             {
                 new SqlParameter("@ItemID", orderItem.MenuItem.ItemID),

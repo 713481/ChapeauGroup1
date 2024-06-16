@@ -32,7 +32,7 @@ namespace ChapeauUI
             lblOrderingTableNumber.Text = $"Table Number: {tableNumber}";
 
             // Fill and Filter menu (listview)
-            FillMenuItems();
+/*            FillMenuItems();*/
             FilterMenuItems(MenuType.Lunch);
         }
         private void orderingForm_Load(object sender, EventArgs e)
@@ -54,7 +54,8 @@ namespace ChapeauUI
         {
             FilterMenuItems(MenuType.Drinks);
         }
-        private void FillMenuItems()
+        // Code previous to the filter to fill the list view with all dishes
+/*        private void FillMenuItems()
         {
             // Clear existing items
             lvOrderingMenuItems.Items.Clear();
@@ -81,14 +82,15 @@ namespace ChapeauUI
                 }
                 lvOrderingMenuItems.Items.Add(listViewItem);
             }
-        }
+        }*/
+        // Fill the entire listview with dishes through the filter.
         private void FilterMenuItems(MenuType menuType)
         {
             // Clear existing items
             lvOrderingMenuItems.Items.Clear();
 
             // Retrieve menu items from the database
-            List<MenuItem> menuItems = orderService.GetAllMenuItems();
+            menuItems = orderService.GetAllMenuItems();
 
             // Filter menu items based on the selected menu type
             List<MenuItem> filteredMenuItems = menuItems.Where(item => item.MenuType == menuType).ToList();
@@ -129,6 +131,13 @@ namespace ChapeauUI
 
                 if (selectedMenuItem != null)
                 {
+                    // Checking if the stock is 0 if true return...
+                    if (selectedMenuItem.Stock == 0)
+                    {
+                        MessageBox.Show("This dish is out of stock, please choose something else!");
+                        return; // Exit the method early
+                    }
+
                     // Check if the item already exists in userOrder
                     OrderItem existingOrderItem = userOrder.FirstOrDefault(item => item.MenuItem.ItemID == selectedMenuItem.ItemID);
 
