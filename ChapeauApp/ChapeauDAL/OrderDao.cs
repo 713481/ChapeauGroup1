@@ -264,13 +264,13 @@ namespace ChapeauDAL
         {
             // Define the SQL query to retrieve orders within the specified date range
             string query = @"
-    SELECT DISTINCT O.OrderID, O.TableID, O.OrderTime
-    FROM [ORDER] AS O
-    JOIN [OrderItem] AS OI ON O.OrderID = OI.OrderID
-    JOIN [MENUITEM] AS MI ON OI.ItemID = MI.ItemID
-    WHERE 
-    O.OrderStatus = @orderStatus
-    AND CAST(O.OrderTime AS DATE) = CAST(GETDATE() AS DATE)";
+            SELECT DISTINCT O.OrderID, O.TableID, O.OrderTime
+            FROM [ORDER] AS O
+            JOIN [OrderItem] AS OI ON O.OrderID = OI.OrderID
+            JOIN [MENUITEM] AS MI ON OI.ItemID = MI.ItemID
+            WHERE 
+            O.OrderStatus = @orderStatus
+            AND CAST(O.OrderTime AS DATE) = CAST(GETDATE() AS DATE)";
 
             // Append conditions based on isBar
             if (isBar)
