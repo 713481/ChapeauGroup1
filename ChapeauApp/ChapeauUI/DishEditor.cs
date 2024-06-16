@@ -13,12 +13,14 @@ namespace ChapeauUI
 {
     public partial class DishEditor : Form
     {
+        private Form myOrder;
         private OrderItem orderItem;
 
-        public DishEditor(OrderItem orderItem)
+        public DishEditor(OrderItem orderItem, Form MyOrder)
         {
             InitializeComponent();
             this.orderItem = orderItem;
+            myOrder = MyOrder;
 
             lblDECurrentDish.Text = orderItem.MenuItem.ItemName;
             lblDEOrderedCountText.Text = $"Ordered count: {orderItem.OrderCount.ToString()}";
@@ -51,6 +53,7 @@ namespace ChapeauUI
             orderItem.Notes = tbxDENotes.Text;
             DialogResult = DialogResult.OK;
             Close();
+            myOrder.Show();
         }
 
         private void btnDEAllergicPeanuts_Click(object sender, EventArgs e)

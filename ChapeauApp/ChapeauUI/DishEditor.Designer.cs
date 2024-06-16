@@ -241,7 +241,10 @@
             Controls.Add(pnlMyOrderingLogo);
             Controls.Add(pnlMyOrderingHeaderBackground);
             ForeColor = SystemColors.ControlText;
+            MaximizeBox = false;
+            MinimizeBox = false;
             Name = "DishEditor";
+            StartPosition = FormStartPosition.CenterScreen;
             Text = "DishEditor";
             ResumeLayout(false);
             PerformLayout();
