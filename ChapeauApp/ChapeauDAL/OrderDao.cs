@@ -115,7 +115,7 @@ namespace ChapeauDAL
                 {
                     MenuItem = itemDao.GetItemById((int)dr["ItemID"]),
                     //ItemID = (int)dr["ItemID"],
-                    OrderID = (int)dr["OrderID"],
+                    Category = (ItemCategory)dr["CategoryType"],
                     StatusItem = (ItemStatus)dr["ItemStatus"],
                     OrderCount = (int)dr["OrderCount"],
                     Notes = dr["OrderDescription"].ToString(),
@@ -129,7 +129,7 @@ namespace ChapeauDAL
 
         public List<OrderItem> GetOrderItems(bool isABar, bool isAOpenOrders, int orderId) 
         {
-            string query = "SELECT OI.OrderID, OI.ItemID, OI.OrderCount, OI.ItemStatus, OI.OrderDescription, OI.OrderTime, M.ItemName " +
+            string query = "SELECT M.CategoryType, OI.ItemID, OI.OrderCount, OI.ItemStatus, OI.OrderDescription, OI.OrderTime, M.ItemName " +
                   "FROM [Orderitem] AS OI " +
                   "JOIN [MENUITEM] AS M ON M.ItemID = OI.ItemID " +
                   "WHERE OI.OrderID = @OrderID ";
@@ -180,11 +180,11 @@ namespace ChapeauDAL
         public List<Order> GetOrders(bool isBar, bool isOpenOrders)
         {
             string query = @"
-              SELECT O.OrderID, O.TableID, O.OrderTime
-              FROM [ORDER] AS O
-             JOIN [OrderItem] AS OI ON O.OrderID = OI.OrderID
-             JOIN [MENUITEM] AS MI ON OI.ItemID = MI.ItemID
-             WHERE ";
+            SELECT O.OrderID, O.TableID, O.OrderTime
+            FROM [ORDER] AS O
+            JOIN [OrderItem] AS OI ON O.OrderID = OI.OrderID
+            JOIN [MENUITEM] AS MI ON OI.ItemID = MI.ItemID
+            WHERE ";
 
             // Append conditions based on isBar
             if (isBar)
@@ -199,21 +199,32 @@ namespace ChapeauDAL
             // Append conditions based on isOpenOrders
             if (isOpenOrders)
             {
-                query += " AND OrderStatus <= 2"; // Only open orders
-                query += " AND CAST(GETDATE() AS date) = CAST(O.OrderTime AS date)"; // Only orders from the same day
+                query += " AND O.OrderStatus <= 2"; // Only open orders
             }
             else
             {
-                if (!isBar)
+                query += "AND CAST(O.OrderTime AS DATE) = CAST(GETDATE() AS DATE) " +
+                 "AND O.OrderID NOT IN (SELECT DISTINCT OI.OrderID " +
+                                        "FROM [OrderItem] AS OI " +
+                                        "JOIN [MENUITEM] AS MI ON OI.ItemID = MI.ItemID " +
+                                        "WHERE OI.ItemStatus <= 2 " +
+                                        "AND MI.MealsType ";
+
+                // Complete the condition for bar or kitchen orders
+                if(isBar)
+{
+                    query += " AND MI.MealsType = 3)"; // Exclude bar orders if isBar is true
+                }
+                else
                 {
-                    query += " AND MI.MealsType != 3"; // Exclude drinks for kitchen orders
+                    query += " AND MI.MealsType != 3)"; // Exclude kitchen orders if isBar is false
                 }
             }
 
             // Group by all non-aggregated columns and order by OrderTime
-                query += @"
-               GROUP BY O.OrderID, O.TableID, O.OrderTime
-               ORDER BY O.OrderTime";
+            query += @"
+            GROUP BY O.OrderID, O.TableID, O.OrderTime
+            ORDER BY O.OrderTime";
 
             return ReadOrderTables(ExecuteSelectQuery(query), isBar, isOpenOrders);
 
@@ -261,8 +272,8 @@ namespace ChapeauDAL
 
             // Create parameters for the order status
             SqlParameter[] parameters = {
-        new SqlParameter("@orderStatus", (int)status)
-    };
+            new SqlParameter("@orderStatus", (int)status)
+           };
 
             // Execute the query and retrieve the results
             DataTable resultTable = ExecuteSelectQuery(query, parameters);
