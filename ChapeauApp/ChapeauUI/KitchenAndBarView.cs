@@ -176,7 +176,7 @@ namespace ChapeauUI
                         Order order = (Order)ListViewOrdersKitchen.SelectedItems[0].Tag;
 
                         // Update order status to "Served" in the database
-                        orderService.OrderStatusUpdate(order.OrderID, OrderStatus.Served);
+                        //orderService.OrderStatusUpdate(order.OrderID, OrderStatus.Served);
 
                         // Remove the order from ListViewOrdersKitchen
                         ListViewOrdersKitchen.Items.Remove(ListViewOrdersKitchen.SelectedItems[0]);
