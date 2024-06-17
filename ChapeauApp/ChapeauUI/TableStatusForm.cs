@@ -27,7 +27,7 @@ namespace ChapeauUI
             this.employee = employee;
             tableService = new TableService();
             RefreshTimer = new System.Windows.Forms.Timer();
-            RefreshTimer.Interval = 1000;
+            RefreshTimer.Interval = 10000;
             RefreshTimer.Tick += RefreshTimer_Tick;
             RefreshTimer.Start();
 
