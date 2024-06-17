@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            components = new System.ComponentModel.Container();
             buttonReturnToTableView = new Button();
             buttonOccupyingTables = new Button();
             buttonFreeingTable = new Button();
@@ -39,11 +40,13 @@
             labelTableShowNumbers = new Label();
             TableStatusOrderbutton = new Button();
             TableStatusPaymentButton = new Button();
+            button1ChangingStatusToServed = new Button();
+            timerRefreshs = new System.Windows.Forms.Timer(components);
             SuspendLayout();
             // 
             // buttonReturnToTableView
             // 
-            buttonReturnToTableView.Location = new Point(290, 41);
+            buttonReturnToTableView.Location = new Point(280, 12);
             buttonReturnToTableView.Name = "buttonReturnToTableView";
             buttonReturnToTableView.Size = new Size(94, 29);
             buttonReturnToTableView.TabIndex = 0;
@@ -54,7 +57,7 @@
             // buttonOccupyingTables
             // 
             buttonOccupyingTables.BackColor = Color.FromArgb(128, 255, 128);
-            buttonOccupyingTables.Location = new Point(72, 339);
+            buttonOccupyingTables.Location = new Point(72, 349);
             buttonOccupyingTables.Name = "buttonOccupyingTables";
             buttonOccupyingTables.Size = new Size(94, 29);
             buttonOccupyingTables.TabIndex = 1;
@@ -65,7 +68,7 @@
             // buttonFreeingTable
             // 
             buttonFreeingTable.BackColor = Color.FromArgb(255, 128, 128);
-            buttonFreeingTable.Location = new Point(72, 386);
+            buttonFreeingTable.Location = new Point(72, 396);
             buttonFreeingTable.Name = "buttonFreeingTable";
             buttonFreeingTable.Size = new Size(94, 29);
             buttonFreeingTable.TabIndex = 2;
@@ -76,7 +79,8 @@
             // listViewTableStatusOrderList
             // 
             listViewTableStatusOrderList.Columns.AddRange(new ColumnHeader[] { TableStatusOrderNoLists, TableStatusOnOrderTables, TableStatusWatingTimeForOrders });
-            listViewTableStatusOrderList.Location = new Point(72, 82);
+            listViewTableStatusOrderList.FullRowSelect = true;
+            listViewTableStatusOrderList.Location = new Point(72, 62);
             listViewTableStatusOrderList.Name = "listViewTableStatusOrderList";
             listViewTableStatusOrderList.Size = new Size(286, 224);
             listViewTableStatusOrderList.TabIndex = 3;
@@ -85,7 +89,7 @@
             // 
             // TableStatusOrderNoLists
             // 
-            TableStatusOrderNoLists.Text = "Order No.";
+            TableStatusOrderNoLists.Text = "Item No.";
             TableStatusOrderNoLists.Width = 80;
             // 
             // TableStatusOnOrderTables
@@ -101,7 +105,7 @@
             // 
             labelTableBox.AutoSize = true;
             labelTableBox.Font = new Font("Segoe UI", 18F, FontStyle.Regular, GraphicsUnit.Point);
-            labelTableBox.Location = new Point(124, 38);
+            labelTableBox.Location = new Point(124, 18);
             labelTableBox.Name = "labelTableBox";
             labelTableBox.Size = new Size(87, 41);
             labelTableBox.TabIndex = 4;
@@ -111,7 +115,7 @@
             // 
             labelTableShowNumbers.AutoSize = true;
             labelTableShowNumbers.Font = new Font("Segoe UI", 16.2F, FontStyle.Regular, GraphicsUnit.Point);
-            labelTableShowNumbers.Location = new Point(217, 41);
+            labelTableShowNumbers.Location = new Point(217, 21);
             labelTableShowNumbers.Name = "labelTableShowNumbers";
             labelTableShowNumbers.Size = new Size(32, 38);
             labelTableShowNumbers.TabIndex = 5;
@@ -119,7 +123,7 @@
             // 
             // TableStatusOrderbutton
             // 
-            TableStatusOrderbutton.Location = new Point(250, 339);
+            TableStatusOrderbutton.Location = new Point(250, 349);
             TableStatusOrderbutton.Name = "TableStatusOrderbutton";
             TableStatusOrderbutton.Size = new Size(94, 29);
             TableStatusOrderbutton.TabIndex = 6;
@@ -129,7 +133,7 @@
             // 
             // TableStatusPaymentButton
             // 
-            TableStatusPaymentButton.Location = new Point(250, 386);
+            TableStatusPaymentButton.Location = new Point(250, 396);
             TableStatusPaymentButton.Name = "TableStatusPaymentButton";
             TableStatusPaymentButton.Size = new Size(94, 29);
             TableStatusPaymentButton.TabIndex = 7;
@@ -137,12 +141,27 @@
             TableStatusPaymentButton.UseVisualStyleBackColor = true;
             TableStatusPaymentButton.Click += TableStatusPaymentButton_Click;
             // 
+            // button1ChangingStatusToServed
+            // 
+            button1ChangingStatusToServed.Location = new Point(166, 314);
+            button1ChangingStatusToServed.Name = "button1ChangingStatusToServed";
+            button1ChangingStatusToServed.Size = new Size(94, 29);
+            button1ChangingStatusToServed.TabIndex = 8;
+            button1ChangingStatusToServed.Text = "Serve";
+            button1ChangingStatusToServed.UseVisualStyleBackColor = true;
+            button1ChangingStatusToServed.Click += button1ChangingStatusToServed_Click;
+            // 
+            // timerRefreshs
+            // 
+            timerRefreshs.Tick += timerRefreshs_Tick;
+            // 
             // TableStatusForm
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(128, 128, 255);
             ClientSize = new Size(442, 450);
+            Controls.Add(button1ChangingStatusToServed);
             Controls.Add(TableStatusPaymentButton);
             Controls.Add(TableStatusOrderbutton);
             Controls.Add(labelTableShowNumbers);
@@ -170,5 +189,7 @@
         private Label labelTableShowNumbers;
         private Button TableStatusOrderbutton;
         private Button TableStatusPaymentButton;
+        private Button button1ChangingStatusToServed;
+        private System.Windows.Forms.Timer timerRefreshs;
     }
 }

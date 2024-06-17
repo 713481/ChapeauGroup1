@@ -63,10 +63,18 @@ namespace ChapeauUI
         }
         private void buttonLoggingOut_Click(object sender, EventArgs e)
         {
+            //confirmation dialog
 
-            this.Close();
-            LoginForm loginForm = new LoginForm();
-            loginForm.ShowDialog();
+            DialogResult dialogResult = MessageBox.Show("Are you sure you want to logout?", "Confirmation", MessageBoxButtons.YesNo);
+            if (dialogResult == DialogResult.Yes)
+            {
+
+                
+                this.Hide();
+                LoginForm loginForm = new LoginForm();
+                loginForm.ShowDialog();
+
+            }        
            
         }
         private void TableViewsLayoutPanel_Paint(object sender, PaintEventArgs e)

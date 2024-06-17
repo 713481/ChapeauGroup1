@@ -20,7 +20,7 @@ namespace ChapeauService
         {
             return tableDao.GetTables();
         }
-        //Method to get a specific table by its number 
+        //Method to get a specific table
         public Table GetTableNumbers(int tablenumber)
         {
             return tableDao.GetTableNUmbers(tablenumber);
@@ -32,6 +32,15 @@ namespace ChapeauService
             Table updatedTable = tableDao.GetTableNUmbers(tableNumber);
             return updatedTable;
         }
-
+        //method to get order items by table
+        public List<OrderItem> GetItemsOrderByTable(int tableNumber)
+        {
+            return tableDao.GetItemsOrderByTable(tableNumber);
+        }
+        //method to update the ordered item status 
+        public void UpdateOrderItemStatus(int itemID, ItemStatus status)
+        {
+            tableDao.UpdateOrderItemStatus(itemID, status);
+        }
     }
 }
