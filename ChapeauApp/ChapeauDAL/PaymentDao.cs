@@ -44,7 +44,7 @@ namespace ChapeauDAL
             }
         }
 
-        // Method to get the total price for a given order ID
+        // get the total price for a given order ID
         public double GetTotalPrice(int orderId)
         {
             using (SqlConnection connection = new SqlConnection(connectionString))
