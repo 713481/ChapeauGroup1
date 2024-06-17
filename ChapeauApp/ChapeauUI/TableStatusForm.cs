@@ -19,15 +19,21 @@ namespace ChapeauUI
         private int tableNumber;
         private TableService tableService;
         private Employee employee;
-        
+
         public TableStatusForm(Employee employee, int tableNumber)
         {
             InitializeComponent();
             this.tableNumber = tableNumber;
             this.employee = employee;
             tableService = new TableService();
-            //loading and set up timer 
-           
+            RefreshTimer = new System.Windows.Forms.Timer();
+            RefreshTimer.Interval = 1000;
+            RefreshTimer.Tick += RefreshTimer_Tick;
+            RefreshTimer.Start();
+
+
+
+
             GetTableNumber(tableNumber);
             GetOrderDetails(tableNumber);
 
@@ -50,14 +56,10 @@ namespace ChapeauUI
 
         private void buttonReturnToTableView_Click(object sender, EventArgs e)
         {
-            DialogResult dialogResult = MessageBox.Show("Are you sure you want to leave this table?", "Confirmation", MessageBoxButtons.YesNo);
-            if (dialogResult == DialogResult.Yes)
-            {
-                this.Hide();
-                TableViewForm tableViewForm = new TableViewForm(employee);
-                tableViewForm.ShowDialog();
+            this.Hide();
+            TableViewForm tableViewForm = new TableViewForm(employee);
+            tableViewForm.ShowDialog();
 
-            }
 
         }
         // Method to update the status of the table
@@ -154,8 +156,7 @@ namespace ChapeauUI
             }
 
         }
-
-        private void timerRefreshs_Tick(object sender, EventArgs e)
+        private void RefreshTimer_Tick(object sender, EventArgs e)
         {
             GetOrderDetails(tableNumber);
         }

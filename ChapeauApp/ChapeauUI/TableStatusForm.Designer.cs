@@ -41,12 +41,12 @@
             TableStatusOrderbutton = new Button();
             TableStatusPaymentButton = new Button();
             button1ChangingStatusToServed = new Button();
-            timerRefreshs = new System.Windows.Forms.Timer(components);
+            RefreshTimer = new System.Windows.Forms.Timer(components);
             SuspendLayout();
             // 
             // buttonReturnToTableView
             // 
-            buttonReturnToTableView.Location = new Point(280, 12);
+            buttonReturnToTableView.Location = new Point(366, 18);
             buttonReturnToTableView.Name = "buttonReturnToTableView";
             buttonReturnToTableView.Size = new Size(94, 29);
             buttonReturnToTableView.TabIndex = 0;
@@ -143,7 +143,7 @@
             // 
             // button1ChangingStatusToServed
             // 
-            button1ChangingStatusToServed.Location = new Point(166, 314);
+            button1ChangingStatusToServed.Location = new Point(164, 292);
             button1ChangingStatusToServed.Name = "button1ChangingStatusToServed";
             button1ChangingStatusToServed.Size = new Size(94, 29);
             button1ChangingStatusToServed.TabIndex = 8;
@@ -151,16 +151,16 @@
             button1ChangingStatusToServed.UseVisualStyleBackColor = true;
             button1ChangingStatusToServed.Click += button1ChangingStatusToServed_Click;
             // 
-            // timerRefreshs
+            // RefreshTimer
             // 
-            timerRefreshs.Tick += timerRefreshs_Tick;
+            RefreshTimer.Tick += RefreshTimer_Tick;
             // 
             // TableStatusForm
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(128, 128, 255);
-            ClientSize = new Size(442, 450);
+            ClientSize = new Size(472, 450);
             Controls.Add(button1ChangingStatusToServed);
             Controls.Add(TableStatusPaymentButton);
             Controls.Add(TableStatusOrderbutton);
@@ -190,6 +190,6 @@
         private Button TableStatusOrderbutton;
         private Button TableStatusPaymentButton;
         private Button button1ChangingStatusToServed;
-        private System.Windows.Forms.Timer timerRefreshs;
+        private System.Windows.Forms.Timer RefreshTimer;
     }
 }

@@ -37,7 +37,7 @@
             labelNumberOfTable.Font = new Font("Segoe UI", 22.2F, FontStyle.Regular, GraphicsUnit.Point);
             labelNumberOfTable.Location = new Point(0, 0);
             labelNumberOfTable.Name = "labelNumberOfTable";
-            labelNumberOfTable.Size = new Size(84, 79);
+            labelNumberOfTable.Size = new Size(86, 87);
             labelNumberOfTable.TabIndex = 0;
             labelNumberOfTable.Text = "1";
             labelNumberOfTable.TextAlign = ContentAlignment.MiddleCenter;
@@ -47,10 +47,10 @@
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            BackColor = Color.Red;
+            BackColor = Color.White;
             Controls.Add(labelNumberOfTable);
             Name = "UserControlTableView";
-            Size = new Size(84, 79);
+            Size = new Size(86, 87);
             ResumeLayout(false);
         }
 
