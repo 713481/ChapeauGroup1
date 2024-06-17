@@ -66,7 +66,7 @@ namespace ChapeauUI
         {
             if (ListViewTables.SelectedItems.Count > 0)
             {
-                // Extract the table number from the selected item text (assuming it's formatted like "Table 1")
+                // Extract the table number from the selected item text 
                 string selectedTableText = ListViewTables.SelectedItems[0].Text;
                 int tableNumber = int.Parse(selectedTableText.Split(' ')[1]);
 
@@ -91,7 +91,7 @@ namespace ChapeauUI
 
 
 
-                // Close the PaymentForm
+                
 
             }
             else

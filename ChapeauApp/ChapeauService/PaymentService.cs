@@ -34,15 +34,15 @@ namespace ChapeauService
                 Feedback = feedback
             };
 
-            // Add the payment record to the database
+            // Adds the payment record to the database
             return paymentDAO.AddPayment(bill);
         }
 
 
-        // Method to update an existing payment
+        
       
 
-        // Method to get the total price for a given order ID
+        // Method to get the total price for an order ID
         public double GetTotalPrice(int orderId)
         {
             return paymentDAO.GetTotalPrice(orderId);
@@ -78,7 +78,7 @@ namespace ChapeauService
 
         private void ExecuteNonQuery(string query, SqlParameter[] sqlParameters)
         {
-            // Replace with your actual connection string
+           
             string connectionString = "Server=chapeaugroup1.database.windows.net;\r\n        user id=testadmin;\r\n        password=W3lcomE123!;\r\n        Initial Catalog=chapeaugroup1;\r\n        persistsecurityinfo=True;";
 
             using (SqlConnection connection = new SqlConnection(connectionString))

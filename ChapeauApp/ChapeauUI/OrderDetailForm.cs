@@ -88,8 +88,8 @@ namespace ChapeauUI
                 {
                     var listViewItem = new ListViewItem($"{detail.ItemName} x{detail.TotalCount}");
                     decimal totalItemPrice = detail.Price * detail.TotalCount;
-                    listViewItem.SubItems.Add(totalItemPrice.ToString("C", cultureInfo)); // Corrected Price display
-                    listViewItem.SubItems.Add((detail.VAT * 100).ToString("F2") + "%"); // Corrected VAT display
+                    listViewItem.SubItems.Add(totalItemPrice.ToString("C", cultureInfo)); 
+                    listViewItem.SubItems.Add((detail.VAT * 100).ToString("F2") + "%"); 
                     OrderDetailsListView.Items.Add(listViewItem);
 
                     totalprice += totalItemPrice;
