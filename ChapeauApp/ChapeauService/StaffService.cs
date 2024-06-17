@@ -54,11 +54,12 @@ namespace ChapeauService
         {
             string hashedPassword = HashPassword(password);
             staffDao.CreateUser(userName, hashedPassword);
+            staffDao.UpdatePassword(userName, hashedPassword);
         }
         public void CreateMultipleUsers()
         {
             StaffService staffService = new StaffService();
-            
+            staffService.CreateUser("John", "12334");
 
         }
 
