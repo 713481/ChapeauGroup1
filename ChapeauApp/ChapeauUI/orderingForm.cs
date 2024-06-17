@@ -120,8 +120,11 @@ namespace ChapeauUI
 
         private void btnOrderingMyOrder_Click(object sender, EventArgs e)
         {
+            // Create MyOrder form passing the necessary information
             MyOrder myOrderForm = new MyOrder(employee, tableNumber, userOrder, this);
+            // Hide the current form (orderingForm)
             this.Hide();
+            // Show the newly created form
             myOrderForm.ShowDialog();
         }
 
@@ -156,9 +159,9 @@ namespace ChapeauUI
                         {
                             MenuItem = selectedMenuItem,
                             OrderCount = 1, // Initially set to 1
-                            Notes = "", // Add any notes if necessary
-                            OrderTime = DateTime.Now,
-                            StatusItem = ItemStatus.Open
+                            Notes = "", // Add any notes if necessary 
+                            OrderTime = DateTime.Now, // Set OrderTime to current time
+                            StatusItem = ItemStatus.Open // Set StatusItem to open
                         };
 
                         userOrder.Add(orderItem);
@@ -175,7 +178,7 @@ namespace ChapeauUI
                 MessageBox.Show("Please select an item to add.");
             }
         }
-
+        // Make sure the user actually wants to exit the ordering process
         private void btnOrderingReturn_Click(object sender, EventArgs e)
         {
             // Message , Title, Buttons

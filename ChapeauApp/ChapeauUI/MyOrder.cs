@@ -51,11 +51,12 @@ namespace ChapeauUI
                 {
                     TableID = tableNumber,  // Set the table ID
                     EmployeeID = employee.EmployeeID,  // Set the employee ID
-                    orderStatus = OrderStatus.Open,  // Assuming Open is the status for a new order
-                    OrderTime = DateTime.Now
+                    orderStatus = OrderStatus.Open,  // Set the status Open for a new order
+                    OrderTime = DateTime.Now // Set current time of ordering
                 };
 
                 OrderService orderService = new OrderService();
+                // pass the order and the list of orderedDishes
                 orderService.FinishOrder(order, userOrder);
 
                 MessageBox.Show("Order finalized successfully!");

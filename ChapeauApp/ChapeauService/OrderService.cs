@@ -18,19 +18,6 @@ namespace ChapeauService
             orderDao = new OrderDao(); 
             itemDao = new ItemDao();
         }
-        public int CreateOrder(Order order)
-        {
-            return orderDao.CreateOrder(order);
-        }
-
-        public void AddOrderItem(OrderItem orderItem)
-        {
-            orderDao.AddOrderItem(orderItem);
-        }
-        public List<Order> GetOrdersByTable(int tableId)
-        {
-            return orderDao.GetOrdersByTable(tableId);
-        }
         public List<MenuItem> GetAllMenuItems()
         {
             return itemDao.GetAllItems();
