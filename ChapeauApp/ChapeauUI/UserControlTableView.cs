@@ -43,14 +43,20 @@ namespace ChapeauUI
         {
             // get table property of the current instance of the UserControl
             int tableNumber = Table.TableNumber;
-
+            //make new instance and hide it 
+            TableViewForm tableViewForm = new TableViewForm(employee);
+            tableViewForm.Hide();
             //making a new instance of the table status form of the table object
-            
             TableStatusForm tableStatusForm = new TableStatusForm(employee, tableNumber);
+            //show table status form
             tableStatusForm.Show();
+            //raise the clicktable event
             ClickedOnTable();
+
             //Call the GetTable method from the tableStatusForm instance
             tableStatusForm.GetTableNumber(tableNumber);
+            
+       
         }
         // Method to raise the ClickedTable event
         protected virtual void ClickedOnTable()
