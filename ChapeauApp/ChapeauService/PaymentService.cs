@@ -40,20 +40,7 @@ namespace ChapeauService
 
 
         // Method to update an existing payment
-        public bool UpdatePayment(int billId, double newTotalPrice, double newTip, string newFeedback)
-        {
-            // Fetch the existing bill
-            Bill bill = new Bill
-            {
-                BillID = billId,
-                TotalPrice = newTotalPrice,
-                Tip = newTip,
-                Feedback = newFeedback
-            };
-
-            // Update the payment record in the database
-            return paymentDAO.UpdatePayment(bill);
-        }
+      
 
         // Method to get the total price for a given order ID
         public double GetTotalPrice(int orderId)
@@ -61,11 +48,7 @@ namespace ChapeauService
             return paymentDAO.GetTotalPrice(orderId);
         }
 
-        public void DeleteOrder(int orderId)
-        {
-            // Call the DAO to delete the order
-            paymentDAO.DeleteOrder(orderId);
-        }
+      
 
         public void MarkOrderAsPaid(int orderId)
         {

@@ -72,64 +72,9 @@ namespace ChapeauDAL
             }
         }
 
-        public bool UpdatePayment(Bill bill)
-        {
-            using (SqlConnection connection = new SqlConnection(connectionString))
-            {
-                string query = @"
-                UPDATE BILL
-                SET TotalPrice = @NewTotalPrice, Tip = @NewTip, Feedback = @NewFeedback
-                WHERE BillID = @BillID";
+       
 
-                using (SqlCommand command = new SqlCommand(query, connection))
-                {
-                    command.Parameters.AddWithValue("@BillID", bill.BillID);
-                    command.Parameters.AddWithValue("@TotalPrice", bill.TotalPrice);
-                    command.Parameters.AddWithValue("@Tip", bill.Tip);
-                    command.Parameters.AddWithValue("@Feedback", bill.Feedback);
-
-                    connection.Open();
-                    int result = command.ExecuteNonQuery();
-
-                    // Check if the update was successful
-                    return result > 0;
-                }
-            }
-        }
-
-        public void DeleteOrder(int orderId)
-        {
-            using (SqlConnection connection = new SqlConnection(connectionString))
-            {
-                connection.Open();
-
-                // Begin a transaction to ensure atomicity
-                using (var transaction = connection.BeginTransaction())
-                {
-                    try
-                    {
-                        // Delete order details associated with the order
-                        var deleteOrderDetailsCmd = new SqlCommand("DELETE FROM OrderItem WHERE OrderId = @orderId", connection, transaction);
-                        deleteOrderDetailsCmd.Parameters.AddWithValue("@orderId", orderId);
-                        deleteOrderDetailsCmd.ExecuteNonQuery();
-
-                        // Delete the order itself
-                        var deleteOrderCmd = new SqlCommand("DELETE FROM [ORDER] WHERE OrderId = @orderId", connection, transaction);
-                        deleteOrderCmd.Parameters.AddWithValue("@orderId", orderId);
-                        deleteOrderCmd.ExecuteNonQuery();
-
-                        // Commit the transaction
-                        transaction.Commit();
-                    }
-                    catch
-                    {
-                        // Rollback the transaction if there is an error
-                        transaction.Rollback();
-                        throw;
-                    }
-                }
-            }
-        }
+        
 
     }
 }
