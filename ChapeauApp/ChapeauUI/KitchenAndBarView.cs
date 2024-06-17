@@ -150,7 +150,7 @@ namespace ChapeauUI
                     OrderItem selectedItem = (OrderItem)listViewKitchenOrderItem.SelectedItems[0].Tag;
 
                     // Call the ChangeStatus method to update the status to Served
-                    orderService.ChangeStatus(selectedItem, ItemStatus.Served);
+                    orderService.ChangeStatus(selectedItem, ItemStatus.Ready);
 
                     // Optionally, you can update the UI or perform any other actions here
                     MessageBox.Show("Item status updated to Ready.");
@@ -163,7 +163,7 @@ namespace ChapeauUI
                     foreach (ListViewItem item in listViewKitchenOrderItem.Items)
                     {
                         OrderItem orderItem = (OrderItem)item.Tag;
-                        if (orderItem.StatusItem != ItemStatus.Served)
+                        if (orderItem.StatusItem != ItemStatus.Ready)
                         {
                             allItemsReady = false;
                             break;
